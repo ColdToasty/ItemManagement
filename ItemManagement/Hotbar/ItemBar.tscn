@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Hotbar/ItemBar.cs" type="Script" id=1]
+
+[node name="ItemBar" type="ItemList"]
+margin_right = 64.0
+margin_bottom = 40.0
+custom_colors/guide_color = Color( 0.564706, 0.0823529, 0.0823529, 1 )
+custom_colors/font_color_selected = Color( 0.117647, 0.196078, 0.00392157, 1 )
+max_columns = 10
+same_column_width = true
+fixed_column_width = 1
+script = ExtResource( 1 )
