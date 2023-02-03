@@ -1,0 +1,9 @@
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.csproj.AssemblyReference.cache
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.GeneratedMSBuildEditorConfig.editorconfig
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.AssemblyInfoInputs.cache
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.AssemblyInfo.cs
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.csproj.CoreCompileInputs.cache
+C:\GodotProjects\ItemManagement\.mono\temp\bin\Debug\Item Management.dll
+C:\GodotProjects\ItemManagement\.mono\temp\bin\Debug\Item Management.pdb
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.dll
+C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.pdb
