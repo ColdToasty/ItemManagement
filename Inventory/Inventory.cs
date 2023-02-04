@@ -5,11 +5,29 @@ public class Inventory : Node2D
 {
     public GridContainer inventory_slots;
 
-     public Item holding_item = null;
+    public GridContainer hotbar;
+    public TextureRect hotbarSceneTextureRect;
+    public HotbarScene hotbarscene;
+
+    public Item holding_item = null;
     public override void _Ready()
     {
-        inventory_slots = GetNode<GridContainer>("GridContainer");
+        inventory_slots = GetNode<GridContainer>("InventorySpace");
+        hotbarscene = GetNode<HotbarScene>("/root/HotbarScene");
+        hotbarSceneTextureRect = hotbarscene.textureRect;
+        hotbarSceneTextureRect.Texture = null;
+        hotbar = hotbarscene.hotbar;
+
+
+        hotbarscene.RemoveChild(hotbar);
+        AddChild(hotbar);
+        
+        hotbar.RectPosition = new Vector2(15,46);
+
         foreach(Slots slot in inventory_slots.GetChildren()){
+            slot.Connect("pickUpItem", this, "slot_gui_input");
+        }
+        foreach(Slots slot in hotbar.GetChildren()){
             slot.Connect("pickUpItem", this, "slot_gui_input");
         }
     }
@@ -46,6 +64,7 @@ public class Inventory : Node2D
 
 
         }
+        
     }
 
 

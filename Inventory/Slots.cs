@@ -34,7 +34,7 @@ public class Slots : Panel
             inventoryItem.Position = new Vector2(2,2);
             AddChild(inventoryItem);
             }
-        refresh_style();    
+        Set("custom_styles/panel", default_style);
         }
 
 
@@ -55,7 +55,7 @@ public class Slots : Panel
         Node2D inventory = (Node2D)FindParent("Inventory");
         inventory.AddChild(inventoryItem);
         inventoryItem = null;
-        refresh_style();
+  
     }
 
     public void PutIntoSlot(Item new_item){
@@ -64,7 +64,6 @@ public class Slots : Panel
         Node2D inventory = (Node2D)FindParent("Inventory");
         inventory.RemoveChild(inventoryItem);
         AddChild(inventoryItem);
-        refresh_style();
 
     }
 

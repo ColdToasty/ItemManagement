@@ -13,6 +13,10 @@ config_version=4
 config/name="Item Management"
 config/icon="res://icon.png"
 
+[autoload]
+
+HotbarScene="*res://Hotbar/HotbarScene.tscn"
+
 [display]
 
 window/size/width=1000
