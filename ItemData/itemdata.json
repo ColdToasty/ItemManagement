@@ -1,0 +1,17 @@
+{
+    "Tungesten_Sword": {
+        "Type" : "sword",
+        "Stackable" : "false",
+        "Quantity" : "1"
+
+    },
+
+    "Tungesten_pickaxe" : {
+        "Type" : "tool",
+        "Stackable" : "false",
+        "Quantity" : "1"
+    }
+
+
+
+}

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Item-Images/pickaxe.png" type="Texture" id=1]
+[ext_resource path="res://Inventory/Item.cs" type="Script" id=2]
+
+[node name="Item" type="Node2D"]
+z_index = 1
+script = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+mouse_filter = 2
+texture = ExtResource( 1 )
+stretch_mode = 6

@@ -1,158 +1,192 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Hotbar/ItemFrame.png" type="Texture" id=1]
-[ext_resource path="res://Hotbar/ItemFrameOutline.png" type="Texture" id=2]
-[ext_resource path="res://Hotbar/ItemHotBar.cs" type="Script" id=3]
+[ext_resource path="res://Hotbar/HotBarFrame.png" type="Texture" id=2]
+[ext_resource path="res://Inventory/Slots.cs" type="Script" id=3]
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.901961, 0.603922, 0.184314, 0.317647 )
+[sub_resource type="CSharpScript" id=2]
+script/source = "using Godot;
+using System;
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.85098, 0.752941, 0.211765, 1 )
+public class ItemBar : Node2D
+{
+    public GridContainer hotBar;
+    public Texture currentTexture;
+    public Texture defaultTexture;
+    public StyleBoxTexture currentBoxTexture;
+    
+    public StyleBoxTexture defaultBoxTexture;
+     public Item holding_item = null;
 
-[sub_resource type="Theme" id=5]
-/styles/Background = SubResource( 4 )
+    private int index = 0;
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.847059, 0.647059, 0.117647, 0.588235 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0.945098, 1, 0, 1 )
-border_blend = true
+    public override void _Ready()
+    {
+        currentBoxTexture = new StyleBoxTexture();
+        defaultBoxTexture = new StyleBoxTexture();
 
-[sub_resource type="Theme" id=7]
-/styles/Fill = SubResource( 6 )
 
-[node name="ItemHotBar" type="Panel"]
-margin_right = 555.0
-margin_bottom = 60.0
-custom_styles/panel = SubResource( 3 )
-script = ExtResource( 3 )
+        currentTexture = (Texture)GD.Load(\"res://Hotbar/ItemPresentOutline.png\"); 
+        defaultTexture = (Texture)GD.Load(\"res://Hotbar/ItemFrame.png\"); 
+        
+        currentBoxTexture.Texture = currentTexture;
+        defaultBoxTexture.Texture = defaultTexture;
+        
+        hotBar = GetNode<GridContainer>(\"GridContainer\");
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 555.0
-margin_bottom = 55.0
-theme = SubResource( 5 )
-custom_constants/separation = 5
 
-[node name="Item1" type="TextureRect" parent="HBoxContainer"]
-margin_right = 50.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
+        foreach(Slots slot in hotBar.GetChildren()){
+            slot.Connect(\"pickUpItem\", this, \"slot_gui_input\");
+        }
+
+    }
+
+    public void slot_gui_input(InputEventMouseButton e, Slots slot){
+        if(e is InputEventMouseButton){
+            if(e.ButtonIndex == (int)ButtonList.Left && e.Pressed){
+                //If we are holding on an item
+                if(holding_item != null){
+                    //If the location we want to place our item into is empty
+                    if(slot.inventoryItem == null){
+                        slot.PutIntoSlot(holding_item);
+                        holding_item = null;
+                    }
+                    //If an item is already present
+                    else if (slot.inventoryItem != null){
+                        Item tempItem = slot.inventoryItem;
+                        slot.pickFromSlot();
+                        tempItem.Position = new Vector2(GetGlobalMousePosition().x-12,GetGlobalMousePosition().y-12);
+                        slot.PutIntoSlot(holding_item);
+                        holding_item = tempItem;
+                }
+                }
+                //If we want to pick up item with nothing in \"hand\"
+                else if (slot.inventoryItem != null){
+                    holding_item = slot.inventoryItem;
+                    slot.pickFromSlot();
+                    holding_item.GlobalPosition = new Vector2(GetGlobalMousePosition().x-12,GetGlobalMousePosition().y-12);
+                }
+
+
+            }
+
+
+        }
+    }
+
+
+    public override void _Input(InputEvent @event)
+    {
+        if(holding_item != null){
+            holding_item.GlobalPosition = new Vector2(GetGlobalMousePosition().x-12,GetGlobalMousePosition().y-12);
+        }
+    }
+
+}
+
+
+
+"
+
+[sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
+region_rect = Rect2( 0, 0, 16, 16 )
 
-[node name="Item2" type="TextureRect" parent="HBoxContainer"]
-margin_left = 55.0
-margin_right = 105.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
+[node name="HotBar" type="Node2D"]
+script = SubResource( 2 )
 
-[node name="Item3" type="TextureRect" parent="HBoxContainer"]
-margin_left = 110.0
-margin_right = 160.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item4" type="TextureRect" parent="HBoxContainer"]
-margin_left = 165.0
-margin_right = 215.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item5" type="TextureRect" parent="HBoxContainer"]
-margin_left = 220.0
-margin_right = 270.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item6" type="TextureRect" parent="HBoxContainer"]
-margin_left = 275.0
-margin_right = 325.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item7" type="TextureRect" parent="HBoxContainer"]
-margin_left = 330.0
-margin_right = 380.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item8" type="TextureRect" parent="HBoxContainer"]
-margin_left = 385.0
-margin_right = 435.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item9" type="TextureRect" parent="HBoxContainer"]
-margin_left = 440.0
-margin_right = 490.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Item10" type="TextureRect" parent="HBoxContainer"]
-margin_left = 495.0
-margin_right = 545.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-size_flags_vertical = 4
-theme = SubResource( 7 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
-
-[node name="Current" type="TextureRect" parent="."]
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 57.0
-margin_bottom = 57.0
-rect_min_size = Vector2( 55, 55 )
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 8.0
+margin_top = 72.0
+margin_right = 353.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 345, 40 )
 texture = ExtResource( 2 )
 stretch_mode = 1
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_left = 13.0
+margin_top = 77.0
+margin_right = 353.0
+margin_bottom = 107.0
+rect_min_size = Vector2( 340, 30 )
+columns = 10
+
+[node name="Slot1" type="Panel" parent="GridContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot2" type="Panel" parent="GridContainer"]
+margin_left = 34.0
+margin_right = 64.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot3" type="Panel" parent="GridContainer"]
+margin_left = 68.0
+margin_right = 98.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot4" type="Panel" parent="GridContainer"]
+margin_left = 102.0
+margin_right = 132.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot5" type="Panel" parent="GridContainer"]
+margin_left = 136.0
+margin_right = 166.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot6" type="Panel" parent="GridContainer"]
+margin_left = 170.0
+margin_right = 200.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot7" type="Panel" parent="GridContainer"]
+margin_left = 204.0
+margin_right = 234.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot8" type="Panel" parent="GridContainer"]
+margin_left = 238.0
+margin_right = 268.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot9" type="Panel" parent="GridContainer"]
+margin_left = 272.0
+margin_right = 302.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Slot10" type="Panel" parent="GridContainer"]
+margin_left = 306.0
+margin_right = 336.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )

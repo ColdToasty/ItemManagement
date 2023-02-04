@@ -11,13 +11,16 @@ config_version=4
 [application]
 
 config/name="Item Management"
-run/main_scene="res://World/World.tscn"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=800
+window/size/width=1000
 window/size/height=500
+window/per_pixel_transparency/allowed=true
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/shrink=2.8
 
 [gui]
 
@@ -103,6 +106,11 @@ Scroll_Down={
 0={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":48,"unicode":0,"echo":false,"script":null)
+ ]
+}
+DisableHotBar={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":96,"unicode":0,"echo":false,"script":null)
  ]
 }
 

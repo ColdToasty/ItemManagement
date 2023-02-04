@@ -7,3 +7,12 @@ C:\GodotProjects\ItemManagement\.mono\temp\bin\Debug\Item Management.dll
 C:\GodotProjects\ItemManagement\.mono\temp\bin\Debug\Item Management.pdb
 C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.dll
 C:\GodotProjects\ItemManagement\.mono\temp\obj\Debug\Item Management.pdb
+F:\Projects\ItemManagement\.mono\temp\bin\Debug\Item Management.dll
+F:\Projects\ItemManagement\.mono\temp\bin\Debug\Item Management.pdb
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.csproj.AssemblyReference.cache
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.GeneratedMSBuildEditorConfig.editorconfig
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.AssemblyInfoInputs.cache
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.AssemblyInfo.cs
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.csproj.CoreCompileInputs.cache
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.dll
+F:\Projects\ItemManagement\.mono\temp\obj\Debug\Item Management.pdb
