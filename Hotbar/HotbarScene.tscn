@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Inventory/Slots.cs" type="Script" id=1]
 [ext_resource path="res://Hotbar/ItemFrameOutline.png" type="Texture" id=2]
-[ext_resource path="res://Hotbar/ItemFrame.png" type="Texture" id=3]
+[ext_resource path="res://Hotbar/HotBarFrame.png" type="Texture" id=3]
 [ext_resource path="res://Hotbar/HotbarScene.cs" type="Script" id=4]
 
 [sub_resource type="StyleBoxTexture" id=1]
@@ -10,7 +10,6 @@ texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="HotbarScene" type="Node2D"]
-z_index = 1
 script = ExtResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
