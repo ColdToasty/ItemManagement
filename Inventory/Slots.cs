@@ -64,7 +64,7 @@ public class Slots : Panel
         Node2D inventory = (Node2D)FindParent("Inventory");
         inventory.RemoveChild(inventoryItem);
         AddChild(inventoryItem);
-
+       
     }
 
     public override void _GuiInput(InputEvent @event)

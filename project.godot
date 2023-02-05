@@ -11,11 +11,13 @@ config_version=4
 [application]
 
 config/name="Item Management"
+run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 HotbarScene="*res://Hotbar/HotbarScene.tscn"
+Inventory="*res://Inventory/Inventory.tscn"
 
 [display]
 
@@ -24,7 +26,7 @@ window/size/height=500
 window/per_pixel_transparency/allowed=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
-window/stretch/shrink=2.8
+window/stretch/shrink=1.67
 
 [gui]
 
