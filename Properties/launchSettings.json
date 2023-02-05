@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Item Management": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Godot_v3.5.1-stable_mono_win64\\Godot_v3.5.1-stable_mono_win64.exe",
+      "commandLineArgs": "--path . --verbose",
+      "nativeDebugging": true
+    }
+  }
+}
