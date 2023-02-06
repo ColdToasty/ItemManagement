@@ -52,7 +52,7 @@ public class Slots : Panel
 
     public void pickFromSlot(){
         RemoveChild(inventoryItem);
-        Node2D inventory = (Node2D)FindParent("Inventory");
+        Node2D inventory = (Node2D)FindParent("PlayerMenu");
         inventory.AddChild(inventoryItem);
         inventoryItem = null;
   
@@ -61,7 +61,7 @@ public class Slots : Panel
     public void PutIntoSlot(Item new_item){
         inventoryItem = new_item;
         inventoryItem.Position = new Vector2(2,2);
-        Node2D inventory = (Node2D)FindParent("Inventory");
+        Node2D inventory = (Node2D)FindParent("PlayerMenu");
         inventory.RemoveChild(inventoryItem);
         AddChild(inventoryItem);
        

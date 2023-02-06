@@ -3,14 +3,31 @@
 [ext_resource path="res://Inventory/Slots.cs" type="Script" id=1]
 [ext_resource path="res://Hotbar/ItemFrameOutline.png" type="Texture" id=2]
 [ext_resource path="res://Hotbar/HotBarFrame.png" type="Texture" id=3]
-[ext_resource path="res://Hotbar/HotbarScene.cs" type="Script" id=4]
+
+[sub_resource type="CSharpScript" id=2]
+script/source = "using Godot;
+using System;
+
+public class HotbarScene : Node2D
+{
+    public TextureRect textureRect;
+    public GridContainer hotbar;
+
+    public override void _Ready()
+    {
+        textureRect = GetNode<TextureRect>(\"TextureRect\");
+        hotbar = GetNode<GridContainer>(\"HotBar\");
+    }
+
+}
+"
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="HotbarScene" type="Node2D"]
-script = ExtResource( 4 )
+script = SubResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 345.0

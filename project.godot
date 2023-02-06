@@ -14,11 +14,6 @@ config/name="Item Management"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-HotbarScene="*res://Hotbar/HotbarScene.tscn"
-Inventory="*res://Inventory/Inventory.tscn"
-
 [debug]
 
 settings/stdout/print_fps=true
@@ -32,6 +27,7 @@ window/stretch/aspect="expand"
 [global]
 
 verb=false
+ed=false
 
 [gui]
 
