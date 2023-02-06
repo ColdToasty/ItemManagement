@@ -7,7 +7,7 @@ public class Inventory : Node2D
     public HotbarScene hotbarscene;
     public GridContainer hotbar;
     public TextureRect hotbarSceneTextureRect;
-    public Vector2 inventory_hotbar_position = new Vector2(15, 40);
+    public Vector2 inventory_hotbar_position = new Vector2(7, 40);
 
 
     //This inventory variables
