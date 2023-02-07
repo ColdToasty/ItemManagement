@@ -133,6 +133,7 @@ Inventory_toggle={
 2d_physics/layer_3="PlayerPickup"
 2d_physics/layer_4="Item"
 2d_physics/layer_5="ItemPlayerDetection"
+2d_physics/layer_6="Mob"
 
 [mono]
 

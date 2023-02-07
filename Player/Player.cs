@@ -15,7 +15,7 @@ public class Player : KinematicBody2D
 
     public GridContainer hotbar;
     public GridContainer inventory_slots;
-    public Inventory inventoryScene;
+
 
     public override void _Ready()
     {

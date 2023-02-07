@@ -12,10 +12,10 @@ public class PlayerMenu : Node2D
 	public GridContainer inventory_slots;
 
 	public Item holding_item = null;
-
-
-
-	//Toggle elements
+	public Vector2 holding_item_position;
+		
+		
+		//Toggle elements
 
 
 
@@ -23,8 +23,6 @@ public class PlayerMenu : Node2D
 	{
 		inventory_slots = GetNode<GridContainer>("InventorySpace");
 		hotbar = GetNode<GridContainer>("HotBar");
-
-
 
 		foreach (Slots slot in inventory_slots.GetChildren())
 		{
@@ -99,6 +97,7 @@ public class PlayerMenu : Node2D
 				else if (slot.inventoryItem != null)
 				{
 					holding_item = slot.inventoryItem;
+					holding_item_position = slot.inventoryItem.Position;
 					slot.pickFromSlot();
 					holding_item.GlobalPosition = new Vector2(GetGlobalMousePosition().x - 12, GetGlobalMousePosition().y - 12);
 				}

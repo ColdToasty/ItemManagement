@@ -3,8 +3,7 @@ using System;
 
 public class World : Node2D
 {
-    public Player player;
-    public Inventory inventory;
+
     public override void _Ready()
     {
         

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Hotbar/HotBarFrame.png" type="Texture" id=1]
 [ext_resource path="res://Hotbar/ItemFrameOutline.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://Inventory/PlayerMenu.cs" type="Script" id=4]
 [ext_resource path="res://Hotbar/ItemPresentOutline.png" type="Texture" id=5]
 [ext_resource path="res://Hotbar/Current.png" type="Texture" id=6]
+[ext_resource path="res://Inventory/menuTabGroup.tres" type="ButtonGroup" id=7]
+[ext_resource path="res://Inventory/menuTabs.cs" type="Script" id=8]
+[ext_resource path="res://Hotbar/ItemFrame.png" type="Texture" id=9]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -13,6 +16,12 @@ region_rect = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="Theme" id=3]
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 1 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="PlayerMenu" type="Node2D"]
@@ -30,6 +39,7 @@ __meta__ = {
 }
 
 [node name="InventorySpace" type="GridContainer" parent="."]
+visible = false
 anchor_right = 0.02
 anchor_bottom = 0.022
 margin_left = 7.0
@@ -390,6 +400,7 @@ custom_styles/panel = SubResource( 1 )
 script = ExtResource( 3 )
 
 [node name="HotBar" type="GridContainer" parent="."]
+visible = false
 margin_left = 6.0
 margin_top = 54.0
 margin_right = 342.0
@@ -475,19 +486,83 @@ rect_min_size = Vector2( 30, 30 )
 custom_styles/panel = SubResource( 2 )
 script = ExtResource( 3 )
 
-[node name="InventoryTab" type="TextureButton" parent="."]
+[node name="menuTabs" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
-keep_pressed_outside = true
+script = ExtResource( 8 )
+buttonGroup = ExtResource( 7 )
+
+[node name="InventoryTab" type="TextureButton" parent="menuTabs"]
+margin_left = 6.0
+margin_top = 2.0
+margin_right = 46.0
+margin_bottom = 42.0
+toggle_mode = true
+pressed = true
+action_mode = 0
+group = ExtResource( 7 )
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 5 )
 expand = true
 
-[node name="MapTab" type="TextureButton" parent="."]
-margin_left = 85.0
-margin_top = 2.0
-margin_right = 125.0
-margin_bottom = 42.0
+[node name="MapTab" type="TextureButton" parent="menuTabs"]
+margin_left = 53.0
+margin_top = 1.0
+margin_right = 93.0
+margin_bottom = 41.0
+toggle_mode = true
+group = ExtResource( 7 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 5 )
+expand = true
 
-[connection signal="pressed" from="InventoryTab" to="." method="_on_InventoryButton_pressed"]
-[connection signal="pressed" from="MapTab" to="." method="_on_Map_pressed"]
+[node name="QuestTab" type="TextureButton" parent="menuTabs"]
+margin_left = 105.0
+margin_top = 1.0
+margin_right = 145.0
+margin_bottom = 41.0
+toggle_mode = true
+group = ExtResource( 7 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 5 )
+expand = true
+
+[node name="QuestContainer" type="VBoxContainer" parent="."]
+margin_left = 24.0
+margin_top = 50.0
+margin_right = 324.0
+margin_bottom = 210.0
+theme = SubResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="QuestContainer"]
+margin_right = 300.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 300, 160 )
+texture = ExtResource( 9 )
+stretch_mode = 1
+
+[node name="Panel" type="Panel" parent="QuestContainer"]
+margin_top = 164.0
+margin_right = 300.0
+margin_bottom = 164.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="Label" type="Label" parent="QuestContainer/Panel"]
+margin_left = 4.0
+margin_top = -114.0
+margin_right = 290.0
+margin_bottom = -54.0
+text = "Some quest thing"
+
+[node name="Panel2" type="Panel" parent="QuestContainer"]
+margin_top = 168.0
+margin_right = 300.0
+margin_bottom = 168.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="Label" type="Label" parent="QuestContainer/Panel2"]
+margin_left = 4.0
+margin_top = -163.0
+margin_right = 307.0
+margin_bottom = -149.0
+text = "Some quest thing"
