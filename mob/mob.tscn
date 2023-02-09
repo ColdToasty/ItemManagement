@@ -1,15 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://mob/mob.png" type="Texture" id=1]
+[ext_resource path="res://Overlay/hurtbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://mob/mob.cs" type="Script" id=3]
+[ext_resource path="res://Stats/mobStats.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Overlay/viewCone.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 31.5 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 32.0039
 
 [node name="mob" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="Stats" parent="." instance=ExtResource( 4 )]
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+hframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 0.5 )
+position = Vector2( -2, 0.5 )
 shape = SubResource( 1 )
+
+[node name="hurtbox" parent="." instance=ExtResource( 2 )]
+collision_layer = 256
+collision_mask = 128
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="ViewCone" parent="Position2D" instance=ExtResource( 5 )]
+collision_layer = 0
+collision_mask = 2
+
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="Position2D/ViewCone" to="." method="_on_ViewCone_body_entered"]
+
+[editable path="hurtbox"]

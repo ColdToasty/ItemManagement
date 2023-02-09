@@ -13,6 +13,7 @@ public class PlayerMenu : Node2D
 
 	public Item holding_item = null;
 	public Vector2 holding_item_position;
+	public Slots previous_slot;
 		
 		
 		//Toggle elements
@@ -86,17 +87,21 @@ public class PlayerMenu : Node2D
 					//If an item is already present
 					else if (slot.inventoryItem != null)
 					{
-						Item tempItem = slot.inventoryItem;
+						Item temp_item = slot.inventoryItem;
 						slot.pickFromSlot();
-						tempItem.Position = new Vector2(GetGlobalMousePosition().x - 12, GetGlobalMousePosition().y - 12);
+						temp_item.Position = new Vector2(GetGlobalMousePosition().x - 12, GetGlobalMousePosition().y - 12);
 						slot.PutIntoSlot(holding_item);
-						holding_item = tempItem;
+						holding_item = temp_item;
 					}
 				}
 				//If we want to pick up item with nothing in "hand"
 				else if (slot.inventoryItem != null)
 				{
 					holding_item = slot.inventoryItem;
+
+					//Remember the slot
+					previous_slot = slot; 
+
 					holding_item_position = slot.inventoryItem.Position;
 					slot.pickFromSlot();
 					holding_item.GlobalPosition = new Vector2(GetGlobalMousePosition().x - 12, GetGlobalMousePosition().y - 12);
@@ -117,6 +122,17 @@ public class PlayerMenu : Node2D
 		{
 			holding_item.GlobalPosition = new Vector2(GetGlobalMousePosition().x - 12, GetGlobalMousePosition().y - 12);
 		}
+		//When Key I/i is pressed 
+		if (Input.IsActionJustPressed("Inventory_toggle")){
+			//Holding an item and inventory is pressed
+			if(holding_item != null) {
+				//Use the slot where the item was picked from
+				//Add the item back
+				previous_slot.PutIntoSlot(holding_item);
+				holding_item = null;
+			}
+			this.Visible = !this.Visible;
+        }
 	}
 
 }

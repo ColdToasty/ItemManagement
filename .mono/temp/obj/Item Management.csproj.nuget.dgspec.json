@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj": {}
+    "F:\\Projects\\ItemManagement\\Item Management.csproj": {}
   },
   "projects": {
-    "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj": {
+    "F:\\Projects\\ItemManagement\\Item Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
+        "projectUniqueName": "F:\\Projects\\ItemManagement\\Item Management.csproj",
         "projectName": "Item Management",
-        "projectPath": "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
+        "projectPath": "F:\\Projects\\ItemManagement\\Item Management.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "F:\\PROJECTS\\ITEMMANAGEMENT\\.mono\\temp\\obj\\",
+        "outputPath": "F:\\Projects\\ItemManagement\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

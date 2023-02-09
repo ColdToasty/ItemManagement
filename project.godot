@@ -125,6 +125,11 @@ Inventory_toggle={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":73,"unicode":0,"echo":false,"script":null)
  ]
 }
+Slap={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -134,6 +139,9 @@ Inventory_toggle={
 2d_physics/layer_4="Item"
 2d_physics/layer_5="ItemPlayerDetection"
 2d_physics/layer_6="Mob"
+2d_physics/layer_7="PlayerHurtbox"
+2d_physics/layer_8="SlapHitBox"
+2d_physics/layer_9="SlapHurtBox"
 
 [mono]
 
