@@ -24,7 +24,10 @@ public class Player : KinematicBody2D
 
 
 
-	
+	private Timer timer;
+	[Export]
+	private float blink_animation_delay = (float)10;
+	private bool will_blink = false;
 
 	//When a enemy mob enters the players hurtbox
 	//Gets slapped to death
@@ -41,9 +44,10 @@ public class Player : KinematicBody2D
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
 		slapBoxArea = GetNode<Area2D>("Position2D/Area2D");
+		timer = GetNode<Timer>("Timer");
 
 
-		
+
 	}
 
 
@@ -100,9 +104,16 @@ public class Player : KinematicBody2D
 	}
 
 	private void _on_hurtbox_area_shape_entered(Area2D whatEntered)
-    {
+	{
 
-    }
+	}
+
+
+	private void _on_Blink_timeout()
+	{
+
+		will_blink = false;
+	}
 
 	private void _on_AnimationPlayer_animation_finished(String anim_name)
 	{
@@ -111,6 +122,16 @@ public class Player : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+		if (will_blink == false)
+		{
+			int ran =(int) GD.Randi();
+			if (ran % 13 == 1)
+			{
+				timer.Start(blink_animation_delay);
+				will_blink = true;
+			}
+		}
+		
 
 		if(state == STATE.MOVING)
 		{
@@ -125,6 +146,9 @@ public class Player : KinematicBody2D
 
 	}
 }
+
+
+
 
 
 
