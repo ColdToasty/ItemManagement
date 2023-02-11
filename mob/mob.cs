@@ -5,11 +5,35 @@ public class mob : KinematicBody2D
 {
 	public PackedScene statsScene;
 	public mobStats stats;
+	public viewCone mobViewCone;
+
+	public Vector2 velocity = Vector2.Zero;
+	public int acceleration = 100;
+	public int speed = 400;
+
+	public Vector2 originalPosition;
+	public Vector2 direction;
+
+	public Player player;
+
+	public Sprite sprite;
+
+
+	public enum STATE
+	{
+		CHASE,
+		IDLE
+	}
+	public STATE state = STATE.IDLE;
 
 	public override void _Ready()
 	{
 		stats = GetNode<mobStats>("Stats");
-
+		mobViewCone = GetNode<viewCone>("Position2D/ViewCone");
+		mobViewCone.Connect("player_entered", this, "player_entered");
+		mobViewCone.Connect("player_exited", this, "player_exited");
+		originalPosition = this.GlobalPosition;
+		sprite = GetNode<Sprite>("Sprite");
 	}
 
 
@@ -21,8 +45,9 @@ public class mob : KinematicBody2D
 	}
 
 	//Add in some hit effect that shows character has been hit
-	public void playHitEffect() { 
-	
+	public void playHitEffect()
+	{
+
 	}
 
 	//Runs when health reaches 0 in mobstats.cs
@@ -31,13 +56,44 @@ public class mob : KinematicBody2D
 		QueueFree();
 	}
 
-	//If Player comes into line of sight
-	private void _on_ViewCone_body_entered(Player body)
-	{		
-			GD.Print("I SEE YOU");
-        
+	public void seek_player()
+	{
+		if (mobViewCone.can_see_player())
+		{
+			state = STATE.CHASE;
+		}
 	}
 
+	public override void _PhysicsProcess(float delta)
+	{
+		if (state == STATE.CHASE)
+		{
+			player = mobViewCone.player;
+			if (player != null)
+			{
+				direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+				velocity = velocity.MoveToward(direction * speed, acceleration * delta);
+			}
+			else
+			{
+				state = STATE.IDLE;
+			}
+
+		}
+
+		if (state == STATE.IDLE)
+		{
+			direction = GlobalPosition.DirectionTo(originalPosition);
+			velocity = velocity.MoveToward(direction * speed, (acceleration / 4) * delta);
+			seek_player();
+		}
+		GD.Print(state);
+		velocity = MoveAndSlide(velocity);
+
+
+
+
+	}
 
 }
 

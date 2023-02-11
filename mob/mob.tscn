@@ -34,6 +34,5 @@ collision_mask = 2
 
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
-[connection signal="body_entered" from="Position2D/ViewCone" to="." method="_on_ViewCone_body_entered"]
 
 [editable path="hurtbox"]
