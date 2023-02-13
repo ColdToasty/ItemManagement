@@ -14,10 +14,6 @@ config/name="Item Management"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/per_pixel_transparency/allowed=true
@@ -32,6 +28,7 @@ enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg" )
 
 verb=false
 ed=false
+fps=false
 
 [gui]
 

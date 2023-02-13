@@ -1,7 +1,6 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
-[ext_resource path="res://Player/PlayerSprite/Idle.png" type="Texture" id=2]
 [ext_resource path="res://Player/Slap.cs" type="Script" id=3]
 [ext_resource path="res://Player/PlayerSprite/Idle.png" type="Texture" id=4]
 [ext_resource path="res://PlayerSounds/slap2.mp3" type="AudioStream" id=6]
@@ -579,8 +578,9 @@ graph_offset = Vector2( 41, 19 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
-[sub_resource type="CircleShape2D" id=41]
-radius = 28.0179
+[sub_resource type="CapsuleShape2D" id=44]
+radius = 18.0
+height = 43.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -588,9 +588,9 @@ collision_mask = 0
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1, -6 )
+position = Vector2( 1.25008, -5.74992 )
 scale = Vector2( 3.07813, 3.07813 )
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 hframes = 2
 vframes = 2
 __meta__ = {
@@ -607,6 +607,7 @@ __meta__ = {
 }
 
 [node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 0.25008, 0.25008 )
 rotation = 3.14159
 
 [node name="Area2D" type="Area2D" parent="Position2D"]
@@ -644,7 +645,8 @@ parameters/Slapping/blend_position = Vector2( 0, 1 )
 stream = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 41 )
+position = Vector2( 1, 0.500002 )
+shape = SubResource( 44 )
 
 [node name="Timer" type="Timer" parent="."]
 
