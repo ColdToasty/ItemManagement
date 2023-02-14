@@ -35,7 +35,7 @@ public class Player : KinematicBody2D
 
 
 
- 
+	public Bag bag; 
 
 	public override void _Ready()
 	{

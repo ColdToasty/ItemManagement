@@ -1,17 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.cs" type="Script" id=2]
 [ext_resource path="res://Inventory/Inventory.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mob/mob.tscn" type="PackedScene" id=4]
+[ext_resource path="res://PlaceLocation/PlaceLocation.tscn" type="PackedScene" id=5]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 217, 67 )
 current = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 217, 67 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
@@ -19,6 +22,10 @@ remote_path = NodePath("../../Camera2D")
 [node name="mob" parent="." instance=ExtResource( 4 )]
 position = Vector2( -209, 69 )
 
+[node name="PlaceLocation" parent="." instance=ExtResource( 5 )]
+position = Vector2( 404, 82 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PlayerMenu" parent="CanvasLayer" instance=ExtResource( 3 )]
+position = Vector2( -679, -207 )

@@ -14,9 +14,9 @@ config/name="Item Management"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
-[debug]
+[autoload]
 
-settings/stdout/print_fps=true
+ItemDatabase="*res://Managers/ItemDatabase.cs"
 
 [display]
 
@@ -32,6 +32,7 @@ enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg" )
 
 verb=false
 ed=false
+fps=false
 
 [gui]
 
@@ -139,7 +140,7 @@ Slap={
 
 2d_physics/layer_1="World"
 2d_physics/layer_2="Player"
-2d_physics/layer_3="PlayerPickup"
+2d_physics/layer_3="PlayerReach"
 2d_physics/layer_4="Item"
 2d_physics/layer_5="ItemPlayerDetection"
 2d_physics/layer_6="Mob"
