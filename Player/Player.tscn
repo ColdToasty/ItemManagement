@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Player/Slap.cs" type="Script" id=3]
@@ -582,6 +582,9 @@ graph_offset = Vector2( 41, 19 )
 radius = 18.0
 height = 43.0
 
+[sub_resource type="CapsuleShape2D" id=45]
+radius = 48.0
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 0
@@ -649,6 +652,13 @@ position = Vector2( 1, 0.500002 )
 shape = SubResource( 44 )
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 45 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Blink_timeout"]

@@ -24,9 +24,14 @@ public class mob : KinematicBody2D
 	public float max_view_range = 270;
 	public Sprite sprite;
 
+	public Vector2 knockback = Vector2.Zero;
+
 
 	//Current line of sight
 	public DetectionZone detectionZone;
+
+	public viewCone view_cone;
+	public RayCast2D raycast;
 
 
 	
@@ -36,18 +41,25 @@ public class mob : KinematicBody2D
 		view_pivot = GetNode<Position2D>("Position2D");
 		sprite = GetNode<Sprite>("Sprite");
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
+
+		view_cone = GetNode<viewCone>("Position2D/ViewCone");
+		raycast = GetNode<RayCast2D>("Position2D/ViewCone/RayCast2D");
 	}
 
+
+	//Slap interactions
+
+
+	//Add in some hit effect that shows character has been hit
+	public void playHitEffect() { 
+		
+	}
 
 	private void _on_hurtbox_area_entered(CollisionShape2D area)
 	{
 		stats.Health -= 1;
 		playHitEffect();
-	}
 
-	//Add in some hit effect that shows character has been hit
-	public void playHitEffect() { 
-	
 	}
 
 	//Runs when health reaches 0 in mobstats.cs
@@ -56,13 +68,7 @@ public class mob : KinematicBody2D
 		QueueFree();
 	}
 
-	//If Player comes into line of sight
-	//Rotation not accurate
-	private void _on_ViewCone_body_entered(Player body)
-	{
 
-
-	}
 
 	
 	public void vector_towards_player()
@@ -72,16 +78,29 @@ public class mob : KinematicBody2D
 		player_position = player.GlobalPosition;
 
 		velocity = GlobalPosition.DirectionTo(player_position);
+
 		velocity = MoveAndSlide(velocity * speed);
+
+
+	}
+
+	public void shift_view_cone()
+    {
+		Player player = detectionZone.player;
+		raycast.LookAt(player.GlobalPosition);
+		raycast.ForceRaycastUpdate();
 
 
 	}
 
 	public override void _PhysicsProcess(float delta)
 	{
+
+		 
 		//Player is in detection zone
 		if (detectionZone.see_player())
 		{
+			shift_view_cone();
 			vector_towards_player();
 		}
 		//Player has left detection zone
@@ -91,6 +110,7 @@ public class mob : KinematicBody2D
 		else if (player_position != null && GlobalPosition != player_position)
         {
 			velocity = GlobalPosition.DirectionTo(player_position);
+
 			velocity = MoveAndSlide(velocity * speed);
 		}
 

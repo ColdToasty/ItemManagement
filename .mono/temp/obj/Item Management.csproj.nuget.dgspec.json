@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GodotProjects\\ItemManagement\\Item Management.csproj": {}
+    "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\Item Management.csproj": {}
   },
   "projects": {
-    "C:\\GodotProjects\\ItemManagement\\Item Management.csproj": {
+    "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\Item Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GodotProjects\\ItemManagement\\Item Management.csproj",
+        "projectUniqueName": "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
         "projectName": "Item Management",
-        "projectPath": "C:\\GodotProjects\\ItemManagement\\Item Management.csproj",
+        "projectPath": "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
         "packagesPath": "C:\\Users\\01and\\.nuget\\packages\\",
-        "outputPath": "C:\\GodotProjects\\ItemManagement\\.mono\\temp\\obj\\",
+        "outputPath": "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\01and\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -8,7 +8,7 @@ public class DetectionZone : Area2D
 
 	//If player is seen
 	//Will return true
-
+	
 	public bool see_player()
     {
 		return player != null;
