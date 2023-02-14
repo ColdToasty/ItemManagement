@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.cs" type="Script" id=2]
 [ext_resource path="res://Inventory/Inventory.tscn" type="PackedScene" id=3]
 [ext_resource path="res://mob/mob.tscn" type="PackedScene" id=4]
 [ext_resource path="res://PlaceLocation/PlaceLocation.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Item-Images/Cracker.png" type="Texture" id=6]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
@@ -25,7 +26,27 @@ position = Vector2( -209, 69 )
 [node name="PlaceLocation" parent="." instance=ExtResource( 5 )]
 position = Vector2( 404, 82 )
 
+[node name="Sprite" parent="PlaceLocation" index="0"]
+position = Vector2( 2, 4.76837e-07 )
+scale = Vector2( 0.875, 1 )
+texture = ExtResource( 6 )
+hframes = 1
+__meta__ = {
+"_aseprite_wizard_config_": {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://Item-Images",
+"o_name": "Cracker",
+"only_visible": false,
+"op_exp": false,
+"player": "Player/AnimationPlayer",
+"source": "res://Item-Images/Cracker.aseprite"
+}
+}
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PlayerMenu" parent="CanvasLayer" instance=ExtResource( 3 )]
 position = Vector2( -679, -207 )
+
+[editable path="PlaceLocation"]
