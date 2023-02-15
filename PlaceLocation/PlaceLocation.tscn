@@ -1,24 +1,13 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Item-Images/axe.png" type="Texture" id=1]
 [ext_resource path="res://PlaceLocation/PlaceLocation.cs" type="Script" id=2]
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 46.8463
+[ext_resource path="res://PlaceLocation/PlaceLocationPlayerDetectionZone.tscn" type="PackedScene" id=3]
 
 [node name="PlaceLocation" type="Node2D"]
 script = ExtResource( 2 )
 
+[node name="PlaceLocationPlayerDetectionZone" parent="." instance=ExtResource( 3 )]
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-hframes = 9
-
-[node name="PlayerDetectionZone" type="Area2D" parent="."]
-scale = Vector2( 1.05261, 1.1426 )
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
-shape = SubResource( 1 )
-
-[connection signal="area_entered" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_area_entered"]

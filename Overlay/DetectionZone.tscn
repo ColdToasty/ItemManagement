@@ -6,7 +6,7 @@
 radius = 253.008
 
 [node name="DetectionZone" type="Area2D"]
-collision_layer = 0
+collision_layer = 16
 collision_mask = 2
 script = ExtResource( 1 )
 

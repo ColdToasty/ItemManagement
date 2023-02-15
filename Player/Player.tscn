@@ -583,7 +583,8 @@ radius = 18.0
 height = 43.0
 
 [sub_resource type="CapsuleShape2D" id=45]
-radius = 48.0
+radius = 19.0
+height = 42.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -654,11 +655,12 @@ shape = SubResource( 44 )
 [node name="Timer" type="Timer" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 0
+collision_layer = 0
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 45 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="timeout" from="Timer" to="." method="_on_Blink_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_PlaceLocation_area_entered"]

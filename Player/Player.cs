@@ -1,6 +1,6 @@
 using Godot;
 using System;
-
+using System.Collections.Generic;
 public class Player : KinematicBody2D
 {
 	public enum STATE
@@ -24,19 +24,22 @@ public class Player : KinematicBody2D
 
 
 
-	private Timer timer;
+	public Timer timer;
 	[Export]
-	private float blink_animation_delay = (float)10;
-	private bool will_blink = false;
+	private float remove_delay = (float)0.01;
+
 
 	//When a enemy mob enters the players hurtbox
-	//Gets slapped to death
+	//Gets slapped till unconsious
 	public Area2D slapBoxArea;
 
 
-
-	public Bag bag; 
-
+	//Items list
+	public List<ItemInfo> items;
+	public ItemDatabase db;
+	public int place_location_number;
+	public List<Texture> item_textures = new List<Texture>();
+	
 	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -44,10 +47,13 @@ public class Player : KinematicBody2D
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
 		slapBoxArea = GetNode<Area2D>("Position2D/Area2D");
+		db = GetNode<ItemDatabase>("/root/ItemDatabase");
 		timer = GetNode<Timer>("Timer");
-
-
-
+		items = db.items;
+		
+		//Gets the number of placeLocation nodes
+		place_location_number = GetTree().CurrentScene.GetNode<YSort>("YSort").GetChildCount();
+		add_textures();
 	}
 
 
@@ -56,11 +62,31 @@ public class Player : KinematicBody2D
 		velocity = MoveAndSlide(velocity);
 	}
 
+	//adds the textures to list
+	public void add_textures()
+	{
+		Random rnd = new Random();
+		int item_data_count = db.get_list_length();
+
+		for (int i = 0; i < place_location_number; i++)
+		{
+			int rnd_sprite = rnd.Next(item_data_count);
+			item_textures.Add(db.items[rnd_sprite].texture);
+		}
+
+	}
+
+	//when a PlaceLocationPlayerDetectionZone enters its area
+	private void _on_PlaceLocation_area_entered(object area)
+	{
+
+		
+	}
 
 
 
 
-	public  void move_state()
+	public void move_state()
 	{
 		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
@@ -109,12 +135,6 @@ public class Player : KinematicBody2D
 	}
 
 
-	private void _on_Blink_timeout()
-	{
-
-		will_blink = false;
-	}
-
 	private void _on_AnimationPlayer_animation_finished(String anim_name)
 	{
 		state = STATE.MOVING;
@@ -122,15 +142,7 @@ public class Player : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
-		if (will_blink == false)
-		{
-			int ran =(int) GD.Randi();
-			if (ran % 13 == 1)
-			{
-				timer.Start(blink_animation_delay);
-				will_blink = true;
-			}
-		}
+
 		
 
 		if(state == STATE.MOVING)
@@ -146,6 +158,10 @@ public class Player : KinematicBody2D
 
 	}
 }
+
+
+
+
 
 
 

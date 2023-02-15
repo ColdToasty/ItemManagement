@@ -6,6 +6,8 @@ public class mob : KinematicBody2D
 	public PackedScene statsScene;
 	public mobStats stats;
 	public viewCone mobViewCone;
+	public DetectionZone detectionZone;
+
 
 	public Vector2 velocity = Vector2.Zero;
 	public int acceleration = 100;
@@ -29,9 +31,7 @@ public class mob : KinematicBody2D
 	public override void _Ready()
 	{
 		stats = GetNode<mobStats>("Stats");
-		mobViewCone = GetNode<viewCone>("Position2D/ViewCone");
-		mobViewCone.Connect("player_entered", this, "player_entered");
-		mobViewCone.Connect("player_exited", this, "player_exited");
+		detectionZone = GetNode<DetectionZone>("DetectionZone");
 		originalPosition = this.GlobalPosition;
 		sprite = GetNode<Sprite>("Sprite");
 	}
@@ -58,7 +58,7 @@ public class mob : KinematicBody2D
 
 	public void seek_player()
 	{
-		if (mobViewCone.can_see_player())
+		if (detectionZone.see_player())
 		{
 			state = STATE.CHASE;
 		}
@@ -68,7 +68,7 @@ public class mob : KinematicBody2D
 	{
 		if (state == STATE.CHASE)
 		{
-			player = mobViewCone.player;
+			player = detectionZone.player;
 			if (player != null)
 			{
 				direction = GlobalPosition.DirectionTo(player.GlobalPosition);
@@ -87,7 +87,7 @@ public class mob : KinematicBody2D
 			velocity = velocity.MoveToward(direction * speed, (acceleration / 4) * delta);
 			seek_player();
 		}
-		GD.Print(state);
+
 		velocity = MoveAndSlide(velocity);
 
 

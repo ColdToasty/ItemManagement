@@ -8,11 +8,6 @@ public class viewCone : Area2D
 	
 
 
-	public override void _Ready()
-	{
-		
-	}
-
 
 	public Boolean can_see_player()
     {
