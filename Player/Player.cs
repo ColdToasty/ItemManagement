@@ -9,7 +9,7 @@ public class Player : KinematicBody2D
 		ATTACK
 	}
 
-	public int SPEED = 400;
+	public int SPEED = 200;
 	public STATE state = STATE.MOVING;
 	public Vector2 input_vector = Vector2.Zero;
 	public Vector2 velocity = Vector2.Zero;
@@ -90,6 +90,14 @@ public class Player : KinematicBody2D
 	{
 		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
+        if (Input.IsActionPressed("Sprint"))
+        {
+			SPEED = 400;
+        }
+        else
+        {
+			SPEED = 200;
+        }
 		input_vector = input_vector.Normalized();
 		if (input_vector != Vector2.Zero)
 		{

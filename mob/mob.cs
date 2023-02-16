@@ -5,22 +5,25 @@ public class mob : KinematicBody2D
 {
 	public PackedScene statsScene;
 	public mobStats stats;
-	public viewCone mobViewCone;
 	public DetectionZone detectionZone;
 
 
 	public Vector2 velocity = Vector2.Zero;
 	public int acceleration = 100;
-	public int speed = 400;
+	public int speed = 300;
 
 	public Vector2 originalPosition;
 	public Vector2 direction;
 
 	public Player player;
-
 	public Sprite sprite;
 
 
+
+	public viewCone ViewCone;
+	public Position2D pivotCone;
+	public double rotation_speed = Mathf.Pi;
+	public RayCast2D raycast;
 	public enum STATE
 	{
 		CHASE,
@@ -34,6 +37,8 @@ public class mob : KinematicBody2D
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
 		originalPosition = this.GlobalPosition;
 		sprite = GetNode<Sprite>("Sprite");
+		ViewCone = GetNode<viewCone>("RayCast2D/ViewCone");
+		raycast = GetNode<RayCast2D>("RayCast2D");
 	}
 
 
@@ -58,19 +63,39 @@ public class mob : KinematicBody2D
 
 	public void seek_player()
 	{
-		if (detectionZone.see_player())
+		if (ViewCone.can_see_player())
 		{
 			state = STATE.CHASE;
 		}
 	}
 
+	//Need to add a way that rotates viewcone in direction of where player is
+	//if player sprints in the detectionZone
+
 	public override void _PhysicsProcess(float delta)
 	{
+		seek_player();
+
 		if (state == STATE.CHASE)
 		{
-			player = detectionZone.player;
+			//Check if player is in detectionZone first
+			//If not null then player is sprinting and view cone has to shift
+			if (detectionZone.player != null)
+			{
+				player = detectionZone.player;
+
+			}
+			//If player is not sprinting use the viewCone player
+            else
+            {
+				player = ViewCone.player;
+			}
+
 			if (player != null)
 			{
+
+				raycast.LookAt(player.GlobalPosition);
+				raycast.ForceRaycastUpdate();
 				direction = GlobalPosition.DirectionTo(player.GlobalPosition);
 				velocity = velocity.MoveToward(direction * speed, acceleration * delta);
 			}
@@ -78,14 +103,11 @@ public class mob : KinematicBody2D
 			{
 				state = STATE.IDLE;
 			}
-
+			
 		}
-
 		if (state == STATE.IDLE)
-		{
-			direction = GlobalPosition.DirectionTo(originalPosition);
-			velocity = velocity.MoveToward(direction * speed, (acceleration / 4) * delta);
-			seek_player();
+        {
+			velocity = velocity.MoveToward(Vector2.Zero * speed, acceleration * delta);
 		}
 
 		velocity = MoveAndSlide(velocity);
