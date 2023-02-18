@@ -3,9 +3,9 @@ using System;
 
 public class mob : KinematicBody2D
 {
+
 	public PackedScene statsScene;
 	public mobStats stats;
-	public DetectionZone detectionZone;
 
 
 	public Vector2 velocity = Vector2.Zero;
@@ -19,11 +19,14 @@ public class mob : KinematicBody2D
 	public Sprite sprite;
 
 
-
+	public DetectionZone detectionZone;
 	public viewCone ViewCone;
 	public Position2D pivotCone;
 	public double rotation_speed = Mathf.Pi;
 	public RayCast2D raycast;
+
+
+
 	public enum STATE
 	{
 		CHASE,
@@ -80,20 +83,23 @@ public class mob : KinematicBody2D
 		{
 			//Check if player is in detectionZone first
 			//If not null then player is sprinting and view cone has to shift
-			if (detectionZone.player != null)
+			if (detectionZone.player != null && ViewCone.player == null && detectionZone.player.SPEED > 200)
 			{
 				player = detectionZone.player;
+				GD.Print("Sprint");
 
 			}
 			//If player is not sprinting use the viewCone player
-            else
+            else if(ViewCone.player != null)
             {
 				player = ViewCone.player;
 			}
 
+			//Check the detectionZone first
+			
+
 			if (player != null)
 			{
-
 				raycast.LookAt(player.GlobalPosition);
 				raycast.ForceRaycastUpdate();
 				direction = GlobalPosition.DirectionTo(player.GlobalPosition);

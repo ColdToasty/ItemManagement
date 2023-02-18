@@ -26,19 +26,7 @@ public class DetectionZone : Area2D
 	//Need to update method when player is already in shape and making noise
 	public void _on_DetectionZone_body_shape_entered(RID body_rid, Player body, int body_shape_index, int local_shape_index)
 	{
-		GD.Print("see");
-		//Use to get the player in area
-        GetOverlappingAreas();
-		if(body.SPEED > 200)
-        {
-			GD.Print("running");
-			player = body;
-        }
-        else
-        {
-			player = null;
-        }
-		
+		player = body;	
 	}
 
 }
