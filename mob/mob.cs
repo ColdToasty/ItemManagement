@@ -5,60 +5,53 @@ public class mob : KinematicBody2D
 {
 	public PackedScene statsScene;
 	public mobStats stats;
-
-	public Vector2 player_position;
-	public float adjacent;
-
-	public Vector2 my_original_position;
-
-
-	//Movement variables
-	public int speed = 100;
-	public int acceleration = 100;
-	public Vector2 velocity = Vector2.Zero;
-
-
-	// View Cone *Not implemented*
-	public Position2D view_pivot;
-	public float degrees;
-	public float max_view_range = 270;
-	public Sprite sprite;
-
-	public Vector2 knockback = Vector2.Zero;
-
-
-	//Current line of sight
 	public DetectionZone detectionZone;
 
-	public viewCone view_cone;
+
+	public Vector2 velocity = Vector2.Zero;
+	public int acceleration = 100;
+	public int speed = 300;
+
+	public Vector2 originalPosition;
+	public Vector2 direction;
+
+	public Player player;
+	public Sprite sprite;
+
+
+
+	public viewCone ViewCone;
+	public Position2D pivotCone;
+	public double rotation_speed = Mathf.Pi;
 	public RayCast2D raycast;
+	public enum STATE
+	{
+		CHASE,
+		IDLE
+	}
+	public STATE state = STATE.IDLE;
 
-
-	
 	public override void _Ready()
 	{
 		stats = GetNode<mobStats>("Stats");
-		view_pivot = GetNode<Position2D>("Position2D");
-		sprite = GetNode<Sprite>("Sprite");
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
-
-		view_cone = GetNode<viewCone>("Position2D/ViewCone");
-		raycast = GetNode<RayCast2D>("Position2D/ViewCone/RayCast2D");
+		originalPosition = this.GlobalPosition;
+		sprite = GetNode<Sprite>("Sprite");
+		ViewCone = GetNode<viewCone>("RayCast2D/ViewCone");
+		raycast = GetNode<RayCast2D>("RayCast2D");
 	}
 
-
-	//Slap interactions
-
-
-	//Add in some hit effect that shows character has been hit
-	public void playHitEffect() { 
-		
-	}
 
 	private void _on_hurtbox_area_entered(CollisionShape2D area)
 	{
 		stats.Health -= 1;
 		playHitEffect();
+		GD.Print("hit");
+	}
+
+	//Add in some hit effect that shows character has been hit
+	public void playHitEffect()
+	{
 
 	}
 
@@ -68,80 +61,63 @@ public class mob : KinematicBody2D
 		QueueFree();
 	}
 
-
-
-	
-	public void vector_towards_player()
-    {
-		//Player in this function will always be !null
-		Player player = detectionZone.player;
-		player_position = player.GlobalPosition;
-
-		velocity = GlobalPosition.DirectionTo(player_position);
-
-		velocity = MoveAndSlide(velocity * speed);
-
-
+	public void seek_player()
+	{
+		if (ViewCone.can_see_player())
+		{
+			state = STATE.CHASE;
+		}
 	}
 
-	public void shift_view_cone()
-    {
-		Player player = detectionZone.player;
-		raycast.LookAt(player.GlobalPosition);
-		raycast.ForceRaycastUpdate();
-
-
-	}
+	//Need to add a way that rotates viewcone in direction of where player is
+	//if player sprints in the detectionZone
 
 	public override void _PhysicsProcess(float delta)
 	{
+		seek_player();
 
-		 
-		//Player is in detection zone
-		if (detectionZone.see_player())
+		if (state == STATE.CHASE)
 		{
-			shift_view_cone();
-			vector_towards_player();
+			//Check if player is in detectionZone first
+			//If not null then player is sprinting and view cone has to shift
+			if (detectionZone.player != null)
+			{
+				player = detectionZone.player;
+
+			}
+			//If player is not sprinting use the viewCone player
+            else
+            {
+				player = ViewCone.player;
+			}
+
+			if (player != null)
+			{
+
+				raycast.LookAt(player.GlobalPosition);
+				raycast.ForceRaycastUpdate();
+				direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+				velocity = velocity.MoveToward(direction * speed, acceleration * delta);
+			}
+			else
+			{
+				state = STATE.IDLE;
+			}
+			
 		}
-		//Player has left detection zone
-
-
-		//If player leaves detection zone then mob moves towards last seen location
-		else if (player_position != null && GlobalPosition != player_position)
+		if (state == STATE.IDLE)
         {
-			velocity = GlobalPosition.DirectionTo(player_position);
-
-			velocity = MoveAndSlide(velocity * speed);
+			velocity = velocity.MoveToward(Vector2.Zero * speed, acceleration * delta);
 		}
 
-		//If player wasn't there then mob does original position
-		
-
+		velocity = MoveAndSlide(velocity);
 
 
 
 
 	}
 
-	//Plans for movement
-
-	/*
-	+ Have mob move towards player
-
-
-
-
-	+ Have raycast arrow to detect collision and have it get the first node it hits and make a checkl
-		- if its a player, move towards it
-		- if its not a player then dont move towards it
-	
-	+Implement pathfinding 
-	 
-	 */
-
-
 }
-
 
 
 

@@ -6,15 +6,9 @@
 script = ExtResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, -98 )
-scale = Vector2( 7.95192, 9.83333 )
-polygon = PoolVector2Array( 1.5, 10, -1.5, 10, -13, -13.25, -10.815, -14.0339, -8.42564, -14.8475, -6.16203, -15.1525, -3.14389, -15.4576, 0, -15.7627, 3.26965, -15.4576, 6.91657, -15.0509, 9.05442, -14.7458, 11.0665, -14.0339, 13, -13.25 )
+position = Vector2( -1, 1 )
+scale = Vector2( 1.56527, 1.42231 )
+polygon = PoolVector2Array( 12, 0, -12, 0, -96, -228, -84, -233, -64, -240, -48, -243, -28, -245, 0, -249, 28, -245, 48, -243, 64, -240, 84, -233, 96, -228 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-enabled = true
-cast_to = Vector2( 0, -253 )
-collision_mask = 3
-collide_with_areas = true
-
-[connection signal="body_shape_entered" from="." to="." method="_on_ViewCone_body_shape_entered"]
-[connection signal="body_shape_exited" from="." to="." method="_on_ViewCone_body_shape_exited"]
+[connection signal="body_shape_entered" from="." to="." method="_on_ViewCone_player_shape_entered"]
+[connection signal="body_shape_exited" from="." to="." method="_on_ViewCone_player_shape_exited"]
