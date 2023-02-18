@@ -1,7 +1,3 @@
 is_global = true
 build_property.RootNamespace = ItemManagement
-<<<<<<< Updated upstream
-build_property.ProjectDir = c:\GodotProjects\ItemManagement\
-=======
-build_property.ProjectDir = F:\PROJECTS\ITEMMANAGEMENT\
->>>>>>> Stashed changes
+build_property.ProjectDir = F:\Projects\ItemManagement\
