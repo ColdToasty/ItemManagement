@@ -1,8 +1,10 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
+[ext_resource path="res://Player/PlayerReach.cs" type="Script" id=2]
 [ext_resource path="res://Player/Slap.cs" type="Script" id=3]
 [ext_resource path="res://Player/PlayerSprite/Idle.png" type="Texture" id=4]
+[ext_resource path="res://Player/PlayerVisible.cs" type="Script" id=5]
 [ext_resource path="res://PlayerSounds/slap2.mp3" type="AudioStream" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -578,19 +580,19 @@ graph_offset = Vector2( 41, 19 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
-[sub_resource type="CapsuleShape2D" id=45]
-radius = 19.0
-height = 42.0
-
-[sub_resource type="CapsuleShape2D" id=44]
-radius = 23.0
-height = 48.0
-
 [sub_resource type="CapsuleShape2D" id=46]
 height = 18.0
 
+[sub_resource type="CapsuleShape2D" id=47]
+radius = 26.0
+height = 46.0
+
+[sub_resource type="CapsuleShape2D" id=48]
+radius = 21.0
+height = 60.0
+
 [node name="Player" type="KinematicBody2D"]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 0
 script = ExtResource( 1 )
 
@@ -653,26 +655,28 @@ stream = ExtResource( 6 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 45 )
-
-[node name="PlayerPosition" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPosition"]
-position = Vector2( 0, -3 )
-shape = SubResource( 44 )
-
 [node name="WorldCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 32 )
 rotation = 1.5708
 shape = SubResource( 46 )
 
+[node name="PlayerItem" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerItem"]
+position = Vector2( 3, -3 )
+shape = SubResource( 47 )
+
+[node name="PlayerVisible" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerVisible"]
+position = Vector2( 0, -1 )
+shape = SubResource( 48 )
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_PlaceLocation_area_entered"]

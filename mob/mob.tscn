@@ -38,13 +38,8 @@ collision_mask = 2
 [node name="ViewCone" parent="RayCast2D" instance=ExtResource( 5 )]
 rotation = 1.5708
 scale = Vector2( 0.0357143, 0.1 )
-collision_layer = 0
-collision_mask = 2
 
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
-[connection signal="area_entered" from="RayCast2D/ViewCone" to="RayCast2D/ViewCone" method="_on_ViewCone_area_entered"]
-[connection signal="area_exited" from="RayCast2D/ViewCone" to="RayCast2D/ViewCone" method="_on_ViewCone_area_exited"]
 
 [editable path="hurtbox"]
-[editable path="RayCast2D/ViewCone"]

@@ -86,8 +86,8 @@ public class mob : KinematicBody2D
 
 			}
 			//If player is not sprinting use the viewCone player
-            else
-            {
+			else
+			{
 				player = ViewCone.player;
 			}
 
@@ -106,7 +106,7 @@ public class mob : KinematicBody2D
 			
 		}
 		if (state == STATE.IDLE)
-        {
+		{
 			velocity = velocity.MoveToward(Vector2.Zero * speed, acceleration * delta);
 		}
 

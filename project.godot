@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 [autoload]
 
 ItemDatabase="*res://Managers/ItemDatabase.cs"
+CookieCounter="*res://Cookies/CookieCounter.cs"
 
 [display]
 
@@ -39,6 +40,8 @@ enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg", "res://addons
 verb=false
 ed=false
 fps=false
+2d=false
+"2d physics"=false
 
 [gui]
 
@@ -155,7 +158,7 @@ Sprint={
 2d_physics/layer_4="Item"
 2d_physics/layer_5="ItemPlayerDetection"
 2d_physics/layer_6="Mob"
-2d_physics/layer_7="PlayerHurtbox"
+2d_physics/layer_7="PlayerVisible"
 2d_physics/layer_8="SlapHitBox"
 2d_physics/layer_9="SlapHurtBox"
 

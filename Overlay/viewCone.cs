@@ -12,16 +12,15 @@ public class viewCone : Area2D
 
 
 
-	private void _on_ViewCone_area_entered(Player body)
-	{
-		player = body;
+private void _on_Player_area_entered(PlayerVisible area)
+{
+		player = area.parent;
+		GD.Print("playet");
 	}
 
 
-	private void _on_ViewCone_area_exited(Player body)
-	{
+private void _on_Player_area_exited(PlayerVisible area)
+{
 		player = null;
 	}
-
-
 }

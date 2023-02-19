@@ -29,15 +29,15 @@ public class PlaceLocation : Node2D
 	}
 
 
-    public override void _PhysicsProcess(float delta) 
-    {
-        if (zone.see_player())
-        {
+	public override void _PhysicsProcess(float delta) 
+	{
+		if (zone.see_player())
+		{
 			//Set the texture so that item is placed
 			set_texture();
 
 		}
-    }
+	}
 
 
 

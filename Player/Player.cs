@@ -39,6 +39,8 @@ public class Player : KinematicBody2D
 	public ItemDatabase db;
 	public int place_location_number;
 	public List<Texture> item_textures = new List<Texture>();
+
+
 	
 	public override void _Ready()
 	{
@@ -52,7 +54,7 @@ public class Player : KinematicBody2D
 		items = db.items;
 		
 		//Gets the number of placeLocation nodes
-		place_location_number = GetTree().CurrentScene.GetNode<YSort>("YSort").GetChildCount();
+		place_location_number = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
 		add_textures();
 	}
 
@@ -90,14 +92,14 @@ public class Player : KinematicBody2D
 	{
 		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
-        if (Input.IsActionPressed("Sprint"))
-        {
+		if (Input.IsActionPressed("Sprint"))
+		{
 			SPEED = 400;
-        }
-        else
-        {
+		}
+		else
+		{
 			SPEED = 200;
-        }
+		}
 		input_vector = input_vector.Normalized();
 		if (input_vector != Vector2.Zero)
 		{

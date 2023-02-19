@@ -8,24 +8,19 @@
     ".NETFramework,Version=v4.7.2": []
   },
   "packageFolders": {
-    "C:\\Users\\USER\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\01and\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
+      "projectUniqueName": "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
       "projectName": "Item Management",
-      "projectPath": "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
-      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "F:\\PROJECTS\\ITEMMANAGEMENT\\.mono\\temp\\obj\\",
+      "projectPath": "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
+      "packagesPath": "C:\\Users\\01and\\.nuget\\packages\\",
+      "outputPath": "C:\\GODOTPROJECTS\\ITEMMANAGEMENT\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\01and\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -50,7 +45,7 @@
     "frameworks": {
       "net472": {
         "targetAlias": "net472",
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.406\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

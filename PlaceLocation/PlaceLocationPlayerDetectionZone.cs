@@ -14,16 +14,24 @@ public class PlaceLocationPlayerDetectionZone : Area2D
 		return player != null;
 	}
 
-	private void _on_Player_body_shape_entered(RID body_rid, Player body, int body_shape_index, int local_shape_index)
-	{
-		player = body;
-	}
-	private void _on_PlaceLocationPlayerDetectionZone_body_shape_exited(RID body_rid, Player body, int body_shape_index, int local_shape_index)
-    {
-		player = null;
 
-    }
+	private void _on_playerReach_area_entered(PlayerReach area)
+	{
+		player = area.parent;
+	}
+
+
+	private void _on_playerReach_area_exited(PlayerReach area)
+	{
+		player = null;
+	}
 }
+
+
+
+
+
+
 
 
 
