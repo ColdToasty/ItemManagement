@@ -11,7 +11,13 @@
 radius = 32.0039
 
 [node name="mob" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 32
 script = ExtResource( 3 )
+
+[node name="ViewCone" parent="." instance=ExtResource( 5 )]
+rotation = 1.5708
+scale = Vector2( 1, 1 )
 
 [node name="DetectionZone" parent="." instance=ExtResource( 6 )]
 
@@ -28,16 +34,6 @@ shape = SubResource( 1 )
 [node name="hurtbox" parent="." instance=ExtResource( 2 )]
 collision_layer = 256
 collision_mask = 128
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-scale = Vector2( 10, 28 )
-enabled = true
-cast_to = Vector2( 24.7, -0.0263158 )
-collision_mask = 2
-
-[node name="ViewCone" parent="RayCast2D" instance=ExtResource( 5 )]
-rotation = 1.5708
-scale = Vector2( 0.0357143, 0.1 )
 
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -10,14 +10,10 @@ public class viewCone : Area2D
 		return player != null;
 	}
 
-
-
 private void _on_Player_area_entered(PlayerVisible area)
 {
 		player = area.parent;
-		GD.Print("playet");
 	}
-
 
 private void _on_Player_area_exited(PlayerVisible area)
 {

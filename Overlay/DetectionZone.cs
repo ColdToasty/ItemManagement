@@ -9,21 +9,30 @@ public class DetectionZone : Area2D
 	//If player is seen
 	//Will return true
 	
-	public bool see_player()
+	public bool can_see_player()
 	{
 		return player != null;
 	}
 
-	
+    public override void _PhysicsProcess(float delta)
+    {
+    }
 
-
-
-	//If player sprints then makes noise
-	//Need to update method when player is already in shape and making noise
-	public void _on_DetectionZone_body_shape_entered(RID body_rid, Player body, int body_shape_index, int local_shape_index)
+    private void _on_noise_area_exited(RunNoise area)
 	{
-		player = body;	
+		player = null;
 	}
 
+	//Get the player class
+	private void _on_noise_area_entered(RunNoise area)
+	{
+		player = area.parent;
+	}
+
+
+
+
 }
+
+
 

@@ -161,6 +161,7 @@ Sprint={
 2d_physics/layer_7="PlayerVisible"
 2d_physics/layer_8="SlapHitBox"
 2d_physics/layer_9="SlapHurtBox"
+2d_physics/layer_10="RunNoise"
 
 [mono]
 

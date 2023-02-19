@@ -23,8 +23,8 @@ public class mob : KinematicBody2D
 	public viewCone ViewCone;
 	public Position2D pivotCone;
 	public double rotation_speed = Mathf.Pi;
-	public RayCast2D raycast;
 
+	public Vector2 last_player_position = Vector2.Zero;
 
 
 	public enum STATE
@@ -40,8 +40,7 @@ public class mob : KinematicBody2D
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
 		originalPosition = this.GlobalPosition;
 		sprite = GetNode<Sprite>("Sprite");
-		ViewCone = GetNode<viewCone>("RayCast2D/ViewCone");
-		raycast = GetNode<RayCast2D>("RayCast2D");
+		ViewCone = GetNode<viewCone>("ViewCone");
 	}
 
 
@@ -49,7 +48,6 @@ public class mob : KinematicBody2D
 	{
 		stats.Health -= 1;
 		playHitEffect();
-		GD.Print("hit");
 	}
 
 	//Add in some hit effect that shows character has been hit
@@ -66,51 +64,77 @@ public class mob : KinematicBody2D
 
 	public void seek_player()
 	{
-		if (ViewCone.can_see_player())
+		if (detectionZone.can_see_player() || ViewCone.can_see_player())
 		{
 			state = STATE.CHASE;
 		}
 	}
 
+	
+	public void rotate(float delta, Vector2 position)
+    {
+		float r = ViewCone.GlobalRotation;
+
+		//direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+		//velocity = velocity.MoveToward(direction * speed, acceleration * delta);
+
+		float angle = (position - this.GlobalPosition).Angle();
+
+
+
+		double angle_delta = rotation_speed * delta;
+
+		angle = Mathf.LerpAngle(r, angle, 1);
+
+		angle = Mathf.Clamp((float)angle, (float)(r - angle_delta), (float)(r + angle_delta));
+		ViewCone.GlobalRotation = angle;
+	}
+	
 	//Need to add a way that rotates viewcone in direction of where player is
 	//if player sprints in the detectionZone
 
 	public override void _PhysicsProcess(float delta)
 	{
 		seek_player();
-
 		if (state == STATE.CHASE)
 		{
 			//Check if player is in detectionZone first
 			//If not null then player is sprinting and view cone has to shift
-			if (detectionZone.player != null && ViewCone.player == null && detectionZone.player.SPEED > 200)
+			if (detectionZone.player != null && ViewCone.player == null)
 			{
 				player = detectionZone.player;
-				GD.Print("Sprint");
-
+				last_player_position = player.GlobalPosition;
 			}
 			//If player is not sprinting use the viewCone player
-            else if(ViewCone.player != null)
-            {
-				player = ViewCone.player;
-			}
-
-			//Check the detectionZone first
-			
-
-			if (player != null)
+			else if(ViewCone.player != null)
 			{
-				raycast.LookAt(player.GlobalPosition);
-				raycast.ForceRaycastUpdate();
-				direction = GlobalPosition.DirectionTo(player.GlobalPosition);
-				velocity = velocity.MoveToward(direction * speed, acceleration * delta);
+				player = ViewCone.player;
+				last_player_position = player.GlobalPosition;
 			}
+            else
+            {
+				player = null;
+				last_player_position = Vector2.Zero;
+			}
+
+
+			//If person has been seen in either zones and last_player_position is not Vector2.Zero
+			if (player != null || last_player_position != Vector2.Zero)
+			{
+				rotate(delta, player.GlobalPosition);
+			}
+			else if (player == null && last_player_position != Vector2.Zero)
+            {
+				rotate(delta, last_player_position);
+			}
+		
 			else
 			{
 				state = STATE.IDLE;
 			}
 			
 		}
+
 		if (state == STATE.IDLE)
 		{
 			velocity = velocity.MoveToward(Vector2.Zero * speed, acceleration * delta);
