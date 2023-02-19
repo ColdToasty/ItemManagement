@@ -235,6 +235,8 @@ tracks/3/keys = {
 "times": PoolRealArray( 0.1 )
 }
 
+[sub_resource type="StreamTexture" id=47]
+
 [sub_resource type="Animation" id=42]
 length = 0.2
 loop = true
@@ -248,7 +250,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ SubResource( 47 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -299,7 +301,7 @@ tracks/4/keys = {
 "values": [ 1.0, 2.0 ]
 }
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=48]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -312,7 +314,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 2 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -360,7 +362,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 0.0 ]
+"values": [ 1.0 ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -408,6 +410,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3.0 ]
+}
 
 [sub_resource type="Animation" id=20]
 resource_name = "IdleRight"
@@ -425,6 +439,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2.0 ]
+}
 
 [sub_resource type="Animation" id=18]
 resource_name = "IdleUp"
@@ -441,6 +467,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -597,9 +635,8 @@ collision_mask = 0
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1, -6 )
-scale = Vector2( 3.07813, 3.07813 )
-texture = ExtResource( 4 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 2 )
 hframes = 2
 vframes = 2
 __meta__ = {
@@ -609,9 +646,9 @@ __meta__ = {
 "o_folder": "res://Player/PlayerSprite",
 "o_name": "Idle",
 "only_visible": false,
-"op_exp": true,
+"op_exp": false,
 "player": "AnimationPlayer",
-"source": "res://Player/PlayerSprite/sneaky.aseprite"
+"source": "res://Player/PlayerSprite/sneaky_Idle.aseprite"
 }
 }
 
@@ -635,7 +672,7 @@ anims/AttackLeft = SubResource( 3 )
 anims/AttackRight = SubResource( 5 )
 anims/AttackUp = SubResource( 6 )
 anims/Blink = SubResource( 42 )
-anims/Idle = SubResource( 43 )
+anims/IdleBack = SubResource( 48 )
 anims/IdleDown = SubResource( 19 )
 anims/IdleLeft = SubResource( 21 )
 anims/IdleRight = SubResource( 20 )
