@@ -25,8 +25,7 @@ public class Player : KinematicBody2D
 
 
 	public Timer timer;
-	[Export]
-	private float remove_delay = (float)0.01;
+
 
 
 	//When a enemy mob enters the players hurtbox

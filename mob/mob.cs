@@ -20,11 +20,10 @@ public class mob : KinematicBody2D
 
 
 	public DetectionZone detectionZone;
-	public viewCone ViewCone;
-	public Position2D pivotCone;
-	public double rotation_speed = Mathf.Pi;
+	public CollisionShape2D view_cone_box;
+	public viewCone view_cone;
 
-	public Vector2 last_player_position = Vector2.Zero;
+	public float rotation_speed = Mathf.Pi;
 
 
 	public enum STATE
@@ -40,7 +39,9 @@ public class mob : KinematicBody2D
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
 		originalPosition = this.GlobalPosition;
 		sprite = GetNode<Sprite>("Sprite");
-		ViewCone = GetNode<viewCone>("ViewCone");
+		view_cone_box = GetNode<CollisionShape2D>("ViewBox");
+		view_cone = GetNode<viewCone>("ViewBox/ViewCone");
+
 	}
 
 
@@ -64,83 +65,61 @@ public class mob : KinematicBody2D
 
 	public void seek_player()
 	{
-		if (detectionZone.can_see_player() || ViewCone.can_see_player())
+		if (detectionZone.can_see_player())
 		{
 			state = STATE.CHASE;
 		}
 	}
 
-	
-	public void rotate(float delta, Vector2 position)
+	public void rotate_cone(float delta, Vector2 position)
     {
-		float r = ViewCone.GlobalRotation;
+		Vector2 direction = position - view_cone_box.GlobalPosition;
+		var angle = direction.Angle();
 
-		//direction = GlobalPosition.DirectionTo(player.GlobalPosition);
-		//velocity = velocity.MoveToward(direction * speed, acceleration * delta);
+		float speed = (float)0.2;
+		var r = view_cone_box.GlobalRotation;
+		var angle_delta = rotation_speed * delta;
 
-		float angle = (position - this.GlobalPosition).Angle();
-
-
-
-		double angle_delta = rotation_speed * delta;
-
-		angle = Mathf.LerpAngle(r, angle, 1);
-
-		angle = Mathf.Clamp((float)angle, (float)(r - angle_delta), (float)(r + angle_delta));
-		ViewCone.GlobalRotation = angle;
+		angle = Mathf.LerpAngle(r, angle, speed);
+		angle = Mathf.Clamp(angle, r - angle_delta, r + angle_delta);
+		view_cone_box.GlobalRotation = angle;
 	}
+
 	
 	//Need to add a way that rotates viewcone in direction of where player is
 	//if player sprints in the detectionZone
 
 	public override void _PhysicsProcess(float delta)
 	{
-		seek_player();
-		if (state == STATE.CHASE)
+		//Check if player is in detectionZone first
+		//If not null then player is sprinting and view cone has to shift
+		if (detectionZone.player != null)
 		{
-			//Check if player is in detectionZone first
-			//If not null then player is sprinting and view cone has to shift
-			if (detectionZone.player != null && ViewCone.player == null)
-			{
-				player = detectionZone.player;
-				last_player_position = player.GlobalPosition;
-			}
-			//If player is not sprinting use the viewCone player
-			else if(ViewCone.player != null)
-			{
-				player = ViewCone.player;
-				last_player_position = player.GlobalPosition;
-			}
-            else
-            {
-				player = null;
-				last_player_position = Vector2.Zero;
-			}
+			player = detectionZone.player;
+		}
+		else if (view_cone.player != null)
+        {
+			player = view_cone.player;
+        }
+        else
+        {
+			player = null;
+		}
 
-
-			//If person has been seen in either zones and last_player_position is not Vector2.Zero
-			if (player != null || last_player_position != Vector2.Zero)
-			{
-				rotate(delta, player.GlobalPosition);
-			}
-			else if (player == null && last_player_position != Vector2.Zero)
-            {
-				rotate(delta, last_player_position);
-			}
-		
-			else
-			{
-				state = STATE.IDLE;
-			}
+		//If person has been seen in either zones and last_player_position is not Vector2.Zero
+		if (player != null)
+		{
+			rotate_cone(delta, player.GlobalPosition);
 			
+			//Move mob towards player location
+
 		}
 
-		if (state == STATE.IDLE)
-		{
-			velocity = velocity.MoveToward(Vector2.Zero * speed, acceleration * delta);
-		}
 
-		velocity = MoveAndSlide(velocity);
+
+
+
+
 
 
 
@@ -148,14 +127,3 @@ public class mob : KinematicBody2D
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

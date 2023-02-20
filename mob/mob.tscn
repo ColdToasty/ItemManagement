@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://mob/mob.png" type="Texture" id=1]
 [ext_resource path="res://Overlay/hurtbox.tscn" type="PackedScene" id=2]
@@ -10,20 +10,19 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0039
 
+[sub_resource type="CircleShape2D" id=2]
+
 [node name="mob" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 32
 script = ExtResource( 3 )
-
-[node name="ViewCone" parent="." instance=ExtResource( 5 )]
-rotation = 1.5708
-scale = Vector2( 1, 1 )
 
 [node name="DetectionZone" parent="." instance=ExtResource( 6 )]
 
 [node name="Stats" parent="." instance=ExtResource( 4 )]
 
 [node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
 texture = ExtResource( 1 )
 hframes = 8
 
@@ -34,6 +33,11 @@ shape = SubResource( 1 )
 [node name="hurtbox" parent="." instance=ExtResource( 2 )]
 collision_layer = 256
 collision_mask = 128
+
+[node name="ViewBox" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="ViewCone" parent="ViewBox" instance=ExtResource( 5 )]
 
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
