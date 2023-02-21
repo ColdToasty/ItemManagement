@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Cookie0.png-cbcc827aa1dc2006b5831905070f1792.stex"
+path="res://.import/CookieScore1.png-9021705dddd0a4998c313ceb4ddcad86.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cookies/Cookie0.png"
-dest_files=[ "res://.import/Cookie0.png-cbcc827aa1dc2006b5831905070f1792.stex" ]
+source_file="res://Cookies/CookieScore1.png"
+dest_files=[ "res://.import/CookieScore1.png-9021705dddd0a4998c313ceb4ddcad86.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

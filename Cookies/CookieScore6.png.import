@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Cookie0.png-cbcc827aa1dc2006b5831905070f1792.stex"
+path="res://.import/CookieScore6.png-09006d44a1bda51d0100760d285d4193.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cookies/Cookie0.png"
-dest_files=[ "res://.import/Cookie0.png-cbcc827aa1dc2006b5831905070f1792.stex" ]
+source_file="res://Cookies/CookieScore6.png"
+dest_files=[ "res://.import/CookieScore6.png-09006d44a1bda51d0100760d285d4193.stex" ]
 
 [params]
 
