@@ -14,9 +14,7 @@ public class DetectionZone : Area2D
 		return player != null;
 	}
 
-    public override void _PhysicsProcess(float delta)
-    {
-    }
+
 
     private void _on_noise_area_exited(RunNoise area)
 	{
