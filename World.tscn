@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.cs" type="Script" id=2]
@@ -16,6 +16,11 @@ radius = 82.0549
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -544, -148 )
 }
+
+[sub_resource type="NavigationPolygon" id=3]
+vertices = PoolVector2Array( 460, -868, 1749, -394, 1393, 743, -1375, 330, -889, -526 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ) ]
+outlines = [ PoolVector2Array( -889, -526, -1375, 330, 1393, 743, 1749, -394, 460, -868 ) ]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
@@ -118,6 +123,12 @@ collision_mask = 0
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( -120, -308 )
+collision_mask = 1
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+position = Vector2( 0, -1 )
+scale = Vector2( 1.1216, 1.25486 )
+navpoly = SubResource( 3 )
