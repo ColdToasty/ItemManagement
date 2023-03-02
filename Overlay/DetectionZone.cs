@@ -5,6 +5,8 @@ public class DetectionZone : Area2D
 {
 	public Player player;
 
+	[Signal]
+	public delegate void rotate_to_location(Vector2 last_position);
 
 	//If player is seen
 	//Will return true
@@ -21,12 +23,11 @@ public class DetectionZone : Area2D
 		player = null;
 	}
 
-	//Get the player class
+
 	private void _on_noise_area_entered(RunNoise area)
 	{
-		player = area.parent;
+		player = area.GetParent<Player>();
 	}
-
 
 
 

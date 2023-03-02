@@ -39,9 +39,11 @@ shape = SubResource( 2 )
 [node name="ViewCone" parent="ViewBox" instance=ExtResource( 5 )]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 20.0
+path_desired_distance = 3.0
+target_desired_distance = 3.0
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]

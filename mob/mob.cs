@@ -32,11 +32,18 @@ public class mob : KinematicBody2D
 
 	public Timer timer;
 
+	public int negative_degree = -45;
+	public int positive_degree = 45;
+
 
 	//NavigationAgent
 	public NavigationAgent2D nav_agent;
 
-	Random rnd_time = new Random();
+    //signal if mob is in path2D
+    [Signal]
+	public delegate void stop_route();
+
+	Random rnd = new Random();
 
 	public enum STATE
 	{
@@ -49,15 +56,13 @@ public class mob : KinematicBody2D
 	{
 		stats = GetNode<mobStats>("Stats");
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
-
 		view_cone_box = GetNode<CollisionShape2D>("ViewBox");
 		view_cone = GetNode<viewCone>("ViewBox/ViewCone");
 
 		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
-		original_position = this.GlobalPosition;
 
 		timer = GetNode<Timer>("Timer");
-
+		original_position = this.GlobalPosition;
 
 	}
 
@@ -71,7 +76,7 @@ public class mob : KinematicBody2D
 
 	//Add in some hit effect that shows character has been hit
 	//And some knock back
-	public void playHitEffect()
+	private void playHitEffect()
 	{
 
 	}
@@ -84,7 +89,7 @@ public class mob : KinematicBody2D
 
 
 
-	public void rotate_cone(float delta, Vector2 position)
+	private void rotate_cone(float delta, Vector2 position)
 	{
 		Vector2 direction = position - view_cone_box.GlobalPosition;
 		var angle = direction.Angle();
@@ -98,9 +103,9 @@ public class mob : KinematicBody2D
 		view_cone_box.GlobalRotation = angle;
 	}
 
-	
+
 	//Move our mob towards a certain location
-	public void move(float delta, Vector2 position)
+	private void move(float delta, Vector2 position)
 	{
 		//Set the position to be moved to
 		nav_agent.SetTargetLocation(position);
@@ -113,32 +118,60 @@ public class mob : KinematicBody2D
 		velocity = (direction * speed);
 		nav_agent.SetVelocity(velocity);
 
-		//Move while it hasn't arrived
+		//While mob hasn't arrived at target location
 		if (!arrived_at_location())
 		{
 			velocity = MoveAndSlide(velocity);
-        }
-        else
-		{ 
+			GD.Print("moving towards target");
+			GD.Print(GlobalPosition);
+		}
+		//If npc has arrived, but last_player_position is a position that is not (0,0) or the original position
+		//This means that they are at a location where the player was last seen
+		if (last_player_position != Vector2.Zero && last_player_position != original_position && arrived_at_location())
+		{
 			//Start the timer only when it is inactive 
-			if(timer.TimeLeft == 0 && last_player_position != original_position)
-            {
-				timer.Start(rnd_time.Next(4, 8));
-            }
+			if (timer.TimeLeft == 0)
+			{
+				timer.Start(rnd.Next(3, 6));
+				GD.Print(timer, " Timer start");
+			}
 			//Look around while last_position isnt set
 			//Means mob is looking around
-			if(last_player_position != original_position)
-            {
+			else
+			{
 				look_around();
-            }
-			
+				GD.Print(timer, " countdown");
+			}
+			GD.Print(timer.TimeLeft);
+		}
 
+		if(arrived_at_location() && last_player_position == original_position)
+        {
+			last_player_position = Vector2.Zero;
+			EmitSignal("stop_route", true);
+			GD.Print("arrived at original");
+
+        }
+
+	}
+		//When mob finishes investigating the area
+	private void _on_Timer_timeout()
+		{
+			last_player_position = original_position;
+			GD.Print("stopped looking around");
 		}
 
 
 
 
-	}
+
+
+
+	
+	private void chase(Vector2 position)
+    {
+
+    }
 
 	//If mob has arrived at the position its suppose to move towards
 	public bool arrived_at_location()
@@ -146,25 +179,33 @@ public class mob : KinematicBody2D
 		return nav_agent.IsNavigationFinished();
 	}
 
-	//When mob finishes investigating the area
-	private void _on_Timer_timeout()
-	{
-		last_player_position = original_position;
-		GD.Print("stopped looking around");
-	}
+
+
 
 	//Rotates the view Cone around to see it they can spot the player
 	private void look_around()
     {
-		float current_degree = view_cone_box.GlobalRotation;
-    }
+	}
 
+
+
+
+
+
+
+	//With detectionzone.
+	//Implement feature for when a player does enter the detection zone, but raycast does not see player
+	//have npc go to the sound source
+
+	//When player makes sound in the zone
+	//Have the viewcone shift towards it even if the player is not in zone anymore
 
 	public override void _PhysicsProcess(float delta)
 	{
-		
+
+
 		if (detectionZone.can_see_player())
-		{
+		{ 
 			player = detectionZone.player;
 		}
 		else if (view_cone.can_see_player())
@@ -180,33 +221,33 @@ public class mob : KinematicBody2D
 		//If person has been seen in either zone
 		if (player != null)
 		{
-			timer.Stop();
 			//Rotate the cone towards the player
 			rotate_cone(delta, player.GlobalPosition);
 
 			//Move mob towards player location
 			if (view_cone.can_see_player())
 			{
+				EmitSignal("stop_route", false);
 				last_player_position = player.GlobalPosition;
 				move(delta, player.GlobalPosition);
+
 			}
 
 		}
-		//If player is not in either zone
+		//If player is null
 		//Mob will move back towards where player was last seen
-		else if(last_player_position != Vector2.Zero)
+		//last_player_position not vector2.zero means move to location
+ 		else if (last_player_position != Vector2.Zero && last_player_position != original_position)
 		{
 			move(delta, last_player_position);
+			rotate_cone(delta, last_player_position);
+        }
+		else if (last_player_position == original_position)
+        {
+			move(delta, original_position);
+			rotate_cone(delta, original_position);
 		}
-
-
-
-
-
-
-
-
-
+		
 
 
 	}

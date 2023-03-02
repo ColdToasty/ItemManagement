@@ -28,8 +28,7 @@ public class Player : KinematicBody2D
 
 
 
-	//When a enemy mob enters the players hurtbox
-	//Gets slapped till unconsious
+
 	public Area2D slapBoxArea;
 
 
@@ -68,6 +67,7 @@ public class Player : KinematicBody2D
 	}
 
 	//adds the textures to list
+	//Need to make so player is not dependent on how many boxes there are
 	public void add_textures()
 	{
 		Random rnd = new Random();

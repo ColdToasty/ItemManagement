@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://path.cs" type="Script" id=2]
+[ext_resource path="res://mob/mob.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve2D" id=5]
+_data = {
+"points": PoolVector2Array( -129.083, -42.6536, 129.083, 42.6536, 597, -6, 24.6942, -103.267, -24.6942, 103.267, 615, 233, 69.5926, -46.0209, -69.5926, 46.0209, 544, 366, 144.163, 105.452, -144.163, -105.452, 19, 365, -48.9994, 113.144, 48.9994, -113.144, 4, 0, -143.675, -44.8985, 143.675, 44.8985, 597, -6 )
+}
+
+[node name="Path2D" type="Path2D"]
+curve = SubResource( 5 )
+script = ExtResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2( 597, -6 )
+rotate = false
+
+[node name="mob" parent="PathFollow2D" instance=ExtResource( 3 )]
+
+[editable path="PathFollow2D/mob"]
+[editable path="PathFollow2D/mob/hurtbox"]
