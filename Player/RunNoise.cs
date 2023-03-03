@@ -12,18 +12,6 @@ public class RunNoise : Area2D
     }
 
 
-    public override void _PhysicsProcess(float delta)
-    {
-        if (monitor)
-        {
-            SetDeferred("monitorable", true);
-            SetDeferred("visible", true);
-        }
-        else
-        {
-            SetDeferred("monitorable", false);
-            SetDeferred("visible", false);
-        }
-    }
+
 
 }

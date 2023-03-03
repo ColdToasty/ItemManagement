@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+Fe4o0KxF20hVOYDhgkD0xYUEjn7IFPcpriSR6/WGSBR024/ktbIns6ARRjd8sZZRyGxCdEMzfTkIavOWI3AwQ==",
+  "dgSpecHash": "F9IxWCE37SOncGNZuftW1MB3502DSC8v5XzM1JwLZSvc7rVEFYtDEsnj9vchByIbkQGWiAmV24G3168DoTdFSw==",
   "success": true,
-  "projectFilePath": "F:\\PROJECTS\\ITEMMANAGEMENT\\Item Management.csproj",
+  "projectFilePath": "C:\\GodotProjects\\ItemManagement\\Item Management.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

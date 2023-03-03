@@ -188,30 +188,22 @@ public class mob : KinematicBody2D
 	}
 
 
-
-
-
-
-
-	//With detectionzone.
-	//Implement feature for when a player does enter the detection zone, but raycast does not see player
-	//have npc go to the sound source
-
 	//When player makes sound in the zone
 	//Have the viewcone shift towards it even if the player is not in zone anymore
 
 	public override void _PhysicsProcess(float delta)
 	{
 
-
-		if (detectionZone.can_see_player())
-		{ 
-			player = detectionZone.player;
+		if (detectionZone.can_hear_player())
+		{
+			rotate_cone(delta, detectionZone.last_heard);
 		}
-		else if (view_cone.can_see_player())
+
+
+		if (view_cone.can_see_player())
 		{
 			player = view_cone.player;
-			
+
 		}
 		else
 		{
@@ -247,6 +239,7 @@ public class mob : KinematicBody2D
 			move(delta, original_position);
 			rotate_cone(delta, original_position);
 		}
+
 		
 
 

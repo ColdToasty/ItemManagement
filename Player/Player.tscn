@@ -594,7 +594,6 @@ shape = SubResource( 48 )
 [node name="RunNoise" type="Area2D" parent="."]
 collision_layer = 512
 collision_mask = 0
-monitorable = false
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RunNoise"]

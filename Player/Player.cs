@@ -95,16 +95,7 @@ public class Player : KinematicBody2D
 	{
 		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
-		if (Input.IsActionPressed("Sprint") && velocity != Vector2.Zero)
-		{
-			SPEED = 400;
-			noise.monitor = true;
-		}
-		else
-		{
-			SPEED = 200;
-			noise.monitor = false;
-		}
+
 		input_vector = input_vector.Normalized();
 		if (input_vector != Vector2.Zero)
 		{
@@ -114,9 +105,18 @@ public class Player : KinematicBody2D
 			animationTree.Set("parameters/Slapping/blend_position", input_vector);
 			animationTree.Set("parameters/Moving/blend_position", input_vector);
 
-			//When input vector signals to move
-			//Changes from Idle or starting node and travel to given state machine
-			//Then use the input_vector as direction for which way to move
+            //When input vector signals to move
+            //Changes from Idle or starting node and travel to given state machine
+            //Then use the input_vector as direction for which way to move
+            if (Input.IsActionPressed("Sprint"))
+				{
+					SPEED = 400;
+				}
+			else
+				{
+					SPEED = 200;
+				}
+			
 			animation_playback.Travel("Moving");
 			velocity = input_vector * SPEED;
 				

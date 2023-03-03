@@ -7,6 +7,7 @@
       "commandName": "Executable",
       "executablePath": "F:\\Godot_v3.5.1-stable_mono_win64\\Godot_v3.5.1-stable_mono_win64.exe",
       "commandLineArgs": "--path . --verbose",
+      "workingDirectory": ".",
       "nativeDebugging": true
     }
   }
