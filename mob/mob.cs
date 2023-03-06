@@ -112,9 +112,13 @@ public class mob : KinematicBody2D
 
 	private void give_direction(Vector2 last_heard)
     {
-
 		last_player_position = last_heard;
 		EmitSignal("stop_route", false);
+		//Stop the timer 
+		if(timer.TimeLeft != 0)
+        {
+			timer.Stop();
+        }
 	}
 
 
@@ -136,7 +140,6 @@ public class mob : KinematicBody2D
 		if (!arrived_at_location())
 		{
 			velocity = MoveAndSlide(velocity);
-			GD.Print(velocity);
 			GD.Print("moving towards target");
 		}
 		//If npc has arrived, but last_player_position is a position that is not (0,0) or the original position
@@ -149,14 +152,9 @@ public class mob : KinematicBody2D
 				timer.Start(rnd.Next(4, 7));
 				GD.Print(timer, " Timer start");
 			}
+
 			//Look around while last_position isnt set
 			//Means mob is looking around
-			else
-			{
-				look_around();
-				GD.Print(timer, " countdown");
-			}
-			GD.Print(timer.TimeLeft);
 		}
 
 		else if(arrived_at_location() && last_player_position == original_position)
@@ -177,15 +175,6 @@ public class mob : KinematicBody2D
 
 
 
-
-
-
-
-	
-	private void chase(Vector2 position)
-    {
-
-    }
 
 	//If mob has arrived at the position its suppose to move towards
 	public bool arrived_at_location()
@@ -208,13 +197,13 @@ public class mob : KinematicBody2D
 		if (detectionZone.can_hear_player())
 		{
 			rotate_cone(delta, detectionZone.last_heard);
+			GD.Print("SJKLDFKSJDFJKL:SDFJKSLDFSDF");
 		}
-
-
 
 		if (view_cone.can_see_player())
 		{
 			player = view_cone.player;
+
 		}
 
 		else
@@ -241,17 +230,23 @@ public class mob : KinematicBody2D
 		//If player is null
 		//Mob will move back towards where player was last seen
 		//last_player_position not vector2.zero means move to location
- 		else if (last_player_position != Vector2.Zero && last_player_position != original_position)
+		if (!detectionZone.can_hear_player())
 		{
-			move(delta, last_player_position);
-			rotate_cone(delta, last_player_position);
-        }
-		else if (last_player_position == original_position)
-        {
-			move(delta, original_position);
-			rotate_cone(delta, original_position);
-		}
 
+
+			if (last_player_position != Vector2.Zero && last_player_position != original_position)
+			{
+				move(delta, last_player_position);
+				rotate_cone(delta, last_player_position);
+			}
+			if (last_player_position == original_position)
+			{
+				move(delta, original_position);
+				rotate_cone(delta, original_position);
+			}
+
+
+		}
 		
 
 
