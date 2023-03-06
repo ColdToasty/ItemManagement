@@ -15,6 +15,7 @@ public class mob : KinematicBody2D
 	public Vector2 last_player_position = Vector2.Zero;
 	public Vector2 original_position;
 	public Vector2 direction;
+	public Vector2 prevDirection = Vector2.Zero;
 
 	public Player player;
 	public PlayerVisible player_visible_shape;
@@ -56,6 +57,7 @@ public class mob : KinematicBody2D
 	{
 		stats = GetNode<mobStats>("Stats");
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
+		detectionZone.Connect("give_direction", this, "give_direction");
 		view_cone_box = GetNode<CollisionShape2D>("ViewBox");
 		view_cone = GetNode<viewCone>("ViewBox/ViewCone");
 
@@ -92,6 +94,8 @@ public class mob : KinematicBody2D
 	private void rotate_cone(float delta, Vector2 position)
 	{
 		Vector2 direction = position - view_cone_box.GlobalPosition;
+
+		prevDirection = direction;
 		var angle = direction.Angle();
 
 		float speed = (float)1;
@@ -101,6 +105,16 @@ public class mob : KinematicBody2D
 		angle = Mathf.LerpAngle(r, angle, speed);
 		angle = Mathf.Clamp(angle, r - angle_delta, r + angle_delta);
 		view_cone_box.GlobalRotation = angle;
+		
+
+	}
+
+
+	private void give_direction(Vector2 last_heard)
+    {
+
+		last_player_position = last_heard;
+		EmitSignal("stop_route", false);
 	}
 
 
@@ -122,17 +136,17 @@ public class mob : KinematicBody2D
 		if (!arrived_at_location())
 		{
 			velocity = MoveAndSlide(velocity);
+			GD.Print(velocity);
 			GD.Print("moving towards target");
-			GD.Print(GlobalPosition);
 		}
 		//If npc has arrived, but last_player_position is a position that is not (0,0) or the original position
 		//This means that they are at a location where the player was last seen
-		if (last_player_position != Vector2.Zero && last_player_position != original_position && arrived_at_location())
+		else if (last_player_position != Vector2.Zero && last_player_position != original_position && arrived_at_location())
 		{
 			//Start the timer only when it is inactive 
 			if (timer.TimeLeft == 0)
 			{
-				timer.Start(rnd.Next(3, 6));
+				timer.Start(rnd.Next(4, 7));
 				GD.Print(timer, " Timer start");
 			}
 			//Look around while last_position isnt set
@@ -145,7 +159,7 @@ public class mob : KinematicBody2D
 			GD.Print(timer.TimeLeft);
 		}
 
-		if(arrived_at_location() && last_player_position == original_position)
+		else if(arrived_at_location() && last_player_position == original_position)
         {
 			last_player_position = Vector2.Zero;
 			EmitSignal("stop_route", true);
@@ -180,8 +194,6 @@ public class mob : KinematicBody2D
 	}
 
 
-
-
 	//Rotates the view Cone around to see it they can spot the player
 	private void look_around()
     {
@@ -193,18 +205,18 @@ public class mob : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
-
 		if (detectionZone.can_hear_player())
 		{
 			rotate_cone(delta, detectionZone.last_heard);
 		}
 
 
+
 		if (view_cone.can_see_player())
 		{
 			player = view_cone.player;
-
 		}
+
 		else
 		{
 			player = null;
