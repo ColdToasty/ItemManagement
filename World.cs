@@ -3,7 +3,7 @@ using System;
 
 public class World : Node2D
 {
-
+	public bool seen = false;
 	public override void _Ready()
 	{
 		

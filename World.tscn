@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.cs" type="Script" id=2]
@@ -8,23 +8,18 @@
 [ext_resource path="res://mob/mobPath.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Score/CookieTracker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Cookies/CookieScore1.png" type="Texture" id=8]
+[ext_resource path="res://Doors/DoorDown.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 82, 79.5 )
 
 [sub_resource type="NavigationPolygon" id=3]
 vertices = PoolVector2Array( 460, -868, 1749, -394, 1393, 743, -278.174, -51.0017, -284.415, -181.694, -889, -526, -433.31, -180.897, -1375, 330, -435.093, -47.8141, -427.96, -175.318 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 0, 4, 6 ), PoolIntArray( 3, 2, 7, 8 ), PoolIntArray( 8, 7, 5, 6 ), PoolIntArray( 6, 4, 9 ) ]
 outlines = [ PoolVector2Array( -889, -526, -1375, 330, 1393, 743, 1749, -394, 460, -868 ), PoolVector2Array( -427.96, -175.318, -284.415, -181.694, -278.174, -51.0017, -435.093, -47.8141, -433.31, -180.897 ) ]
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 82, 79.5 )
-
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
-
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
-visible = false
-position = Vector2( 0, -1 )
-scale = Vector2( 1.1216, 1.25486 )
-navpoly = SubResource( 3 )
 
 [node name="TileMap" type="TileMap" parent="."]
 format = 1
@@ -117,10 +112,16 @@ shape = SubResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( -939, 75 )
-collision_mask = 1
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
 [node name="Path2D" parent="." instance=ExtResource( 6 )]
 position = Vector2( 201, -292 )
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+visible = false
+scale = Vector2( 1.1216, 1.25486 )
+navpoly = SubResource( 3 )
+
+[node name="DoorDown" parent="." instance=ExtResource( 9 )]

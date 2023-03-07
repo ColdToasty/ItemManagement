@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Player/PlayerReach.cs" type="Script" id=2]
@@ -507,9 +507,6 @@ graph_offset = Vector2( 26, -10 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
-[sub_resource type="CapsuleShape2D" id=46]
-height = 18.0
-
 [sub_resource type="CapsuleShape2D" id=47]
 radius = 26.0
 height = 46.0
@@ -520,6 +517,14 @@ height = 60.0
 
 [sub_resource type="CircleShape2D" id=49]
 radius = 72.5672
+
+[sub_resource type="CapsuleShape2D" id=56]
+radius = 9.0
+height = 16.0
+
+[sub_resource type="CapsuleShape2D" id=57]
+radius = 8.0
+height = 18.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
@@ -568,11 +573,6 @@ stream = ExtResource( 6 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="WorldCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 32 )
-rotation = 1.5708
-shape = SubResource( 46 )
-
 [node name="PlayerItem" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 0
@@ -616,6 +616,20 @@ __meta__ = {
 "source": "res://Player/PlayerSprite/sneaky_walk.aseprite"
 }
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 40 )
+rotation = 1.5708
+shape = SubResource( 56 )
+
+[node name="PlayerBase" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBase"]
+position = Vector2( -2, 41 )
+rotation = 1.5708
+shape = SubResource( 57 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

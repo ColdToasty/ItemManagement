@@ -45,22 +45,20 @@ public class DetectionZone : Area2D
 		}
 	}
 
-	//Reset the last_heard to Vector2.Zero
-	private void _on_Timer_timeout()
-	{
-		EmitSignal("give_direction", last_heard);
-		last_heard = Vector2.Zero;
-	}
-
-
 	public void set_player(Player p)
 	{
 		if(p.SPEED >= 400)
 		{
 			last_heard = p.GlobalPosition;
 			timer.Start(rnd.Next(1));
-
 		}
+	}
+
+	//Reset the last_heard to Vector2.Zero
+	private void _on_Timer_timeout()
+	{
+		EmitSignal("give_direction", last_heard);
+		last_heard = Vector2.Zero;
 	}
 
 

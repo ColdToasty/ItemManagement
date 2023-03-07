@@ -105,10 +105,10 @@ public class Player : KinematicBody2D
 			animationTree.Set("parameters/Slapping/blend_position", input_vector);
 			animationTree.Set("parameters/Moving/blend_position", input_vector);
 
-            //When input vector signals to move
-            //Changes from Idle or starting node and travel to given state machine
-            //Then use the input_vector as direction for which way to move
-            if (Input.IsActionPressed("Sprint"))
+			//When input vector signals to move
+			//Changes from Idle or starting node and travel to given state machine
+			//Then use the input_vector as direction for which way to move
+			if (Input.IsActionPressed("Sprint"))
 				{
 					SPEED = 400;
 				}

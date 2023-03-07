@@ -194,21 +194,19 @@ public class mob : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
-		if (detectionZone.can_hear_player())
-		{
-			rotate_cone(delta, detectionZone.last_heard);
-			GD.Print("SJKLDFKSJDFJKL:SDFJKSLDFSDF");
-		}
 
 		if (view_cone.can_see_player())
 		{
 			player = view_cone.player;
-
 		}
-
 		else
 		{
 			player = null;
+		}
+
+		if (detectionZone.can_hear_player())
+		{
+			rotate_cone(delta, detectionZone.last_heard);
 		}
 
 		//If person has been seen in either zone
@@ -223,34 +221,26 @@ public class mob : KinematicBody2D
 				EmitSignal("stop_route", false);
 				last_player_position = player.GlobalPosition;
 				move(delta, player.GlobalPosition);
-
 			}
-
 		}
+
 		//If player is null
 		//Mob will move back towards where player was last seen
 		//last_player_position not vector2.zero means move to location
 		if (!detectionZone.can_hear_player())
 		{
-
-
-			if (last_player_position != Vector2.Zero && last_player_position != original_position)
+			if(last_player_position != Vector2.Zero && last_player_position != original_position)
 			{
 				move(delta, last_player_position);
 				rotate_cone(delta, last_player_position);
 			}
-			if (last_player_position == original_position)
+			if(last_player_position == original_position)
 			{
 				move(delta, original_position);
 				rotate_cone(delta, original_position);
 			}
-
-
 		}
-		
-
-
 	}
 
-}
 
+}
