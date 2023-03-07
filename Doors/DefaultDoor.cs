@@ -13,13 +13,18 @@ public class DefaultDoor : KinematicBody2D
 	public AnimationTree animationTree;
 	public AnimationPlayer animationPlayer;
 	public AnimationNodeStateMachinePlayback animation_playback;
+
+	public CollisionShape2D collider;
 	public override void _Ready()
 	{
-		area = GetNode<Area2D>("Position2D/Area2D");
+		area = GetNode<Area2D>("Area2D");
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+
+
+		collider = GetNode<CollisionShape2D>("CollisionShape2D");
 	}
 
 	public void unlockDoor(bool unlock)
@@ -29,73 +34,50 @@ public class DefaultDoor : KinematicBody2D
 
 
 
-	//Maybe have zone that gives out a signal that notifies mobs in zone to check it out
-
-	//If player enters the door
-	private void _on_Player_area_entered(Player area)
+	public void openDoor()
 	{
-		player = area;
-		check_playerY();
+		int toggle = -1;
+		Vector2 doorPosition =(Vector2)animationTree.Get("parameters/Status/blend_position");
+		doorPosition.y = doorPosition.y * toggle;
+
+		
+		animationTree.Set("parameters/Status/blend_position", doorPosition);
 
 	}
 
-	public override void _PhysicsProcess(float delta)
+	public override void _Input(InputEvent @event)
 	{
-		if(area.GetOverlappingAreas().Count != 0)
+		if(@event is InputEventMouseButton && player != null)
 		{
-			Area2D a  = (Area2D)area.GetOverlappingAreas()[0];
-			player = a.GetParent<Player>();
-			
-			if(player.input_vector.y != 0)
+			InputEventMouseButton e = (InputEventMouseButton)@event;
+			if (e.Pressed && e.ButtonMask == (int)ButtonList.Left)
 			{
-				check_playerY();
+				openDoor();
 			}
-		}
-
-	}
-
-	//Need to check which position the door is position at
-	//If how it moves
-
-	private void check_playerY()
-	{
-		var x = 0;
-		//Checks the Y axis
-		//Going up
-		if (player.input_vector.y == -1 && status != -1)
-		{
-			status += -1;
-		}
-		//Coming from Down
-		else if(player.input_vector.y == 1 && status != 1)
-		{
-			status += 1;
-		}
-
-		//Need to check which blend position our door is in
-
-		//Check the X axis to see if player choses to close door by pusing it
-		//Going left
-		if(player.input_vector.x == 1)
-        {
 			
-        }
-		//Going Right
-		else if(player.input_vector.x == -1)
-        {
-
-        }
-		Vector2 vector = new Vector2(0, status);
-		animationTree.Set("parameters/Status/blend_position", vector);
+			
+		}
 	}
 
 
 
-	private void _on_Player_area_exited(object area)
+	//Need to check mouse position is over the area2d 
+	private void _on_playerReach_area_entered(PlayerReach area)
+	{
+		player = area.GetParent<Player>();
+		
+	}
+
+
+	private void _on_playerReach_area_exited(PlayerReach area)
 	{
 		player = null;
 	}
 
+
+
+	//Have player have to be in player reach zone and have to click left mouse button
+	//Make Door open in direction of players current facing direction
 
 
 	//Add area 2d enters or collides
@@ -104,6 +86,7 @@ public class DefaultDoor : KinematicBody2D
 
 	//If locked then makes players unable to open it - add after implementing basic
 }
+
 
 
 

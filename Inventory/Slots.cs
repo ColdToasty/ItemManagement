@@ -70,6 +70,5 @@ public class Slots : Panel
     public override void _GuiInput(InputEvent @event)
     {
         EmitSignal("pickUpItem", @event, this);
-        
     }
 }

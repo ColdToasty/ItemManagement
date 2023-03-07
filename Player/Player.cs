@@ -22,6 +22,7 @@ public class Player : KinematicBody2D
 	public AnimationTree animationTree;
 	public AnimationPlayer animationPlayer;
 
+	public Vector2 facing = Vector2.Zero;
 
 
 	public Timer timer;
@@ -104,7 +105,7 @@ public class Player : KinematicBody2D
 			animationTree.Set("parameters/Idle/blend_position", input_vector);
 			animationTree.Set("parameters/Slapping/blend_position", input_vector);
 			animationTree.Set("parameters/Moving/blend_position", input_vector);
-
+			facing = input_vector;
 			//When input vector signals to move
 			//Changes from Idle or starting node and travel to given state machine
 			//Then use the input_vector as direction for which way to move
