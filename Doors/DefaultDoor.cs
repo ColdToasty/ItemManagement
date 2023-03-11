@@ -11,18 +11,17 @@ using System;
 public class DefaultDoor : KinematicBody2D
 {
 	public Player player;
-
-
 	public Area2D area;
 	public AnimationTree animationTree;
 	public AnimationPlayer animationPlayer;
 	public AnimationNodeStateMachinePlayback animation_playback;
 	public CollisionShape2D collider;
 
+	public bool mouseInArea = false;
+
 
 	public override void _Ready()
 	{
-		area = GetNode<Area2D>("Area2D");
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
@@ -52,7 +51,6 @@ public class DefaultDoor : KinematicBody2D
 	public void openDoor()
 	{
 		int toggle = -1;
-
 		//Change the blend position of the statemachine in animationtree
 		//This toggles the direction the door opens
 
@@ -70,44 +68,31 @@ public class DefaultDoor : KinematicBody2D
 			//Convert the event into mousebutton event
 			InputEventMouseButton e = (InputEventMouseButton)@event;
 			//Check if e is the left mouse button pressed
-			if (e.Pressed && e.ButtonMask == (int)ButtonList.Left)
+			if (e.Pressed && e.ButtonMask == (int)ButtonList.Left) 
 			{
 				openDoor();
 			}
 		}
 	}
 
-
-
-	//Need to check mouse position is over the area2d 
-	private void _on_playerReach_area_entered(PlayerReach area)
+	private void _on_playerReach_area_entered(PlayerReach reach)
 	{
-		player = area.GetParent<Player>();
-		
+		player = reach.GetParent<Player>();
 	}
 
-	//Reset area to make sure player cannot open this specific door
+
 	private void _on_playerReach_area_exited(PlayerReach area)
 	{
 		player = null;
 	}
-
-
-
-
-
-
 	//If it collides then make it open.
 	//Check if mob is sprinting then make it play sound if so
 
 	//If locked then makes players unable to open it - add after implementing basic
+
+
+
 }
-
-
-
-
-
-
 
 
 

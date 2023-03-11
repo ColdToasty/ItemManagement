@@ -42,6 +42,7 @@ ed=false
 fps=false
 2d=false
 "2d physics"=false
+cursor=false
 
 [gui]
 

@@ -141,11 +141,11 @@ graph_offset = Vector2( -23, 10 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
-[sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 35.5, 49.5 )
-
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 36.5, 1.75 )
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 35.5, 49.5 )
 
 [node name="DoorDown" type="KinematicBody2D"]
 collision_mask = 0
@@ -167,17 +167,18 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 3 )
 parameters/Status/blend_position = Vector2( 0, -1 )
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( -1, -2 )
-shape = SubResource( 17 )
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 44.5 )
 shape = SubResource( 19 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 0, 1 )
+collision_layer = 0
+collision_mask = 5
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -1, -2 )
+shape = SubResource( 17 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_playerReach_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_playerReach_area_exited"]
