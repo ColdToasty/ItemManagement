@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/WoodenFloor4X4.png-5fc7c7c15c7cde5103e19d485f87287b.stex"
+path="res://.import/Template.png-3fcad2193d0915176163e2171790d4cc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tiles/Flooring/PNGWood/WoodenFloor4X4.png"
-dest_files=[ "res://.import/WoodenFloor4X4.png-5fc7c7c15c7cde5103e19d485f87287b.stex" ]
+source_file="res://Tiles/Template.png"
+dest_files=[ "res://.import/Template.png-3fcad2193d0915176163e2171790d4cc.stex" ]
 
 [params]
 
