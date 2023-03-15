@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/WoodenFloorTilemap.png-f8ac523db61ba6425726078fd27d6093.stex"
+path="res://.import/blackandWhiteTile.png-96752653d72102f548e2ef2ec939b723.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tiles/Flooring/PNGWood/WoodenFloorTilemap.png"
-dest_files=[ "res://.import/WoodenFloorTilemap.png-f8ac523db61ba6425726078fd27d6093.stex" ]
+source_file="res://Tiles/Flooring/PNGWood/blackandWhiteTile.png"
+dest_files=[ "res://.import/blackandWhiteTile.png-96752653d72102f548e2ef2ec939b723.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

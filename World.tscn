@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.cs" type="Script" id=2]
@@ -7,19 +7,22 @@
 [ext_resource path="res://PlaceLocation/PlaceLocation.tscn" type="PackedScene" id=5]
 [ext_resource path="res://mob/mobPath.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Score/CookieTracker.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Cookies/CookieScore1.png" type="Texture" id=8]
+[ext_resource path="res://Tiles/Flooring/PNGWood/blackandWhiteTile.png" type="Texture" id=8]
 [ext_resource path="res://Doors/DoorDown.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Tiles/Flooring/PNGWood/WoodenFloorTilemap.png" type="Texture" id=10]
+[ext_resource path="res://Tiles/Flooring/PNGWood/blueandWhiteTile.png" type="Texture" id=10]
+[ext_resource path="res://Tiles/Flooring/PNGWood/1x1WoodenFloor.png" type="Texture" id=11]
+[ext_resource path="res://Tiles/Flooring/PNGWood/marble.png" type="Texture" id=12]
+[ext_resource path="res://Tiles/Flooring/PNGWood/carpetOrange.png" type="Texture" id=13]
 
 [sub_resource type="TileSet" id=5]
-0/name = "WoodenFloorTilemap.png 0"
-0/texture = ExtResource( 10 )
+0/name = "1x1WoodenFloor.png 0"
+0/texture = ExtResource( 11 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 192, 96 )
+0/region = Rect2( 0, 0, 32, 32 )
 0/tile_mode = 1
 0/autotile/bitmask_mode = 1
-0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 432, Vector2( 0, 1 ), 438, Vector2( 0, 2 ), 54, Vector2( 0, 3 ), 48, Vector2( 1, 0 ), 504, Vector2( 1, 1 ), 511, Vector2( 1, 2 ), 63, Vector2( 1, 3 ), 56, Vector2( 2, 0 ), 216, Vector2( 2, 1 ), 219, Vector2( 2, 2 ), 27, Vector2( 2, 3 ), 24, Vector2( 3, 0 ), 144, Vector2( 3, 1 ), 146, Vector2( 3, 2 ), 18, Vector2( 3, 3 ), 16, Vector2( 4, 0 ), 176, Vector2( 4, 1 ), 182, Vector2( 4, 2 ), 178, Vector2( 4, 3 ), 54, Vector2( 4, 4 ), 178, Vector2( 5, 0 ), 248, Vector2( 5, 1 ), 255, Vector2( 5, 2 ), 251, Vector2( 5, 3 ), 63, Vector2( 5, 4 ), 251, Vector2( 6, 0 ), 440, Vector2( 6, 1 ), 447, Vector2( 6, 2 ), 446, Vector2( 6, 3 ), 63, Vector2( 6, 4 ), 446, Vector2( 7, 0 ), 152, Vector2( 7, 1 ), 155, Vector2( 7, 2 ), 154, Vector2( 7, 3 ), 27, Vector2( 7, 4 ), 154, Vector2( 8, 0 ), 184, Vector2( 8, 1 ), 191, Vector2( 8, 2 ), 506, Vector2( 8, 3 ), 58, Vector2( 8, 4 ), 186, Vector2( 9, 0 ), 443, Vector2( 9, 1 ), 254, Vector2( 9, 2 ), 442, Vector2( 9, 3 ), 190, Vector2( 10, 2 ), 250, Vector2( 10, 3 ), 187 ]
+0/autotile/bitmask_flags = [  ]
 0/autotile/icon_coordinate = Vector2( 0, 0 )
 0/autotile/tile_size = Vector2( 16, 16 )
 0/autotile/spacing = 0
@@ -35,9 +38,98 @@
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 82, 79.5 )
+1/name = "blackandWhiteTile.png 1"
+1/texture = ExtResource( 8 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 32, 32 )
+1/tile_mode = 1
+1/autotile/bitmask_mode = 1
+1/autotile/bitmask_flags = [  ]
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 16, 16 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "blueandWhiteTile.png 2"
+2/texture = ExtResource( 10 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 32, 32 )
+2/tile_mode = 1
+2/autotile/bitmask_mode = 0
+2/autotile/bitmask_flags = [  ]
+2/autotile/icon_coordinate = Vector2( 0, 0 )
+2/autotile/tile_size = Vector2( 16, 16 )
+2/autotile/spacing = 0
+2/autotile/occluder_map = [  ]
+2/autotile/navpoly_map = [  ]
+2/autotile/priority_map = [  ]
+2/autotile/z_index_map = [  ]
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "marble.png 3"
+3/texture = ExtResource( 12 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 0, 0, 32, 32 )
+3/tile_mode = 1
+3/autotile/bitmask_mode = 0
+3/autotile/bitmask_flags = [  ]
+3/autotile/icon_coordinate = Vector2( 0, 0 )
+3/autotile/tile_size = Vector2( 16, 16 )
+3/autotile/spacing = 0
+3/autotile/occluder_map = [  ]
+3/autotile/navpoly_map = [  ]
+3/autotile/priority_map = [  ]
+3/autotile/z_index_map = [  ]
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "carpetOrange.png 4"
+4/texture = ExtResource( 13 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 0, 0, 32, 32 )
+4/tile_mode = 1
+4/autotile/bitmask_mode = 0
+4/autotile/bitmask_flags = [  ]
+4/autotile/icon_coordinate = Vector2( 0, 0 )
+4/autotile/tile_size = Vector2( 16, 16 )
+4/autotile/spacing = 0
+4/autotile/occluder_map = [  ]
+4/autotile/navpoly_map = [  ]
+4/autotile/priority_map = [  ]
+4/autotile/z_index_map = [  ]
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
 
 [sub_resource type="NavigationPolygon" id=3]
 vertices = PoolVector2Array( 460, -868, 1749, -394, 1393, 743, -278.174, -51.0017, -284.415, -181.694, -889, -526, -433.31, -180.897, -1375, 330, -435.093, -47.8141, -427.96, -175.318 )
@@ -48,13 +140,11 @@ outlines = [ PoolVector2Array( -889, -526, -1375, 330, 1393, 743, 1749, -394, 46
 script = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]
-position = Vector2( 0, -1 )
-rotation = -0.00576822
 scale = Vector2( 4, 4 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 393200, 0, 3, 393202, 0, 0, 393203, 0, 1, 393204, 0, 1, 393205, 0, 1, 393206, 0, 1, 393207, 0, 1, 393208, 0, 1, 393209, 0, 1, 393210, 0, 1, 393211, 0, 2, 458735, 0, 196608, 458736, 0, 0, 458738, 0, 65536, 458739, 0, 65537, 458740, 0, 65537, 458741, 0, 65537, 458742, 0, 65537, 458743, 0, 65537, 458744, 0, 65537, 458745, 0, 65537, 458746, 0, 65537, 458747, 0, 65538, 524274, 0, 65536, 524275, 0, 65537, 524276, 0, 65537, 524277, 0, 65537, 524278, 0, 65537, 524279, 0, 65537, 524280, 0, 65537, 524281, 0, 65537, 524282, 0, 65537, 524283, 0, 65538, 589807, 0, 0, 589808, 0, 2, 589810, 0, 65536, 589811, 0, 65537, 589812, 0, 65537, 589813, 0, 65537, 589814, 0, 65537, 589815, 0, 65537, 589816, 0, 65537, 589817, 0, 65537, 589818, 0, 65537, 589819, 0, 65538, 655343, 0, 131072, 655344, 0, 131074, 655346, 0, 65536, 655347, 0, 65537, 655348, 0, 65537, 655349, 0, 65537, 655350, 0, 65537, 655351, 0, 65537, 655352, 0, 65537, 655353, 0, 65537, 655354, 0, 65537, 655355, 0, 65538, 720882, 0, 196612, 720883, 0, 196614, 720884, 0, 196614, 720885, 0, 196614, 720886, 0, 196614, 720887, 0, 196613, 720888, 0, 196614, 720889, 0, 196614, 720890, 0, 196614, 720891, 0, 131074 )
+tile_data = PoolIntArray( -196615, 0, 0, -196614, 0, 0, -196613, 0, 0, -196612, 0, 0, -196611, 0, 0, -196610, 0, 0, -196609, 0, 0, -262144, 0, 0, -262143, 0, 0, -262142, 0, 0, -262141, 0, 0, -131080, 0, 0, -131079, 0, 0, -131078, 0, 0, -131077, 0, 0, -131076, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, -65544, 0, 0, -65543, 0, 0, -65542, 0, 0, -65541, 0, 0, -65540, 0, 0, -65539, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -131069, 0, 0, -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -4, 0, 0, -3, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, 65528, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 131064, 0, 0, 131065, 0, 0, 131066, 0, 0, 131067, 0, 0, 131068, 0, 0, 131069, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 196600, 0, 0, 196601, 0, 0, 196602, 0, 0, 196603, 0, 0, 196604, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 262138, 3, 0, 262139, 3, 0, 262140, 3, 0, 262141, 3, 0, 262142, 3, 0, 262143, 3, 0, 196608, 3, 0, 196609, 3, 0, 327674, 3, 0, 327675, 3, 0, 327676, 3, 0, 327677, 3, 0, 327678, 3, 0, 327679, 3, 0, 262144, 3, 0, 262145, 3, 0, 393209, 3, 0, 393210, 3, 0, 393211, 3, 0, 393212, 3, 0, 393213, 3, 0, 393214, 3, 0, 393215, 3, 0, 327680, 3, 0, 327681, 3, 0, 458745, 3, 0, 458747, 3, 0, 458748, 3, 0, 458749, 3, 0, 458750, 3, 0, 458751, 3, 0, 393216, 3, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -83,7 +173,7 @@ position = Vector2( -680, -466 )
 position = Vector2( 512, 229 )
 
 [node name="PlaceLocation6" parent="PlaceLocations" instance=ExtResource( 5 )]
-position = Vector2( 257, 235 )
+position = Vector2( 138, 130 )
 
 [node name="PlaceLocation7" parent="PlaceLocations" instance=ExtResource( 5 )]
 position = Vector2( 461, -421 )
@@ -95,10 +185,10 @@ position = Vector2( -378, -479 )
 position = Vector2( 634, -223 )
 
 [node name="PlaceLocation10" parent="PlaceLocations" instance=ExtResource( 5 )]
-position = Vector2( 404, -281 )
+position = Vector2( 89, -173 )
 
 [node name="PlaceLocation11" parent="PlaceLocations" instance=ExtResource( 5 )]
-position = Vector2( 528, -313 )
+position = Vector2( -29, -181 )
 
 [node name="PlaceLocation12" parent="PlaceLocations" instance=ExtResource( 5 )]
 position = Vector2( -605, 167 )
@@ -129,21 +219,8 @@ position = Vector2( -624, -145 )
 [node name="mob" parent="." instance=ExtResource( 4 )]
 position = Vector2( -524, -146 )
 
-[node name="Table" type="StaticBody2D" parent="."]
-position = Vector2( -400, -150 )
-collision_mask = 0
-
-[node name="Sprite" type="Sprite" parent="Table"]
-position = Vector2( 0, 5.50001 )
-scale = Vector2( 5.8877, 7.09375 )
-texture = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Table"]
-position = Vector2( 0, 3.5 )
-shape = SubResource( 4 )
-
 [node name="Path2D" parent="." instance=ExtResource( 6 )]
-position = Vector2( 201, -292 )
+position = Vector2( 248, -299 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 visible = false
