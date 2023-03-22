@@ -5,7 +5,7 @@
 
 [sub_resource type="Curve2D" id=5]
 _data = {
-"points": PoolVector2Array( -129.083, -42.6536, 129.083, 42.6536, 597, -6, 24.6942, -103.267, -24.6942, 103.267, 615, 233, 69.5926, -46.0209, -69.5926, 46.0209, 544, 366, 144.163, 105.452, -144.163, -105.452, 19, 365, -48.9994, 113.144, 48.9994, -113.144, 4, 0, -143.675, -44.8985, 143.675, 44.8985, 597, -6 )
+"points": PoolVector2Array( 0, 0, 0, 0, 10, -30, -27.5772, -7.07107, 27.5772, 7.07107, 858, -33, 0, 0, 0, 0, 878, 21, -0.707107, -38.1838, 0.707107, 38.1838, 878, 237, 0, 0, 0, 0, 836, 265, 57.9828, -1.41421, -57.9828, 1.41421, -20, 270, 0, 0, 0, 0, -67, 236, 0, 39.598, 0, -39.598, -69, 28, 0, 0, 0, 0, 10, -30 )
 }
 
 [node name="Path2D" type="Path2D"]
@@ -13,10 +13,17 @@ curve = SubResource( 5 )
 script = ExtResource( 2 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2( 597, -6 )
+position = Vector2( -39, -13 )
+rotation = 0.327967
 rotate = false
 
 [node name="mob" parent="PathFollow2D" instance=ExtResource( 3 )]
+rotation = -0.327967
+
+[node name="ViewCone" parent="PathFollow2D/mob/ViewBox" index="0"]
+collision_mask = 0
+
+[connection signal="area_entered" from="PathFollow2D/mob/ViewBox/ViewCone" to="." method="_on_lookshape_entered"]
 
 [editable path="PathFollow2D/mob"]
 [editable path="PathFollow2D/mob/hurtbox"]

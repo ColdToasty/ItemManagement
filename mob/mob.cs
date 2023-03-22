@@ -46,6 +46,9 @@ public class mob : KinematicBody2D
 
 	Random rnd = new Random();
 
+
+
+
 	public enum STATE
 	{
 		CHASE,
@@ -91,7 +94,7 @@ public class mob : KinematicBody2D
 
 
 
-	private void rotate_cone(float delta, Vector2 position)
+	public void rotate_cone(float delta, Vector2 position)
 	{
 		Vector2 direction = position - view_cone_box.GlobalPosition;
 
@@ -186,6 +189,7 @@ public class mob : KinematicBody2D
 	//Rotates the view Cone around to see it they can spot the player
 	private void look_around()
     {
+	
 	}
 
 
