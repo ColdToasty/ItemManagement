@@ -211,6 +211,7 @@ public class mob : KinematicBody2D
 		if (detectionZone.can_hear_player())
 		{
 			rotate_cone(delta, detectionZone.last_heard);
+			EmitSignal("stop_route", false);
 		}
 
 		//If person has been seen in either zone

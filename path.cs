@@ -41,8 +41,14 @@ public class path : Path2D
 
 	}
 
-	
-
+	//See where the future position of the npc is inorder to rotate the cone towards that direction
+	private void futureRoute(float delta)
+    {
+		Vector2 future = npc.GlobalPosition;
+		mob_path.Offset = mob_path.Offset - 100 * delta;
+		npc.rotate_cone(delta, future);
+		mob_path.Offset = mob_path.Offset + 100 * delta;
+	}
 
 	//Need to get mob to roate cone in direction of where they way moving
 	public override void _PhysicsProcess(float delta)
@@ -51,11 +57,9 @@ public class path : Path2D
 		//Default movement when npc has not seen player
 		if(move_route)
 		{
+			futureRoute(delta);
 			mob_path.Offset = mob_path.Offset + 100 * delta;
-			Vector2 future = npc.GlobalPosition;
-			mob_path.Offset = mob_path.Offset - 100 * delta;
-			npc.rotate_cone(delta, future);
-			mob_path.Offset = mob_path.Offset + 100 * delta;
+
 		}
 
 	}
