@@ -55,7 +55,7 @@ public class path : Path2D
 			Vector2 future = npc.GlobalPosition;
 			mob_path.Offset = mob_path.Offset - 100 * delta;
 			npc.rotate_cone(delta, future);
-			mob_path.Offset = mob_path.Offset + 1500 * delta;
+			mob_path.Offset = mob_path.Offset + 100 * delta;
 		}
 
 	}
