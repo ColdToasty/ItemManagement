@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlaceLocation : Node2D
 {
+	public Sprite item_glow;
 	public Sprite item_image;
 	public string name;
 
@@ -12,22 +13,49 @@ public class PlaceLocation : Node2D
 
 	private Player player;
 
+	public List<string> glowAmount = new List<string>();
+
+	public AnimationPlayer animationPlayer;
+
+	public Random rnd = new Random();
+	public string textureAnimation;
+	public bool delivered = false;
 	public override void _Ready()
 	{
-		item_image = GetNode<Sprite>("Sprite");
+		item_glow = GetNode<Sprite>("Sprite");
+		item_image = GetNode<Sprite>("Sprite2");
+
 		zone = GetNode<PlaceLocationPlayerDetectionZone>("PlaceLocationPlayerDetectionZone");
 		detectionzone = zone.GetNode<CollisionShape2D>("CollisionShape2D");
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
+		int count = rnd.Next(1, 2);
+		if(count == 1)
+        {
+			textureAnimation = "shinyGlow1";
+
+		}
+        else
+        {
+			textureAnimation = "shinyGlow2";
+		}
 	}
 
 	public void set_texture()
 	{
 		player = zone.player;
-		item_image.Texture = player.item_textures[0];
-		player.item_textures.RemoveAt(0);
+
 		detectionzone.Disabled = true;
+		delivered = true;
+
+		animationPlayer.Stop();
+
+		item_image.Texture = player.item_textures[0];
+
+		player.item_textures.RemoveAt(0);
+
 
 	}
-
 
 	public override void _PhysicsProcess(float delta) 
 	{
@@ -35,8 +63,12 @@ public class PlaceLocation : Node2D
 		{
 			//Set the texture so that item is placed
 			set_texture();
-
 		}
+		//set the shinyGlow
+        else if(!delivered)
+        {
+			animationPlayer.Play(textureAnimation);
+        }
 	}
 
 
