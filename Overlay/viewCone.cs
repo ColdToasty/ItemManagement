@@ -22,16 +22,19 @@ public class viewCone : Area2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+	
 		//Check each ray
 		foreach (RayCast2D ray in raycast_nodes.GetChildren())
 		{
+
 			//If at least 1 ray cast can see the player visible area
 			if(ray.GetCollider() is PlayerVisible)
-            {
+			{
+				
 				PlayerVisible playerVisible = (PlayerVisible)ray.GetCollider();
 				player = (Player)playerVisible.GetParent();
 				break;
-            }
+			}
 			player = null;
 		}
 		

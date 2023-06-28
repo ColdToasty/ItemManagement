@@ -27,6 +27,8 @@ public class DefaultDoor : KinematicBody2D
 		animationTree.Active = true;
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
 		collider = GetNode<CollisionShape2D>("CollisionShape2D");
+
+
 	}
 
 
@@ -57,14 +59,19 @@ public class DefaultDoor : KinematicBody2D
 		Vector2 doorPosition =(Vector2)animationTree.Get("parameters/Status/blend_position");
 		doorPosition.y = doorPosition.y * toggle;
 		animationTree.Set("parameters/Status/blend_position", doorPosition);
-
+		if (doorPosition.y == 1)
+		{
+			GD.Print("open?");
+		}
 	}
 
 	public override void _Input(InputEvent @event)
 	{
+
 		//Check if player has clicked mouse and is in the door zone
 		if(@event is InputEventMouseButton && player != null)
 		{
+
 			//Convert the event into mousebutton event
 			InputEventMouseButton e = (InputEventMouseButton)@event;
 			//Check if e is the left mouse button pressed
@@ -85,14 +92,55 @@ public class DefaultDoor : KinematicBody2D
 	{
 		player = null;
 	}
-	//If it collides then make it open.
-	//Check if mob is sprinting then make it play sound if so
 
+
+	//If mob enters this area open the door
+	//Check if mob is sprinting then make it play sound if so
 	//If locked then makes players unable to open it - add after implementing basic
 
+	private void keepDoorOpened()
+	{
+        Vector2 doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
+        doorPosition.y = 1;
+        animationTree.Set("parameters/Status/blend_position", doorPosition);
+    }
 
+	private void closeDoor()
+	{
+        Vector2 doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
+        doorPosition.y = -1;
+        animationTree.Set("parameters/Status/blend_position", doorPosition);
+    }
+	private void _on_mobDoor_area_entered(object area)
+	{
+		keepDoorOpened();
+
+    }
+
+
+	private void _on_mobDoor_area_exited(object area)
+	{
+		closeDoor();
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

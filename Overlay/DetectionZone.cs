@@ -72,7 +72,6 @@ public class DetectionZone : Area2D
 	{
 		Player p = area.GetParent<Player>();
 		set_player(p);
-
 	}
 
 

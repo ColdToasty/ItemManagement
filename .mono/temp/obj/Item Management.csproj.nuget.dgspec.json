@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GodotProjects\\ItemManagement\\Item Management.csproj": {}
+    "D:\\Github\\ItemManagement\\Item Management.csproj": {}
   },
   "projects": {
-    "C:\\GodotProjects\\ItemManagement\\Item Management.csproj": {
+    "D:\\Github\\ItemManagement\\Item Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GodotProjects\\ItemManagement\\Item Management.csproj",
+        "projectUniqueName": "D:\\Github\\ItemManagement\\Item Management.csproj",
         "projectName": "Item Management",
-        "projectPath": "C:\\GodotProjects\\ItemManagement\\Item Management.csproj",
-        "packagesPath": "C:\\Users\\01and\\.nuget\\packages\\",
-        "outputPath": "C:\\GodotProjects\\ItemManagement\\.mono\\temp\\obj\\",
+        "projectPath": "D:\\Github\\ItemManagement\\Item Management.csproj",
+        "packagesPath": "C:\\Users\\Home\\.nuget\\packages\\",
+        "outputPath": "D:\\Github\\ItemManagement\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\01and\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Home\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,7 +39,7 @@
       "frameworks": {
         "net472": {
           "targetAlias": "net472",
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

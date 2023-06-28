@@ -40,8 +40,8 @@ public class mob : KinematicBody2D
 	//NavigationAgent
 	public NavigationAgent2D nav_agent;
 
-    //signal if mob is in path2D
-    [Signal]
+	//signal if mob is in path2D
+	[Signal]
 	public delegate void stop_route();
 
 	Random rnd = new Random();
@@ -114,14 +114,14 @@ public class mob : KinematicBody2D
 
 
 	private void give_direction(Vector2 last_heard)
-    {
+	{
 		last_player_position = last_heard;
 		EmitSignal("stop_route", false);
 		//Stop the timer 
 		if(timer.TimeLeft != 0)
-        {
+		{
 			timer.Stop();
-        }
+		}
 	}
 
 
@@ -143,7 +143,7 @@ public class mob : KinematicBody2D
 		if (!arrived_at_location())
 		{
 			velocity = MoveAndSlide(velocity);
-			GD.Print("moving towards target");
+
 		}
 		//If npc has arrived, but last_player_position is a position that is not (0,0) or the original position
 		//This means that they are at a location where the player was last seen
@@ -161,19 +161,20 @@ public class mob : KinematicBody2D
 		}
 
 		else if(arrived_at_location() && last_player_position == original_position)
-        {
+		{
 			last_player_position = Vector2.Zero;
 			EmitSignal("stop_route", true);
-			GD.Print("arrived at original");
 
-        }
+
+		}
+
 
 	}
 		//When mob finishes investigating the area
 	private void _on_Timer_timeout()
 		{
 			last_player_position = original_position;
-			GD.Print("stopped looking around");
+
 		}
 
 
@@ -188,7 +189,7 @@ public class mob : KinematicBody2D
 
 	//Rotates the view Cone around to see it they can spot the player
 	private void look_around()
-    {
+	{
 	
 	}
 
