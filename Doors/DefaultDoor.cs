@@ -15,8 +15,8 @@ public class DefaultDoor : KinematicBody2D
 	public AnimationTree animationTree;
 	public AnimationPlayer animationPlayer;
 	public AnimationNodeStateMachinePlayback animation_playback;
-	public CollisionShape2D collider;
-
+	public CollisionShape2D doorBarrier;
+	public Vector2 doorPosition;
 	public bool mouseInArea = false;
 
 
@@ -26,10 +26,10 @@ public class DefaultDoor : KinematicBody2D
 		animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
-		collider = GetNode<CollisionShape2D>("CollisionShape2D");
+		doorBarrier = GetNode<CollisionShape2D>("CollisionShape2D");
+        doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
 
-
-	}
+    }
 
 
 	/*
@@ -62,7 +62,7 @@ public class DefaultDoor : KinematicBody2D
 		if (doorPosition.y == 1)
 		{
 			GD.Print("open?");
-		}
+        }
 	}
 
 	public override void _Input(InputEvent @event)
@@ -98,29 +98,32 @@ public class DefaultDoor : KinematicBody2D
 	//Check if mob is sprinting then make it play sound if so
 	//If locked then makes players unable to open it - add after implementing basic
 
-	private void keepDoorOpened()
+	private void toggleDoor(int value, bool collisionless)
 	{
-        Vector2 doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
-        doorPosition.y = 1;
+        
+        doorPosition.y = value;
         animationTree.Set("parameters/Status/blend_position", doorPosition);
+		
+		
     }
 
-	private void closeDoor()
-	{
-        Vector2 doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
-        doorPosition.y = -1;
-        animationTree.Set("parameters/Status/blend_position", doorPosition);
-    }
+	//Need to check if mob sits on door
+
 	private void _on_mobDoor_area_entered(object area)
 	{
-		keepDoorOpened();
+		//If door is not open. Open it
+		if(doorPosition.y == -1)
+		{
+            toggleDoor(1, true);
+        }
+		GD.Print("mob open door");
 
     }
-
 
 	private void _on_mobDoor_area_exited(object area)
 	{
-		closeDoor();
+        GD.Print("mob close door");
+        toggleDoor(-1, false);
 	}
 
 }

@@ -50,7 +50,7 @@ public class DetectionZone : Area2D
 		if(p.SPEED >= 400)
 		{
 			last_heard = p.GlobalPosition;
-			timer.Start(rnd.Next(1));
+			timer.Start(rnd.Next(2));
 		}
 	}
 

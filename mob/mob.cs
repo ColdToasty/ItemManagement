@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public class mob : KinematicBody2D
 {
@@ -12,7 +13,9 @@ public class mob : KinematicBody2D
 	public int speed = 250;
 	public int acceleration = 2;
 
-	public Vector2 last_player_position = Vector2.Zero;
+	public bool position_available = false;
+	public bool can_move = false;
+
 	public Vector2 original_position;
 	public Vector2 direction;
 	public Vector2 prevDirection = Vector2.Zero;
@@ -31,8 +34,13 @@ public class mob : KinematicBody2D
 	//CollisionDetection
 	public RayCast2D raycast_nodes;
 
-	public Timer timer;
+	//Timer to wait before moving
+	public Timer idleTimer;
+	public bool timerStarted = false;
+	//Timer to idle before heading back to original location
+	public Timer original_location_timer;
 
+	//
 	public int negative_degree = -45;
 	public int positive_degree = 45;
 
@@ -43,6 +51,7 @@ public class mob : KinematicBody2D
 	//signal if mob is in path2D
 	[Signal]
 	public delegate void stop_route();
+
 
 	Random rnd = new Random();
 
@@ -63,10 +72,9 @@ public class mob : KinematicBody2D
 		detectionZone.Connect("give_direction", this, "give_direction");
 		view_cone_box = GetNode<CollisionShape2D>("ViewBox");
 		view_cone = GetNode<viewCone>("ViewBox/ViewCone");
-
-		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
-
-		timer = GetNode<Timer>("Timer");
+		idleTimer = GetNode<Timer>("idleTimer");
+		original_location_timer = GetNode<Timer>("originalLocationTimer");
+        nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		original_position = this.GlobalPosition;
 
 	}
@@ -74,7 +82,6 @@ public class mob : KinematicBody2D
 
 	private void _on_hurtbox_area_entered(Slap area)
 	{
-
 		stats.Health -= 1;
 		playHitEffect();
 	}
@@ -97,10 +104,8 @@ public class mob : KinematicBody2D
 	public void rotate_cone(float delta, Vector2 position)
 	{
 		Vector2 direction = position - view_cone_box.GlobalPosition;
-
 		prevDirection = direction;
 		var angle = direction.Angle();
-
 		float speed = (float)1;
 		var r = view_cone_box.GlobalRotation;
 		var angle_delta = rotation_speed * delta;
@@ -112,72 +117,23 @@ public class mob : KinematicBody2D
 
 	}
 
-
 	private void give_direction(Vector2 last_heard)
 	{
-		last_player_position = last_heard;
 		EmitSignal("stop_route", false);
-		//Stop the timer 
-		if(timer.TimeLeft != 0)
-		{
-			timer.Stop();
-		}
 	}
 
 
 	//Move our mob towards a certain location
-	private void move(float delta, Vector2 position)
+	private void move()
 	{
-		//Set the position to be moved to
-		nav_agent.SetTargetLocation(position);
-
-		//Get the direction to the location
-
 		direction = this.GlobalPosition.DirectionTo(nav_agent.GetNextLocation());
-
 		//Set the speed and which way to go
 		velocity = (direction * speed);
-		nav_agent.SetVelocity(velocity);
-
-		//While mob hasn't arrived at target location
-		if (!arrived_at_location())
-		{
-			velocity = MoveAndSlide(velocity);
-
-		}
-		//If npc has arrived, but last_player_position is a position that is not (0,0) or the original position
-		//This means that they are at a location where the player was last seen
-		else if (last_player_position != Vector2.Zero && last_player_position != original_position && arrived_at_location())
-		{
-			//Start the timer only when it is inactive 
-			if (timer.TimeLeft == 0)
-			{
-				timer.Start(rnd.Next(4, 7));
-				GD.Print(timer, " Timer start");
-			}
-
-			//Look around while last_position isnt set
-			//Means mob is looking around
-		}
-
-		else if(arrived_at_location() && last_player_position == original_position)
-		{
-			last_player_position = Vector2.Zero;
-			EmitSignal("stop_route", true);
-
-
-		}
-
+		velocity = MoveAndSlide(velocity);
+		
 
 	}
 		//When mob finishes investigating the area
-	private void _on_Timer_timeout()
-		{
-			last_player_position = original_position;
-
-		}
-
-
 
 
 	//If mob has arrived at the position its suppose to move towards
@@ -192,61 +148,101 @@ public class mob : KinematicBody2D
 	{
 	
 	}
-
-
-	//When player makes sound in the zone
-	//Have the viewcone shift towards it even if the player is not in zone anymore
-
-	public override void _PhysicsProcess(float delta)
+	//When the player is heard in its detection zone
+	private void _on_idleTimer_timeout()
 	{
+		can_move = true;
+	}
 
+	//When mob does not find player and has to go back to its starting position
+    private void _on_originalLocationTimer_timeout()
+    {
+		nav_agent.SetTargetLocation(original_position);
+		can_move = true;
+    }
+
+
+    //When player makes sound in the zone
+    //Have the viewcone shift towards it even if the player is not in zone anymore
+
+    public override void _PhysicsProcess(float delta)
+	{
+		//If the viewcone sees the player
 		if (view_cone.can_see_player())
 		{
-			player = view_cone.player;
-		}
-		else
-		{
-			player = null;
-		}
-
-		if (detectionZone.can_hear_player())
-		{
-			rotate_cone(delta, detectionZone.last_heard);
+			//Stop the route, if any
 			EmitSignal("stop_route", false);
-		}
-
-		//If person has been seen in either zone
-		if (player != null)
-		{
+			player = view_cone.player;
+			idleTimer.Stop();
+			original_location_timer.Stop();
 			//Rotate the cone towards the player
 			rotate_cone(delta, player.GlobalPosition);
+			nav_agent.SetTargetLocation(player.GlobalPosition);
+			can_move = true;
+			//GD.Print("ViewCone sees player");
 
-			//Move mob towards player location
-			if (view_cone.can_see_player())
-			{
-				EmitSignal("stop_route", false);
-				last_player_position = player.GlobalPosition;
-				move(delta, player.GlobalPosition);
-			}
 		}
-
-		//If player is null
-		//Mob will move back towards where player was last seen
-		//last_player_position not vector2.zero means move to location
-		if (!detectionZone.can_hear_player())
+		else if (detectionZone.can_hear_player())
 		{
-			if(last_player_position != Vector2.Zero && last_player_position != original_position)
+			timerStarted = false;
+			idleTimer.Stop();
+            original_location_timer.Stop();
+            EmitSignal("stop_route", false);
+			rotate_cone(delta, detectionZone.last_heard);
+			nav_agent.SetTargetLocation(detectionZone.last_heard);
+			if (!timerStarted)
 			{
-				move(delta, last_player_position);
-				rotate_cone(delta, last_player_position);
-			}
-			if(last_player_position == original_position)
-			{
-				move(delta, original_position);
-				rotate_cone(delta, original_position);
+				timerStarted = true;
+				idleTimer.Start(3);
 			}
 		}
+		
+		//If mob hasnt arrived at target location
+		if (!arrived_at_location() && can_move)
+		{
+				idleTimer.Stop();
+				original_location_timer.Stop();
+
+				//GD.Print(nav_agent.GetNextLocation());
+				rotate_cone(delta, nav_agent.GetNextLocation());
+				
+				//Make it so that when player is heard stop movement and follow 185
+
+				move();
+				
+
+				
+		}
+		//If back to original position
+		else if (arrived_at_location() && can_move)
+		{
+			can_move = false;
+			timerStarted = false;
+
+			//Means we need to navigate back to the original position 
+			if(nav_agent.GetTargetLocation() != original_position)
+			{
+                original_location_timer.Start(rnd.Next(4, 7));
+            }
+
+		}
+		//GD.Print(idleTimer.TimeLeft);
+
 	}
 
 
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
