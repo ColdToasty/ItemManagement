@@ -1,22 +1,30 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Tiles/borders/straightRounded.tres" type="TileSet" id=1]
-
-[sub_resource type="TileSet" id=1]
+[ext_resource path="res://Tiles/borders/blackFiller.tres" type="TileSet" id=2]
+[ext_resource path="res://Tiles/borders/halfDiagonal.tres" type="TileSet" id=3]
+[ext_resource path="res://Tiles/borders/diagonal.tres" type="TileSet" id=4]
 
 [node name="borderParent" type="Node2D"]
 
+[node name="blackFiller" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
 [node name="diagonal" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
 cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="halfDiagonal" type="TileMap" parent="."]
-tile_set = SubResource( 1 )
+tile_set = ExtResource( 3 )
 cell_size = Vector2( 16, 16 )
 format = 1
+tile_data = PoolIntArray( -1245182, 0, 0, -1245173, 4, 0, -851960, 3, 0 )
 
 [node name="roundedStraight" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( -1048564, 4, 0, 327687, 0, 0 )
+tile_data = PoolIntArray( -1048564, 4, 0 )

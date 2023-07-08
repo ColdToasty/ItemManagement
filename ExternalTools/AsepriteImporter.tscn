@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Tiles/borders/borders.png" type="Texture" id=1]
+[ext_resource path="res://Tiles/borders/filler.png" type="Texture" id=1]
 
 [sub_resource type="Animation" id=1]
 length = 0.1
@@ -82,10 +82,10 @@ __meta__ = {
 "layer": "",
 "o_ex_p": "",
 "o_folder": "res://Tiles/borders",
-"o_name": "borders",
+"o_name": "filler",
 "only_visible": false,
-"op_exp": true,
+"op_exp": false,
 "player": "AnimationPlayer",
-"source": "res://Tiles/Walls/testWalls.aseprite"
+"source": "res://Tiles/borders/filler.aseprite"
 }
 }
