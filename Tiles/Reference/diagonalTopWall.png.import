@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Template.png-3fcad2193d0915176163e2171790d4cc.stex"
+path="res://.import/diagonalTopWall.png-e201a725a5acb46195f41183e720604a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tiles/Template.png"
-dest_files=[ "res://.import/Template.png-3fcad2193d0915176163e2171790d4cc.stex" ]
+source_file="res://Tiles/Reference/diagonalTopWall.png"
+dest_files=[ "res://.import/diagonalTopWall.png-e201a725a5acb46195f41183e720604a.stex" ]
 
 [params]
 
