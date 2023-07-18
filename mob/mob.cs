@@ -55,9 +55,6 @@ public class mob : KinematicBody2D
 
 	Random rnd = new Random();
 
-
-
-
 	public enum STATE
 	{
 		CHASE,

@@ -30,11 +30,13 @@ public class ItemDatabase : Node
             }
         }
 
-
-
-
     }
 
+
+    public void assignTexture()
+    {
+
+    }
     //Returns the whole list of item objects from ItemData
     public int get_list_length()
     {

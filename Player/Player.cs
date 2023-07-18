@@ -27,19 +27,13 @@ public class Player : KinematicBody2D
 
 	public Timer timer;
 
+    public RunNoise noise;
 
 
 
-	public Area2D slapBoxArea;
 
+    public Area2D slapBoxArea;
 
-	//Items list
-	public List<ItemInfo> items;
-	public ItemDatabase db;
-	public int place_location_number;
-	public List<Texture> item_textures = new List<Texture>();
-
-	public RunNoise noise;
 
 
 	
@@ -49,17 +43,11 @@ public class Player : KinematicBody2D
 		animationTree.Active = true;
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+
 		slapBoxArea = GetNode<Area2D>("Position2D/Area2D");
-		db = GetNode<ItemDatabase>("/root/ItemDatabase");
-		timer = GetNode<Timer>("Timer");
-		items = db.items;
-		
-		//Gets the number of placeLocation nodes
-		place_location_number = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
-		add_textures();
-		noise = GetNode<RunNoise>("RunNoise");
-	
-	}
+
+        timer = GetNode<Timer>("Timer");
+    }
 
 
 	public void move()
@@ -69,18 +57,7 @@ public class Player : KinematicBody2D
 
 	//adds the textures to list
 	//Need to make so player is not dependent on how many boxes there are
-	public void add_textures()
-	{
-		Random rnd = new Random();
-		int item_data_count = db.get_list_length();
 
-		for (int i = 0; i < place_location_number; i++)
-		{
-			int rnd_sprite = rnd.Next(item_data_count);
-			item_textures.Add(db.items[rnd_sprite].texture);
-		}
-
-	}
 
 	//when a PlaceLocationPlayerDetectionZone enters its area
 	private void _on_PlaceLocation_area_entered(object area)
@@ -88,9 +65,6 @@ public class Player : KinematicBody2D
 
 		
 	}
-
-
-
 
 	public void move_state()
 	{

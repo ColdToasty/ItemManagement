@@ -11,8 +11,6 @@ public class PlaceLocation : Node2D
 	private PlaceLocationPlayerDetectionZone zone;
 	private CollisionShape2D detectionzone;
 
-	private Player player;
-
 	public List<string> glowAmount = new List<string>();
 
 	public AnimationPlayer animationPlayer;
@@ -20,9 +18,14 @@ public class PlaceLocation : Node2D
 	public Random rnd = new Random();
 	public string textureAnimation;
 	public bool delivered = false;
-	public override void _Ready()
+
+	public World level;
+    public List<Texture> item_textures = new List<Texture>();
+
+    public override void _Ready()
 	{
-		item_glow = GetNode<Sprite>("Sprite");
+
+        item_glow = GetNode<Sprite>("Sprite");
 		item_image = GetNode<Sprite>("Sprite2");
 
 		zone = GetNode<PlaceLocationPlayerDetectionZone>("PlaceLocationPlayerDetectionZone");
@@ -39,25 +42,29 @@ public class PlaceLocation : Node2D
         {
 			textureAnimation = "shinyGlow2";
 		}
-	}
+
+        Node root = GetTree().Root;
+        level = root.GetNode<World>("level1");
+		
+
+    }
 
 	public void set_texture()
 	{
-		player = zone.player;
 
 		detectionzone.Disabled = true;
 		delivered = true;
-
 		animationPlayer.Stop();
 
-		item_image.Texture = player.item_textures[0];
+		//Set the image to the level item_texture
+        item_image.Texture = level.item_textures[0];
+		//Remove the texture from the list 
+        level.item_textures.RemoveAt(0);
 
-		player.item_textures.RemoveAt(0);
 
+    }
 
-	}
-
-	public override void _PhysicsProcess(float delta) 
+    public override void _PhysicsProcess(float delta) 
 	{
 		if (zone.see_player())
 		{
