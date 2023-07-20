@@ -44,7 +44,8 @@ public class PlaceLocation : Node2D
 		}
 
         Node root = GetTree().Root;
-        level = root.GetNode<World>("level1");
+		string levelName = GetTree().CurrentScene.Name;
+        level = root.GetNode<World>(levelName);
 		
 
     }

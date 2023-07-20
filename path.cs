@@ -4,7 +4,7 @@ using System;
 public class path : Path2D
 {
 	public PathFollow2D mob_path;
-	public mob npc;
+	public Mob npc;
 	public float offset;
 	public bool move_route = true;
 
@@ -15,7 +15,7 @@ public class path : Path2D
 
 		//Allows any npc to be used in the tree
 		string name = mob_path.GetChildren()[0].GetType().ToString();
-		npc = GetNode<mob>($"PathFollow2D/{name}");
+		npc = GetNode<Mob>($"PathFollow2D/{name}");
 		npc.Connect("stop_route", this, "stop_route");
 	}
 

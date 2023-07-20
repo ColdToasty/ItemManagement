@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
-public class mob : KinematicBody2D
+public class Mob : KinematicBody2D
 {
 
 	public PackedScene statsScene;
@@ -190,8 +190,12 @@ public class mob : KinematicBody2D
 			if (!timerStarted)
 			{
 				timerStarted = true;
-				idleTimer.Start(3);
+				idleTimer.Start(1);
 			}
+		}
+		else
+		{
+			player = null;
 		}
 		
 		//If mob hasnt arrived at target location

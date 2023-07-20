@@ -2,7 +2,7 @@
 
 [ext_resource path="res://mob/mob.png" type="Texture" id=1]
 [ext_resource path="res://Overlay/hurtbox.tscn" type="PackedScene" id=2]
-[ext_resource path="res://mob/mob.cs" type="Script" id=3]
+[ext_resource path="res://mob/Mob.cs" type="Script" id=3]
 [ext_resource path="res://Stats/mobStats.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Overlay/DetectionZone.tscn" type="PackedScene" id=6]
 
@@ -19,6 +19,7 @@ script = ExtResource( 3 )
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 20.0
+avoidance_enabled = true
 
 [node name="DetectionZone" parent="." instance=ExtResource( 6 )]
 
