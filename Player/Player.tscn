@@ -515,8 +515,8 @@ height = 60.0
 radius = 72.5672
 
 [sub_resource type="CapsuleShape2D" id=56]
-radius = 9.0
-height = 16.0
+radius = 8.0
+height = 18.0
 
 [sub_resource type="CapsuleShape2D" id=57]
 radius = 8.0
@@ -578,10 +578,11 @@ collision_mask = 24577
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerVisible"]
-position = Vector2( 0, -1 )
+position = Vector2( 0, 3 )
 shape = SubResource( 48 )
 
 [node name="RunNoise" type="Area2D" parent="."]
+visible = false
 collision_layer = 512
 collision_mask = 0
 script = ExtResource( 8 )
@@ -608,7 +609,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1, 40 )
+position = Vector2( -1, 41 )
 rotation = 1.5708
 shape = SubResource( 56 )
 
@@ -622,15 +623,15 @@ rotation = 1.5708
 shape = SubResource( 57 )
 
 [node name="PlayerItem" type="Area2D" parent="."]
-visible = false
 position = Vector2( 0, 1 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerItem"]
-position = Vector2( 0, -1 )
+position = Vector2( 5, 3 )
 shape = SubResource( 47 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="PlayerVisible" to="." method="_on_hitPlayerBox_entered"]

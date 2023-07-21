@@ -169,6 +169,7 @@ Sprint={
 2d_physics/layer_14="door"
 2d_physics/layer_15="wall"
 2d_physics/layer_16="mobDoor"
+2d_physics/layer_17="hitPlayerBox"
 
 [mono]
 

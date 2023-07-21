@@ -27,12 +27,12 @@ public class Player : KinematicBody2D
 
 	public Timer timer;
 
-    public RunNoise noise;
+	public RunNoise noise;
 
 
 
 
-    public Area2D slapBoxArea;
+	public Area2D slapBoxArea;
 
 
 
@@ -46,8 +46,8 @@ public class Player : KinematicBody2D
 
 		slapBoxArea = GetNode<Area2D>("Position2D/Area2D");
 
-        timer = GetNode<Timer>("Timer");
-    }
+		timer = GetNode<Timer>("Timer");
+	}
 
 
 	public void move()
@@ -66,7 +66,27 @@ public class Player : KinematicBody2D
 		
 	}
 
-	public void move_state()
+
+	//When player gets hit by mob with a hitPlayerBox
+    private void _on_hitPlayerBox_entered(object area)
+    {
+		if(area is hitPlayerBox)
+		{
+			if(((hitPlayerBox)area).GetParent() is Old)
+			{
+				GD.Print("Im hurt");
+				//Slow player down
+				//Decrease health
+			}
+			else if(( (hitPlayerBox)area).GetParent() is Cop)
+			{
+				GD.Print("Im knocked out");
+			}
+		}
+    }
+
+
+    public void move_state()
 	{
 		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
@@ -148,15 +168,5 @@ public class Player : KinematicBody2D
 
 	}
 }
-
-
-
-
-
-
-
-
-
-
 
 

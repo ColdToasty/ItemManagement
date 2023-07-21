@@ -71,7 +71,7 @@ public class Mob : KinematicBody2D
 		view_cone = GetNode<viewCone>("ViewBox/ViewCone");
 		idleTimer = GetNode<Timer>("idleTimer");
 		original_location_timer = GetNode<Timer>("originalLocationTimer");
-        nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
+		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		original_position = this.GlobalPosition;
 
 	}
@@ -152,17 +152,17 @@ public class Mob : KinematicBody2D
 	}
 
 	//When mob does not find player and has to go back to its starting position
-    private void _on_originalLocationTimer_timeout()
-    {
+	private void _on_originalLocationTimer_timeout()
+	{
 		nav_agent.SetTargetLocation(original_position);
 		can_move = true;
-    }
+	}
 
 
-    //When player makes sound in the zone
-    //Have the viewcone shift towards it even if the player is not in zone anymore
+	//When player makes sound in the zone
+	//Have the viewcone shift towards it even if the player is not in zone anymore
 
-    public override void _PhysicsProcess(float delta)
+	public override void _PhysicsProcess(float delta)
 	{
 		//If the viewcone sees the player
 		if (view_cone.can_see_player())
@@ -183,8 +183,8 @@ public class Mob : KinematicBody2D
 		{
 			timerStarted = false;
 			idleTimer.Stop();
-            original_location_timer.Stop();
-            EmitSignal("stop_route", false);
+			original_location_timer.Stop();
+			EmitSignal("stop_route", false);
 			rotate_cone(delta, detectionZone.last_heard);
 			nav_agent.SetTargetLocation(detectionZone.last_heard);
 			if (!timerStarted)
@@ -223,8 +223,8 @@ public class Mob : KinematicBody2D
 			//Means we need to navigate back to the original position 
 			if(nav_agent.GetTargetLocation() != original_position)
 			{
-                original_location_timer.Start(rnd.Next(4, 7));
-            }
+				original_location_timer.Start(rnd.Next(4, 7));
+			}
 
 		}
 		//GD.Print(idleTimer.TimeLeft);

@@ -9,32 +9,32 @@ public class World : Node2D
 	Navigation2D MobNavigation;
 
 
-    //Items list
-    public ItemDatabase db;
-    public int place_location_number;
-    public List<Texture> item_textures = new List<Texture>();
+	//Items list
+	public ItemDatabase db;
+	public int place_location_number;
+	public List<Texture> item_textures = new List<Texture>();
 
-    public override void _Ready()
+	public override void _Ready()
 	{
-        db = GetNode<ItemDatabase>("/root/ItemDatabase");
-        //Gets the number of placeLocation nodes
-        place_location_number = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
-        add_textures();
-    }
+		db = GetNode<ItemDatabase>("/root/ItemDatabase");
+		//Gets the number of placeLocation nodes
+		place_location_number = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
+		add_textures();
+	}
 
-    //Loads the textures 
-    public void add_textures()
-    {
-        Random rnd = new Random();
-        int item_data_count = db.get_list_length();
+	//Loads the textures 
+	public void add_textures()
+	{
+		Random rnd = new Random();
+		int item_data_count = db.get_list_length();
 
-        for (int i = 0; i < place_location_number; i++)
-        {
-            //Randomises the texture the present is assigned
-            int rnd_sprite = rnd.Next(item_data_count);
-            //Add it to a set list
-            item_textures.Add(db.items[rnd_sprite].texture);
-        }
+		for (int i = 0; i < place_location_number; i++)
+		{
+			//Randomises the texture the present is assigned
+			int rnd_sprite = rnd.Next(item_data_count);
+			//Add it to a set list
+			item_textures.Add(db.items[rnd_sprite].texture);
+		}
 
-    }
+	}
 }
