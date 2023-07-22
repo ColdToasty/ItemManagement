@@ -349,7 +349,7 @@ extents = Vector2( 32, 7.5 )
 [sub_resource type="RectangleShape2D" id=24]
 extents = Vector2( 32, 45 )
 
-[node name="DoorDown" type="KinematicBody2D"]
+[node name="Door" type="KinematicBody2D"]
 collision_layer = 8192
 collision_mask = 0
 script = ExtResource( 2 )
@@ -387,11 +387,11 @@ visible = false
 position = Vector2( 0, 44.5 )
 shape = SubResource( 19 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="playerReachArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playerReachArea"]
 shape = SubResource( 21 )
 
 [node name="mobDoor" type="Area2D" parent="."]
@@ -407,10 +407,12 @@ shape = SubResource( 22 )
 [node name="Area2D2" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+visible = false
 position = Vector2( 0, -3 )
 shape = SubResource( 24 )
+disabled = true
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_playerReach_area_entered"]
-[connection signal="area_exited" from="Area2D" to="." method="_on_playerReach_area_exited"]
+[connection signal="area_entered" from="playerReachArea" to="." method="_on_playerReach_area_entered"]
+[connection signal="area_exited" from="playerReachArea" to="." method="_on_playerReach_area_exited"]
 [connection signal="area_entered" from="mobDoor" to="." method="_on_mobDoor_area_entered"]
 [connection signal="area_exited" from="mobDoor" to="." method="_on_mobDoor_area_exited"]

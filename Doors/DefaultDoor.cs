@@ -116,13 +116,13 @@ public class DefaultDoor : KinematicBody2D
 		{
             toggleDoor(1, true);
         }
-		GD.Print("mob open door");
+		//GD.Print("mob open door");
 
     }
 
 	private void _on_mobDoor_area_exited(object area)
 	{
-        GD.Print("mob close door");
+        //GD.Print("mob close door");
         toggleDoor(-1, false);
 	}
 

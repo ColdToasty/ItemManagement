@@ -9,7 +9,7 @@ public class Player : KinematicBody2D
 		ATTACK
 	}
 
-	public int SPEED = 200;
+	public int SPEED = 100;
 	public STATE state = STATE.MOVING;
 	public Vector2 input_vector = Vector2.Zero;
 	public Vector2 velocity = Vector2.Zero;

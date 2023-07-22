@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Managers/playerDoorHierarchy.cs" type="Script" id=1]
-[ext_resource path="res://Doors/DoorDown.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Doors/doorDown/Door.tscn" type="PackedScene" id=2]
 
 [node name="playerDoorHierachy" type="YSort"]
 script = ExtResource( 1 )

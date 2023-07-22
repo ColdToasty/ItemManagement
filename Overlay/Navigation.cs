@@ -59,6 +59,10 @@ public class Navigation : Navigation2D
             copInstance.spawnPosition = spawn.GlobalPosition + spawnLocationRnd;
             //Set the cops original position 
             copInstance.original_position = copInstance.GlobalPosition;
+            copInstance.can_move = true;
+            copInstance.nav_agent.SetTargetLocation(man_sees_player);
+            //set it to last_player_location
+
             //Makes the cops move instantly
             copCount++;
         }
