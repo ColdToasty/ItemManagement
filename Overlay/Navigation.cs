@@ -38,6 +38,7 @@ public class Navigation : Navigation2D
         {
             if (children[i] is Cop)
             {
+                //Set the cops mobs target location to where the woman or man mob sees the player
                 ((Cop)(children[i])).nav_agent.SetTargetLocation(this.man_sees_player);
                 ((Cop)(children[i])).can_move = true;
             }
@@ -57,11 +58,13 @@ public class Navigation : Navigation2D
             //Spawns cops near spawn
             copInstance.GlobalPosition = spawn.GlobalPosition + spawnLocationRnd;
             copInstance.spawnPosition = spawn.GlobalPosition + spawnLocationRnd;
-            //Set the cops original position 
+            //Set the cops original position / spawn
             copInstance.original_position = copInstance.GlobalPosition;
+
+            //Sets target location to where player was last seen by a man or woman mob
             copInstance.can_move = true;
             copInstance.nav_agent.SetTargetLocation(man_sees_player);
-            //set it to last_player_location
+
 
             //Makes the cops move instantly
             copCount++;

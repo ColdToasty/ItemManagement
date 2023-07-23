@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/CreamWall-Sheet.png-f8863a69ef3010e417ab39bddce61f06.stex"
+path="res://.import/wallsTemplate.png-eba16926f0a9c9c79cd0a543696f1e02.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tiles/Walls/CreamWall-Sheet.png"
-dest_files=[ "res://.import/CreamWall-Sheet.png-f8863a69ef3010e417ab39bddce61f06.stex" ]
+source_file="res://Tiles/Walls/wallsTemplate.png"
+dest_files=[ "res://.import/wallsTemplate.png-eba16926f0a9c9c79cd0a543696f1e02.stex" ]
 
 [params]
 
