@@ -18,6 +18,7 @@ public class DefaultDoor : KinematicBody2D
 	public CollisionShape2D doorBarrier;
 	public Vector2 doorPosition;
 	public bool mouseInArea = false;
+	private bool locked = false;
 
 
 	public override void _Ready()
@@ -75,7 +76,7 @@ public class DefaultDoor : KinematicBody2D
 			//Convert the event into mousebutton event
 			InputEventMouseButton e = (InputEventMouseButton)@event;
 			//Check if e is the left mouse button pressed
-			if (e.Pressed && e.ButtonMask == (int)ButtonList.Left) 
+			if (e.Pressed && e.ButtonMask == (int)ButtonList.Left && !locked) 
 			{
 				openDoor();
 			}
