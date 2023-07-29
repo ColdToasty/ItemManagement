@@ -19,5 +19,5 @@ format = 1
 [node name="halfDiagonalStraight" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 16, 16 )
+show_collision = true
 format = 1
-tile_data = PoolIntArray( -1245182, 0, 0, -1245173, 4, 0, -65523, 4, 0 )

@@ -1,9 +1,8 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Player/PlayerReach.cs" type="Script" id=2]
 [ext_resource path="res://Player/Slap.cs" type="Script" id=3]
-[ext_resource path="res://Player/playerStats/playerStats.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/PlayerVisible.cs" type="Script" id=5]
 [ext_resource path="res://PlayerSounds/slap2.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Player/PlayerSprite/Walk.png" type="Texture" id=7]
@@ -633,8 +632,6 @@ script = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerItem"]
 position = Vector2( 5, 3 )
 shape = SubResource( 47 )
-
-[node name="playerStats" parent="." instance=ExtResource( 4 )]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

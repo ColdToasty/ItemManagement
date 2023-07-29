@@ -14,7 +14,7 @@ public class DetectionZone : Area2D
 	public Timer timer;
 
 	private Random rnd = new Random();
-
+	private playerStats playerStats;
 
 	[Signal]
 	public delegate void give_direction(Vector2 last_position);
@@ -22,7 +22,8 @@ public class DetectionZone : Area2D
 	public override void _Ready()
 	{
 		timer = GetNode<Timer>("Timer");
-	}
+        playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
+    }
 
 	public bool can_see_player()
 	{
@@ -47,7 +48,7 @@ public class DetectionZone : Area2D
 
 	public void set_player(Player p)
 	{
-		if(p.SPEED >= 400)
+		if(p.SPEED >= playerStats.SprintSpeed)
 		{
 			last_heard = p.GlobalPosition;
 			timer.Start(rnd.Next(2));
