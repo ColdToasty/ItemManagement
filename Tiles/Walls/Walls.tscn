@@ -16,19 +16,19 @@ points = PoolVector2Array( 15.9424, 91.6498, 0, 96, 0, 0, 16.0274, 0 )
 points = PoolVector2Array( 16.3381, 0, 64, 0, 64, 96, 15.9648, 91.2195 )
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 47.9268, 90.7714, 0, 96, 0, 0, 47.7029, 0 )
+points = PoolVector2Array( 48.0157, 92.6496, 0, 96, 0, 0, 47.7029, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
-points = PoolVector2Array( 64, 96, 31.9232, 87.755, 31.9232, 0, 64, 0 )
+points = PoolVector2Array( 64, 96, 31.9653, 93.338, 31.9232, 0, 64, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 31.883, 87.755, 0, 96, 0, 0, 31.7038, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=8]
-points = PoolVector2Array( 64, 96, 0, 89.8374, 0, 0, 64, 0 )
+points = PoolVector2Array( 64, 96, 0, 90.5625, 0, 0, 64, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=9]
-points = PoolVector2Array( 64, 87.4862, 0, 96, 0, 0, 64, 0 )
+points = PoolVector2Array( 63.95, 90.2001, 0, 96, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=1]
 0/name = "1Left"
@@ -224,4 +224,6 @@ format = 1
 
 [node name="edgeWalls" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
+collision_layer = 16384
+collision_mask = 0
 format = 1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Doors/playerDoorSort/npcSort.cs" type="Script" id=1]
+[ext_resource path="res://Overlay/npcOverlay/npcSort.cs" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
@@ -17,6 +17,10 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Exit" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1094
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
 shape = SubResource( 2 )
+
+[connection signal="area_entered" from="Exit" to="." method="_player_exit"]

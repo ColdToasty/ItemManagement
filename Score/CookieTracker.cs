@@ -12,20 +12,20 @@ public class CookieTracker : Control
 	{
 		label = GetNode<Label>("HBoxContainer/Label");
 		counter = GetNode<CookieCounter>("/root/CookieCounter");
-		cookieScore = counter.Cookie_counter;
-		timer = GetNode<Timer>("Timer");
+		cookieScore = counter.Level_Cookie_Counter;
+		timer = GetNode<Timer>("showCookiesTimer");
 		this.Visible = false;
 	}
 
 
 	public void display_score()
 	{
-		label.Text = $"Cookies: {counter.Cookie_counter}";
-		cookieScore = counter.Cookie_counter;
+		label.Text = $"Cookies: {counter.Level_Cookie_Counter}";
+		cookieScore = counter.Level_Cookie_Counter;
 		this.Visible = true;
 		timer.Start(2);
 	}
-
+	
 	private void _on_Timer_timeout()
 	{
 		this.Visible = false;
@@ -35,7 +35,8 @@ public class CookieTracker : Control
 
 	public override void _PhysicsProcess(float delta)
 	{
-		if(cookieScore != counter.Cookie_counter)
+		//Displays the score only when changed
+		if(cookieScore != counter.Level_Cookie_Counter)
 		{
 			display_score();
 		}

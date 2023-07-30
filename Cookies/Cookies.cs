@@ -7,14 +7,17 @@ public class Cookies : StaticBody2D
 
 	private Random rng = new Random();
 
-	private CookieCounter Cookie_counter;
+	private CookieCounter level_cookie_counter;
+
+	[Signal]
+	public delegate void cookieIncrease();
 
 	public override void _Ready()
 	{
 		cookie_texture = GetNode<Sprite>("Sprite");
 		int texture = rng.Next(5);
 		cookie_texture.Frame = texture;
-		Cookie_counter = GetNode<CookieCounter>("/root/CookieCounter");
+        level_cookie_counter = GetNode<CookieCounter>("/root/CookieCounter");
 	}
 
 
@@ -23,7 +26,7 @@ public class Cookies : StaticBody2D
 	//Singleton - Cookies += 1
 	private void _on_playerReach_area_entered(object area)
 	{
-		Cookie_counter.Cookie_counter += 1;
+        level_cookie_counter.Level_Cookie_Counter += 1;
 		QueueFree();
 	}
 

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Overlay/mobOverlay/OldviewCone.cs" type="Script" id=1]
+[ext_resource path="res://Overlay/mobOverlay/ViewBox.tscn" type="PackedScene" id=2]
+
+[node name="oldViewBox" instance=ExtResource( 2 )]
+
+[node name="ViewCone" parent="." index="0"]
+script = ExtResource( 1 )

@@ -33,7 +33,7 @@ public class Player : KinematicBody2D
 	public int SPEED;
 
     [Signal]
-    public delegate void gameOverScreen();
+    public delegate void showGameOverScreen();
 
     public override void _Ready()
 	{
@@ -89,7 +89,7 @@ public class Player : KinematicBody2D
 		{
 			//Play disappear animation
 			//Emit gameOver signal
-			EmitSignal("gameOverScreen");
+			EmitSignal("showGameOverScreen");
 		}
     }
 

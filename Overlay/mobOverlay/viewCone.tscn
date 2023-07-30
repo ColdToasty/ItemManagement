@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Overlay/viewCone.cs" type="Script" id=1]
+[ext_resource path="res://Overlay/mobOverlay/viewCone.cs" type="Script" id=1]
 
 [node name="ViewBox" type="Area2D"]
 rotation = 1.5708

@@ -27,6 +27,21 @@ public class playerStats : Resource
     [Export]
     public float PlayerItemHeight { get; set; }
 
+    [Export]
+    public float playerVisiableRadius { get; set; }
+
+    [Export]
+    public float playerVisiableHeight { get; set; }
+
+
+    [Export]
+    public float runNoiseRadius { get; set; }
+
+
+    [Export]
+    public float runNoiseHeight { get; set; }
+
+
 
 
 

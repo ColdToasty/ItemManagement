@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Score/CookieTracker.cs" type="Script" id=1]
 [ext_resource path="res://Score/CookieTracker.tscn" type="PackedScene" id=2]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="CookieCounter" type="CanvasLayer"]
 
-[node name="CookieTracker" type="Control" parent="." instance=ExtResource( 2 )]
+[node name="CookieTracker" parent="." instance=ExtResource( 2 )]
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 517.0
 margin_bottom = 211.0
-script = ExtResource( 1 )

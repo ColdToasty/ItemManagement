@@ -27,8 +27,6 @@ CookieCounter="*res://Cookies/CookieCounter.cs"
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
 window/per_pixel_transparency/allowed=true
 window/stretch/mode="2d"
 window/stretch/aspect="expand"

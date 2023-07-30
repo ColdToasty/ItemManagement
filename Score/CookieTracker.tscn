@@ -25,6 +25,6 @@ rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 1 )
 expand = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="showCookiesTimer" type="Timer" parent="."]
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="showCookiesTimer" to="." method="_on_Timer_timeout"]
