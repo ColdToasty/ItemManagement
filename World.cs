@@ -15,11 +15,14 @@ public class World : Node2D
 	public List<Texture> item_textures = new List<Texture>();
 	private Player player;
 	public npcSort npcSort;
+	public bool pause = false;
 
 	CookieCounter cookieCounter;
     public int cookieScore;
 
 	private bool level_ended = false;
+
+	private gameOverScreen gameOver;
     public override void _Ready()
 	{
 		db = GetNode<ItemDatabase>("/root/ItemDatabase");
@@ -32,6 +35,9 @@ public class World : Node2D
 		npcSort = GetNode<npcSort>("npcSort");
         npcSort.Connect("endLevel", this, "endLevel");
 		cookieCounter = GetNode<CookieCounter>("/root/CookieCounter");
+
+		//Get gameOverScreen
+		//add it but disable visibility
     }
 
 
@@ -72,4 +78,8 @@ public class World : Node2D
 		}
 
 	}
+	
+
+
+
 }

@@ -14,10 +14,10 @@ public class path : Path2D
 		mob_path = GetNode<PathFollow2D>("PathFollow2D");
 
 		//Allows any npc to be used in the tree
-		string name = mob_path.GetChildren()[0].GetType().ToString();
-		npc = GetNode<Mob>($"PathFollow2D/{name}");
-		npc.Connect("stop_route", this, "stop_route");
-	}
+		string name = mob_path.GetChildren()[0].GetType().ToString().ToLower();
+        npc = GetNode<Mob>($"PathFollow2D/{name}");
+        npc.Connect("stop_route", this, "stop_route");
+    }
 
 	public void stop_route(bool move)
 	{

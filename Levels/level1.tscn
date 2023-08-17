@@ -1,5 +1,6 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
+[ext_resource path="res://mob/mobPath.tscn" type="PackedScene" id=1]
 [ext_resource path="res://mob/npcs/old.tscn" type="PackedScene" id=2]
 [ext_resource path="res://mob/npcs/man.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/table.tscn" type="PackedScene" id=4]
@@ -362,7 +363,7 @@ cell_size = Vector2( 64, 96 )
 tile_data = PoolIntArray( -131077, 8, 0, -131075, 7, 0, -196608, 8, 0, -196606, 7, 0, 131063, 1, 0, 393213, 8, 0, 393215, 7, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 424, -112 )
+position = Vector2( -1000, -376 )
 current = true
 
 [node name="TileMap2" type="TileMap" parent="."]
@@ -426,8 +427,11 @@ position = Vector2( -302.16, 251.712 )
 [node name="woman" parent="npcSort" instance=ExtResource( 11 )]
 position = Vector2( -363, 832 )
 
+[node name="Path2D" parent="npcSort" instance=ExtResource( 1 )]
+position = Vector2( 520, -544 )
+
 [node name="Player" parent="npcSort" instance=ExtResource( 10 )]
-position = Vector2( 424, -112 )
+position = Vector2( -1000, -376 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="npcSort/Player"]
 remote_path = NodePath("../../../Camera2D")

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class follow : PathFollow2D
+public class gameOverScreen : Control
 {
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -13,9 +13,9 @@ public class follow : PathFollow2D
         
     }
 
-
-    public override void _Process(float delta)
-    {    
-
-    }
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
 }

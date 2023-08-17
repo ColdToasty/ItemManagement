@@ -58,8 +58,6 @@ public class Player : KinematicBody2D
 	}
 
 	//adds the textures to list
-	//Need to make so player is not dependent on how many boxes there are
-
 
 	//when a PlaceLocationPlayerDetectionZone enters its area
 	private void _on_PlaceLocation_area_entered(object area)
