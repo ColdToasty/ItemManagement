@@ -18,12 +18,12 @@ public class World : Node2D
 	public bool pause = false;
 
 	CookieCounter cookieCounter;
-    public int cookieScore;
+	public int cookieScore;
 
 	private bool level_ended = false;
 
 	private gameOverScreen gameOver;
-    public override void _Ready()
+	public override void _Ready()
 	{
 		db = GetNode<ItemDatabase>("/root/ItemDatabase");
 		//Gets the number of placeLocation nodes
@@ -33,12 +33,12 @@ public class World : Node2D
 		player.Connect("showGameOverScreen", this, "showGameOverScreen");
 
 		npcSort = GetNode<npcSort>("npcSort");
-        npcSort.Connect("endLevel", this, "endLevel");
+		npcSort.Connect("endLevel", this, "endLevel");
 		cookieCounter = GetNode<CookieCounter>("/root/CookieCounter");
 
 		//Get gameOverScreen
 		//add it but disable visibility
-    }
+	}
 
 
 
@@ -54,17 +54,17 @@ public class World : Node2D
 		GD.Print("End Level");
 		//Prevent cookies being added multiple times
 		if(!level_ended) {
-            level_ended = true;
-            cookieCounter.Save_global_cookies();
-            //Save time
-            //Save presents delivered
-            //Save highScore for level
+			level_ended = true;
+			cookieCounter.Save_global_cookies();
+			//Save time
+			//Save presents delivered
+			//Save highScore for level
 		}
 
-    }
+	}
 
-    //Loads the textures 
-    public void add_textures()
+	//Loads the textures 
+	public void add_textures()
 	{
 		Random rnd = new Random();
 		int item_data_count = db.get_list_length();

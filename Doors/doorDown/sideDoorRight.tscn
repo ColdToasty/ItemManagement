@@ -331,7 +331,7 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachine" id=2]
 states/Status/node = SubResource( 16 )
-states/Status/position = Vector2( 491, 120 )
+states/Status/position = Vector2( 529, 171 )
 start_node = "Status"
 graph_offset = Vector2( -23, 10 )
 
@@ -352,6 +352,7 @@ extents = Vector2( 32, 45 )
 [node name="Door" type="KinematicBody2D"]
 collision_layer = 8192
 collision_mask = 0
+input_pickable = true
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -383,12 +384,11 @@ parameters/playback = SubResource( 3 )
 parameters/Status/blend_position = Vector2( 0, -1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 44.5 )
 shape = SubResource( 19 )
 
 [node name="playerReachArea" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 131072
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="playerReachArea"]

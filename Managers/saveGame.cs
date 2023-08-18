@@ -8,33 +8,34 @@ public class saveGame : Control
 
 
 	private static string save_directory = "user://saves/";
-    private static string continueFileName = "continue.json";
-    private static string continueFileLocation = save_directory + continueFileName;
-    
+    private static string continue_file_name = "continue";
+    private static string file_extension = ".json";
+    private static string continue_file_location = save_directory + continue_file_name + file_extension;
+
 	//Not implemented
 	private bool pause = false;
 
-	//Temp for filenaming
-	private LineEdit name;
+
 
     //Navigate to saveFiles
-    Directory savedGames = new Directory();
+    Directory saved_games = new Directory();
 
-	private int numberOfSavedGames =0;
+	private int number_of_saved_games =0;
     
 	//Continue keys
-	public string continueSaveFileName = "";
-    public string continueSaveFileDate = "";
-    public string continueSaveFileTime = "";
+	public string continue_save_file_name = "";
+    public string continue_save_file_date = "";
+    public string continue_save_file_time = "";
 
 	//Savefile 
-    private playerStats playerStats;
+    private playerStats player_stats;
 
 	//Looks at playerStats resource
-    private Dictionary<string, float> playerData;
+    private Dictionary<string, float> player_data;
 
     //Nodes in tree
-    private Button continueButton;
+    private Button continue_button;
+    private LineEdit name;
 
     [Signal]
 	public delegate void noContinue();
@@ -49,17 +50,20 @@ public class saveGame : Control
 		GD.Print();
 
 		var file = new File();
-		string saveFileDir = save_directory + continueSaveFileName;
-        Error error = file.Open(continueFileLocation, File.ModeFlags.Read);
 
-		if(error == Error.Ok)
+        Error checkFileContinue = file.Open(continue_file_location, File.ModeFlags.Read);
+
+		if(checkFileContinue == Error.Ok)
 		{
-            if (file.FileExists(saveFileDir + ".json"))
+			
+            if (file.FileExists(continue_file_location))
             {
                 var continueGameData = file.GetAsText();
                 JSONParseResult saveData = JSON.Parse(continueGameData);
                 Dictionary result = saveData.Result as Dictionary;
-				GD.Print(result["name"]);
+                continue_save_file_name = result["name"].ToString();
+				continue_save_file_date = result["date"].ToString();
+                continue_save_file_time = result["time"].ToString();
             }
             else
             {
@@ -77,10 +81,26 @@ public class saveGame : Control
 
         file.Close();
 
+		//Everything below probably can be moved into own function
 
+		//Get the save file to be opened location
+		string loadSaveFileLocation = save_directory + continue_save_file_name + file_extension;
+		Error checkSaveExist = file.Open(loadSaveFileLocation, File.ModeFlags.Read);
+		if(checkSaveExist == Error.Ok)
+		{
+			if (file.FileExists(loadSaveFileLocation))
+			{
+				GD.Print("files exist");
+				//Unload the data and paste into the variables
+			}
+		}
 
     }
 
+	private void loadSelectedSaveFile(string saveFileLocation)
+	{
+
+	}
 
 	private void _on_Save_pressed()
 	{
@@ -90,39 +110,37 @@ public class saveGame : Control
 			return;
 		}
 		//Creates the key, pair values for player
-		playerData = new Dictionary<string, float>
+		player_data = new Dictionary<string, float>
 		{
-			{"health", playerStats.Health },
-			{"walkSpeed", playerStats.Speed},
-			{"runSpeed", playerStats.SprintSpeed },
-			{"playerItemRadius", playerStats.PlayerItemRadius},
-			{"playerItemHeight", playerStats.PlayerItemHeight},
-			{"runNoiseRadius", playerStats.runNoiseRadius},
-			{"runNoiseHeight", playerStats.runNoiseHeight },
-			{"positionX", playerStats.positionX},
-			{"positionY", playerStats.positionY}
+			{"health", player_stats.Health },
+			{"walkSpeed", player_stats.Speed},
+			{"runSpeed", player_stats.SprintSpeed },
+			{"playerItemRadius", player_stats.PlayerItemRadius},
+			{"playerItemHeight", player_stats.PlayerItemHeight},
+			{"runNoiseRadius", player_stats.runNoiseRadius},
+			{"runNoiseHeight", player_stats.runNoiseHeight },
+			{"positionX", player_stats.positionX},
+			{"positionY", player_stats.positionY}
 		};
 
 
 		//Create a new file
 		File file = new File();
-		//Check if the directory exist
-		Directory directory = new Directory();
 
 
-        if (!directory.DirExists(save_directory))
+        if (!saved_games.DirExists(save_directory))
 		{
 			//Creates directoy if it does not exist
-			directory.MakeDirRecursive(save_directory);
+			saved_games.MakeDirRecursive(save_directory);
 		}
 
         //Make new folder with name
-        Error trySave = file.Open( save_directory + name.Text + ".json", File.ModeFlags.Write);
+        Error trySave = file.Open(save_directory + name.Text + file_extension, File.ModeFlags.Write);
 
 		if (trySave == Error.Ok)
 		{
 			//Save our variables to this file
-			file.StoreString(JSON.Print(playerData));
+			file.StoreString(JSON.Print(player_data));
 		}
 
 		//Gets the latest save file
@@ -134,18 +152,18 @@ public class saveGame : Control
         };
 
 		latestSave["name"] = name.Text;
-        Error continueSave = file.Open(save_directory + continueFileName, File.ModeFlags.Write);
+        Error continueSave = file.Open(continue_file_location, File.ModeFlags.Write);
         if (continueSave == Error.Ok)
 		{
 			//Disable the continue button
-			continueButton.SetDeferred("disabled", false);
+			continue_button.SetDeferred("disabled", false);
 			//Store the new save into continue
             file.StoreString(JSON.Print(latestSave));
 
 			//Update the continueSave variables
-			continueSaveFileName = latestSave["name"];
-			continueSaveFileDate = latestSave["date"];
-			continueSaveFileTime = latestSave["time"];
+			continue_save_file_name = latestSave["name"];
+			continue_save_file_date = latestSave["date"];
+			continue_save_file_time = latestSave["time"];
 
 
         }
@@ -158,12 +176,12 @@ public class saveGame : Control
 	{
 		//Bring up new window with saved games
 		//Allow option to pick a save
-		savedGames.Open(save_directory);
-		savedGames.ListDirBegin(true, true);
+		saved_games.Open(save_directory);
+		saved_games.ListDirBegin(true, true);
 		
 		while (true)
 		{
-			string filename = savedGames.GetNext();
+			string filename = saved_games.GetNext();
 			GD.Print(filename);
 			if (filename == "")
 			{
@@ -177,56 +195,58 @@ public class saveGame : Control
 	private void updatePlayerData(Dictionary savedPlayerData)
 	{
 		//Sets the players health
-		playerStats.Health = (savedPlayerData["health"].ToString()).ToInt();
+		player_stats.Health = (savedPlayerData["health"].ToString()).ToInt();
 
 	}
 
 	private void _on_increaseHealth_pressed()
 	{
-		playerStats.Health++;
+		player_stats.Health++;
 
 	}
 
 
 	private void countNumberOfSaves()
 	{
-		numberOfSavedGames = 0;
-		savedGames.Open(save_directory);
-		savedGames.ListDirBegin(true, true);
+		number_of_saved_games = 0;
+		saved_games.Open(save_directory);
+		saved_games.ListDirBegin(true, true);
 		//Count number of saves
 		while (true)
 		{
-			string filename = savedGames.GetNext();
+			string filename = saved_games.GetNext();
 			if (filename == "")
 			{
 				break;
 			}
 			else
 			{
-				numberOfSavedGames++;
+				number_of_saved_games++;
 			}
 		}
 
 	}
-	//Allow Differnt loads?
-	//Allow QuickSave
+
+
+
+
 
 	public override void _Ready()
 	{
 
 		//Loads playerStats resource
-		playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
+		player_stats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
 
 		//Get cookie data
 		//Get presents data
 		name = GetNode<LineEdit>("name/text");
-		continueButton = GetNode<Button>("Continue");
+		continue_button = GetNode<Button>("Continue");
 
 
-		if (file.FileExists(continueFileLocation))
+		if (file.FileExists(continue_file_location))
 		{
 			//Try open file
-			Error error = file.Open(continueFileLocation, File.ModeFlags.Read);
+			Error error = file.Open(continue_file_location, File.ModeFlags.Read);
 			//If file successfully opens
 			if (error == Error.Ok)
 			{
@@ -236,23 +256,21 @@ public class saveGame : Control
 
 				JSONParseResult playerContinueData = JSON.Parse(continueGameData);
 				Dictionary result = playerContinueData.Result as Dictionary;
-				continueSaveFileName = result["name"].ToString();
-				continueSaveFileDate = result["date"].ToString();
-				continueSaveFileTime = result["time"].ToString();
+				continue_save_file_name = result["name"].ToString();
+				continue_save_file_date = result["date"].ToString();
+				continue_save_file_time = result["time"].ToString();
 
 				//Replace cookieData
 				//Replace presentsData
 			}
 			else
 			{
-				continueButton.SetDeferred("disabled", true);
+				continue_button.SetDeferred("disabled", true);
 			}
-
-
 		}
 		else
 		{
-			continueButton.SetDeferred("disabled", true);
+			continue_button.SetDeferred("disabled", true);
 		}
         //Last ready } bracket
     }

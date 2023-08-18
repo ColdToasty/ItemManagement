@@ -515,8 +515,8 @@ height = 60.0
 radius = 233.054
 
 [sub_resource type="CapsuleShape2D" id=56]
-radius = 8.0
-height = 18.0
+radius = 10.9999
+height = 14.0001
 
 [sub_resource type="CapsuleShape2D" id=57]
 radius = 8.0
@@ -532,7 +532,7 @@ collision_mask = 24577
 script = ExtResource( 1 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 0.25008, 0.25008 )
+position = Vector2( 2.25008, -37.7499 )
 rotation = 3.14159
 
 [node name="Area2D" type="Area2D" parent="Position2D"]
@@ -574,6 +574,7 @@ stream = ExtResource( 6 )
 [node name="Timer" type="Timer" parent="."]
 
 [node name="PlayerVisible" type="Area2D" parent="."]
+position = Vector2( 2, -38 )
 collision_layer = 64
 collision_mask = 24577
 script = ExtResource( 5 )
@@ -583,6 +584,7 @@ position = Vector2( 0, 3 )
 shape = SubResource( 48 )
 
 [node name="RunNoise" type="Area2D" parent="."]
+position = Vector2( 2, -38 )
 collision_layer = 512
 collision_mask = 0
 script = ExtResource( 8 )
@@ -591,6 +593,7 @@ script = ExtResource( 8 )
 shape = SubResource( 49 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 2, -38 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 7 )
 hframes = 5
@@ -609,11 +612,12 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1, 41 )
+position = Vector2( 0, -1 )
 rotation = 1.5708
 shape = SubResource( 56 )
 
 [node name="PlayerBase" type="Area2D" parent="."]
+position = Vector2( 2, -38 )
 collision_layer = 1024
 collision_mask = 0
 
@@ -623,7 +627,7 @@ rotation = 1.5708
 shape = SubResource( 57 )
 
 [node name="PlayerItem" type="Area2D" parent="."]
-position = Vector2( 0, 1 )
+position = Vector2( 2, -37 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )

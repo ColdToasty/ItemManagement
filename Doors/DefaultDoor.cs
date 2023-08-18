@@ -19,8 +19,8 @@ public class DefaultDoor : KinematicBody2D
 	public Vector2 doorPosition;
 	public bool mouseInArea = false;
 	private bool locked = false;
-
-
+	private bool mouse_on_door = false;
+ 
 	public override void _Ready()
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -28,11 +28,22 @@ public class DefaultDoor : KinematicBody2D
 		animationTree.Active = true;
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
 		doorBarrier = GetNode<CollisionShape2D>("CollisionShape2D");
-        doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
-
+		doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
     }
 
 
+	private void _on_playerReachArea_mouse_entered()
+	{
+		mouse_on_door = true;
+	}
+
+
+	private void _on_playerReachArea_mouse_exited()
+	{
+		mouse_on_door = false;
+	}
+
+	
 	/*
 	 Make door open on both sides
 	 have a blend position for both sides 
@@ -56,14 +67,20 @@ public class DefaultDoor : KinematicBody2D
 		int toggle = -1;
 		//Change the blend position of the statemachine in animationtree
 		//This toggles the direction the door opens
-
-		Vector2 doorPosition =(Vector2)animationTree.Get("parameters/Status/blend_position");
-		doorPosition.y = doorPosition.y * toggle;
-		animationTree.Set("parameters/Status/blend_position", doorPosition);
-		if (doorPosition.y == 1)
+		if (mouse_on_door)
 		{
-			GD.Print("open?");
-        }
+			Vector2 doorPosition = (Vector2)animationTree.Get("parameters/Status/blend_position");
+			
+			doorPosition.y = doorPosition.y * toggle;
+
+			animationTree.Set("parameters/Status/blend_position", doorPosition);
+			if (doorPosition.y == 1)
+			{
+				//Set door to be opened
+				GD.Print("open?");
+			}
+		}
+
 	}
 
 	public override void _Input(InputEvent @event)
@@ -101,12 +118,12 @@ public class DefaultDoor : KinematicBody2D
 
 	private void toggleDoor(int value, bool collisionless)
 	{
-        
-        doorPosition.y = value;
-        animationTree.Set("parameters/Status/blend_position", doorPosition);
+		
+		doorPosition.y = value;
+		animationTree.Set("parameters/Status/blend_position", doorPosition);
 		
 		
-    }
+	}
 
 	//Need to check if mob sits on door
 
@@ -115,36 +132,17 @@ public class DefaultDoor : KinematicBody2D
 		//If door is not open. Open it
 		if(doorPosition.y == -1)
 		{
-            toggleDoor(1, true);
-        }
+			toggleDoor(1, true);
+		}
 		//GD.Print("mob open door");
 
-    }
+	}
 
 	private void _on_mobDoor_area_exited(object area)
 	{
-        //GD.Print("mob close door");
-        toggleDoor(-1, false);
+		//GD.Print("mob close door");
+		toggleDoor(-1, false);
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

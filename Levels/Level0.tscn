@@ -337,16 +337,16 @@ shape = SubResource( 14 )
 shape = SubResource( 15 )
 
 [node name="DoorDown" parent="npcSort" instance=ExtResource( 13 )]
-position = Vector2( 224.198, -239.856 )
+position = Vector2( 224, -192 )
 
 [node name="DoorDown2" parent="npcSort" instance=ExtResource( 13 )]
-position = Vector2( 543.642, -47.6844 )
+position = Vector2( 544, 0 )
 
 [node name="DoorDown3" parent="npcSort" instance=ExtResource( 13 )]
-position = Vector2( 95.8793, 143.957 )
+position = Vector2( 96, 192 )
 
 [node name="DoorLeft" parent="npcSort" instance=ExtResource( 16 )]
-position = Vector2( -57.0175, -96.2171 )
+position = Vector2( -56.6187, -96.5007 )
 
 [node name="CookieCounter" parent="." instance=ExtResource( 6 )]
 
