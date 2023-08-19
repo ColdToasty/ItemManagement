@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Tiles/Flooring/flooring/flooring.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cookies/CookiesHolder.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Tiles/Walls/walls.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World.cs" type="Script" id=9]
 [ext_resource path="res://mob/npcs/man.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Doors/DoorSort.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Overlay/npcOverlay/npcSort.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Doors/doorDown/Door.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Tiles/blackUnderLay.tscn" type="PackedScene" id=14]
@@ -336,17 +337,19 @@ shape = SubResource( 14 )
 [node name="CollisionShape2D" parent="npcSort/man/mobDoor" index="0"]
 shape = SubResource( 15 )
 
-[node name="DoorDown" parent="npcSort" instance=ExtResource( 13 )]
+[node name="DoorSort" parent="npcSort" instance=ExtResource( 11 )]
+
+[node name="DoorDown" parent="npcSort/DoorSort" instance=ExtResource( 13 )]
 position = Vector2( 224, -192 )
 
-[node name="DoorDown2" parent="npcSort" instance=ExtResource( 13 )]
+[node name="DoorDown2" parent="npcSort/DoorSort" instance=ExtResource( 13 )]
 position = Vector2( 544, 0 )
 
-[node name="DoorDown3" parent="npcSort" instance=ExtResource( 13 )]
+[node name="DoorDown3" parent="npcSort/DoorSort" instance=ExtResource( 13 )]
 position = Vector2( 96, 192 )
 
-[node name="DoorLeft" parent="npcSort" instance=ExtResource( 16 )]
-position = Vector2( -56.6187, -96.5007 )
+[node name="DoorLeft" parent="npcSort/DoorSort" instance=ExtResource( 16 )]
+position = Vector2( -32, -56 )
 
 [node name="CookieCounter" parent="." instance=ExtResource( 6 )]
 
