@@ -4,11 +4,11 @@ using System;
 public class npcSort : YSort
 {
 	Godot.Collections.Array children;
-	int copCount = 0;
-	Area2D spawn, exit;
+	private int copCount = 0;
+	private Area2D spawn, exit;
 	private PackedScene copScene;
-	Random rnd = new Random();
-	bool hardMode = false;
+	private Random rnd = new Random();
+	private bool hardMode = false;
 
 	Vector2 man_sees_player;
 
