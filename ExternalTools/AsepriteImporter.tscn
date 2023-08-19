@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Doors/sideDoor/sideDoor.png" type="Texture" id=1]
+[ext_resource path="res://Doors/defaultDoor1/BrownDoor.png" type="Texture" id=1]
 
 [sub_resource type="Animation" id=1]
 length = 0.1
@@ -81,8 +81,8 @@ __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
 "o_ex_p": "",
-"o_folder": "res://Doors/sideDoor",
-"o_name": "sideDoor",
+"o_folder": "res://Doors/defaultDoor1",
+"o_name": "BrownDoor",
 "only_visible": false,
 "op_exp": false,
 "player": "AnimationPlayer",
