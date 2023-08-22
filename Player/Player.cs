@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Security.Policy;
 
 public class Player : KinematicBody2D
@@ -11,9 +12,10 @@ public class Player : KinematicBody2D
 		ATTACK
 	}
 	public STATE state = STATE.MOVING;
-	public Vector2 input_vector = Vector2.Zero;
-	public Vector2 velocity = Vector2.Zero;
+	public Godot.Vector2 input_vector = Godot.Vector2.Zero;
+    public Godot.Vector2 velocity = Godot.Vector2.Zero;
 
+	
 	public GridContainer hotbar;
 	public GridContainer inventory_slots;
 
@@ -25,12 +27,15 @@ public class Player : KinematicBody2D
 	public AnimationTree animationTree;
 	public AnimationPlayer animationPlayer;
 
-	public Vector2 facing = Vector2.Zero;
+	public Godot.Vector2 facing = Godot.Vector2.Zero;
 	public Timer timer;
 	public RunNoise noise;
 	public Area2D slapBoxArea;
 
 	public int SPEED;
+
+	private PlayerVisible playerVisibleArea;
+	private CollisionShape2D playerVisibleCollisionShape;
 
     [Signal]
     public delegate void showGameOverScreen();
@@ -46,6 +51,8 @@ public class Player : KinematicBody2D
 
 		timer = GetNode<Timer>("Timer");
 
+		playerVisibleArea = GetNode<PlayerVisible>("PlayerVisible");
+        playerVisibleCollisionShape = GetNode<CollisionShape2D>("PlayerVisible/CollisionShape2D");
         playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
         SPEED = playerStats.Speed;
 
@@ -66,6 +73,21 @@ public class Player : KinematicBody2D
 		
 	}
 
+	public void enableInvisibility()
+	{
+        playerVisibleArea.SetDeferred("monitoring", false);
+        playerVisibleArea.SetDeferred("monitorable", false);
+		playerVisibleCollisionShape.SetDeferred("disabled", true);
+    }
+
+	public void disableInvisibility()
+	{
+        playerVisibleArea.SetDeferred("monitoring", true);
+        playerVisibleArea.SetDeferred("monitorable", true);
+        playerVisibleCollisionShape.SetDeferred("disabled", false);
+    }
+
+	
 
 	//When player gets hit by mob with a hitPlayerBox
     private void _on_hitPlayerBox_entered(object area)
@@ -98,7 +120,7 @@ public class Player : KinematicBody2D
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
 
 		input_vector = input_vector.Normalized();
-		if (input_vector != Vector2.Zero)
+		if (input_vector != Godot.Vector2.Zero)
 		{
 
 			//Set up animation blend_positions
@@ -126,7 +148,7 @@ public class Player : KinematicBody2D
 		else
 		{
 			animation_playback.Travel("Idle");
-			velocity = Vector2.Zero;
+			velocity = Godot.Vector2.Zero;
 		}
 			
 
@@ -140,7 +162,7 @@ public class Player : KinematicBody2D
 
 	public void attack_state()
 	{
-		velocity = Vector2.Zero;
+		velocity = Godot.Vector2.Zero;
 		animation_playback.Travel("Slapping");
 
 	}

@@ -6,7 +6,7 @@ using System.Collections;
 public class saveGame : Control
 {
 
-
+	//All instances of saveGame will have this directory path
 	private static string save_directory = "user://saves/";
     private static string continue_file_name = "continue";
     private static string file_extension = ".json";

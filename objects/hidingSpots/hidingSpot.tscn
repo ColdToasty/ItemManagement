@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://objects/hidingSpots/HidingSpot.cs" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 72.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 104.307
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 128.25
+
+[node name="hidingSpot" type="StaticBody2D"]
+collision_layer = 262144
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="mouseArea" type="Area2D" parent="."]
+collision_layer = 131072
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mouseArea"]
+shape = SubResource( 2 )
+
+[node name="playerDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playerDetection"]
+shape = SubResource( 3 )
+
+[connection signal="mouse_entered" from="mouseArea" to="." method="_on_mouseArea_mouse_entered"]
+[connection signal="mouse_exited" from="mouseArea" to="." method="_on_mouseArea_mouse_exited"]
+[connection signal="area_entered" from="playerDetection" to="." method="_on_playerDetection_area_entered"]
+[connection signal="area_exited" from="playerDetection" to="." method="_on_playerDetection_area_exited"]

@@ -14,7 +14,7 @@ public class World : Node2D
 	public int place_location_number;
 	public List<Texture> item_textures = new List<Texture>();
 	private Player player;
-	public npcSort npcSort;
+	public ObjectSort objectSort;
 	public bool pause = false;
 
 	CookieCounter cookieCounter;
@@ -29,11 +29,11 @@ public class World : Node2D
 		//Gets the number of placeLocation nodes
 		place_location_number = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
 		add_textures();
-		player = GetTree().CurrentScene.GetNode<Player>("npcSort/Player");
+		player = GetTree().CurrentScene.GetNode<Player>("objectSort/Player");
 		player.Connect("showGameOverScreen", this, "showGameOverScreen");
 
-		npcSort = GetNode<npcSort>("npcSort");
-		npcSort.Connect("endLevel", this, "endLevel");
+        objectSort = GetNode<ObjectSort>("objectSort");
+        objectSort.Connect("endLevel", this, "endLevel");
 		cookieCounter = GetNode<CookieCounter>("/root/CookieCounter");
 
 		//Get gameOverScreen

@@ -1,6 +1,5 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Doors/doorSprites/brownDoor.png" type="Texture" id=1]
 [ext_resource path="res://Doors/DefaultDoor.cs" type="Script" id=2]
 [ext_resource path="res://Doors/doorSprites/frontDoorDown.png" type="Texture" id=3]
 
@@ -339,6 +338,9 @@ tracks/8/keys = {
 "values": [ 0 ]
 }
 
+[sub_resource type="StreamTexture" id=32]
+load_path = "res://.import/brownDoor.png-f717d720ab75b1a5be49610bf0467136.stex"
+
 [sub_resource type="Animation" id=31]
 length = 0.1
 loop = true
@@ -352,7 +354,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ SubResource( 32 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")

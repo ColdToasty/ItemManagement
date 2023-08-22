@@ -52,8 +52,11 @@ public class Mob : KinematicBody2D
 	[Signal]
 	public delegate void stop_route();
 
+    [Signal]
+    public delegate void can_player_hide();
 
-	Random rnd = new Random();
+
+    Random rnd = new Random();
 
 	public enum STATE
 	{
@@ -176,7 +179,8 @@ public class Mob : KinematicBody2D
 			rotate_cone(delta, player.GlobalPosition);
 			nav_agent.SetTargetLocation(player.GlobalPosition);
 			can_move = true;
-			//GD.Print("ViewCone sees player");
+
+			EmitSignal("can_player_hide", false);
 
 		}
 		else if (detectionZone.can_hear_player())
@@ -187,7 +191,8 @@ public class Mob : KinematicBody2D
 			EmitSignal("stop_route", false);
 			rotate_cone(delta, detectionZone.last_heard);
 			nav_agent.SetTargetLocation(detectionZone.last_heard);
-			if (!timerStarted)
+            EmitSignal("can_player_hide", true);
+            if (!timerStarted)
 			{
 				timerStarted = true;
 				idleTimer.Start(1);
@@ -195,7 +200,8 @@ public class Mob : KinematicBody2D
 		}
 		else
 		{
-			player = null;
+            EmitSignal("can_player_hide", true);
+            player = null;
 		}
 		
 		//If mob hasnt arrived at target location
