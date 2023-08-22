@@ -19,6 +19,7 @@ public class CookieCounter : Node
     private int cookie_counter;
     private int level_cookie_counter;
 
+    
     public int Global_Cookie_Counter
     {
         get { return cookie_counter; }

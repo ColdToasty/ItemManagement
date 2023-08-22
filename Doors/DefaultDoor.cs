@@ -20,7 +20,11 @@ public class DefaultDoor : KinematicBody2D
 	public bool mouseInArea = false;
 	private bool locked = false;
 	private bool mouse_on_door = false;
- 
+
+	//for each node in roomsSort?
+	//assign the locationNode variable to the node
+	[Export]
+	public string locationNode;
 	public override void _Ready()
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -76,8 +80,7 @@ public class DefaultDoor : KinematicBody2D
 			animationTree.Set("parameters/Status/blend_position", doorPosition);
 			if (doorPosition.y == 1)
 			{
-				//Set door to be opened
-				GD.Print("open?");
+				//GD.Print("open");
 			}
 		}
 

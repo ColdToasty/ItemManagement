@@ -61,7 +61,7 @@ public class PlaceLocation : Node2D
         item_image.Texture = level.item_textures[0];
 		//Remove the texture from the list 
         level.item_textures.RemoveAt(0);
-
+		item_glow.SetDeferred("visible", false);
 
     }
 

@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Doors/DefaultDoor.cs" type="Script" id=1]
-[ext_resource path="res://Doors/defaultDoor1/brownDoor.png" type="Texture" id=2]
+[ext_resource path="res://Doors/doorSprites/sideDoorLeft.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=9]
 resource_name = "Closed"
@@ -28,7 +28,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -32 ) ]
+"values": [ Vector2( 0, -24 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("CollisionShape2D:position")
@@ -71,7 +71,7 @@ tracks/4/keys = {
 resource_name = "Open"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:flip_h")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -80,10 +80,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:frame")
+tracks/1/path = NodePath("Sprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -91,11 +91,11 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 3 ]
+"update": 0,
+"values": [ Vector2( 0, -29 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:position")
+tracks/2/path = NodePath("CollisionShape2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -104,10 +104,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -64 ) ]
+"values": [ Vector2( 0, -4 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("CollisionShape2D:position")
+tracks/3/path = NodePath("CollisionShape2D:rotation_degrees")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -116,27 +116,15 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -4 ) ]
+"values": [ 90.0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("CollisionShape2D:rotation_degrees")
+tracks/4/path = NodePath("CollisionShape2D:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 90.0 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("CollisionShape2D:scale")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -155,7 +143,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -32 ) ]
+"values": [ Vector2( 0, -24 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CollisionShape2D:position")
@@ -230,7 +218,7 @@ graph_offset = Vector2( -23, 10 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=31]
 extents = Vector2( 4, 32 )
 
 [sub_resource type="RectangleShape2D" id=30]
@@ -241,9 +229,6 @@ extents = Vector2( 59.6154, 88 )
 
 [sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 50.779, 79.5234 )
-
-[sub_resource type="RectangleShape2D" id=24]
-extents = Vector2( 32, 45 )
 
 [node name="DoorLeft" type="KinematicBody2D"]
 collision_layer = 8192
@@ -266,7 +251,7 @@ parameters/Status/blend_position = Vector2( 0, -1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -28, -32 )
 scale = Vector2( 1, 2 )
-shape = SubResource( 19 )
+shape = SubResource( 31 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2( -28, -16 )
@@ -274,10 +259,9 @@ rotation = 1.5708
 shape = SubResource( 30 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -32 )
+position = Vector2( 0, -24 )
 texture = ExtResource( 2 )
-flip_h = true
-hframes = 4
+hframes = 2
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
@@ -306,15 +290,6 @@ collision_mask = 32768
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mobDoor"]
 shape = SubResource( 28 )
-
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 0, -3 )
-shape = SubResource( 24 )
 
 [connection signal="area_entered" from="playerReachArea" to="." method="_on_playerReach_area_entered"]
 [connection signal="area_exited" from="playerReachArea" to="." method="_on_playerReach_area_exited"]

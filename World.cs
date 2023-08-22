@@ -55,13 +55,15 @@ public class World : Node2D
 		//Prevent cookies being added multiple times
 		if(!level_ended) {
 			level_ended = true;
-			//Save the following by sending the values to the saveGame cs file
-			//Save cookies
-			//Save presents
-			//Save time
-			//Save presents delivered
-			//Save highScore for level
-		}
+			int cookies = cookieCounter.Level_Cookie_Counter;
+
+            //Save the following by sending the values to the saveGame cs file
+            //Save cookies
+            //Save presents
+            //Save time
+            //Save presents delivered
+            //Save highScore for level
+        }
 
 	}
 
