@@ -1,21 +1,25 @@
 using Godot;
-using System;
+using System.Collections.Generic;
+
+
 public class HidingSpot : StaticBody2D
 {
 	private bool mouse_over = false;
 	private Sprite object_skin;
 	private bool player_already_hidden = false;
 	private bool player_reach = false;
-	
+	private Area2D release;
+
 	[Signal]
 	public delegate void hide_the_player_in_me(Vector2 position);
 	
 	[Signal]
-	public delegate void show_the_player();
+	public delegate void show_the_player(Vector2 releasePosition);
 	
 	public override void _Ready()
 	{
 		object_skin = GetNode<Sprite>("Sprite");
+		release = GetNode<Area2D>("releaseArea");
 	}
 
 	private void _on_mouseArea_mouse_entered()
@@ -43,7 +47,7 @@ public class HidingSpot : StaticBody2D
 
 	private void show_player()
 	{
-		EmitSignal("show_the_player");
+		EmitSignal("show_the_player", release.GlobalPosition);
 		player_already_hidden = false;
 		//Change this sprite back to original
 		//Enable the clickable zone
@@ -64,34 +68,51 @@ public class HidingSpot : StaticBody2D
 
 
     public override void _Input(InputEvent @event)
-{
-
-	//Check if player has clicked mouse and is in the door zone
-	if (@event is InputEventMouseButton)
 	{
 
-		//Convert the event into mousebutton event
-		InputEventMouseButton e = (InputEventMouseButton)@event;
-		//Check if e is the left mouse button pressed
-		if (e.Pressed && e.ButtonMask == (int)ButtonList.Left)
+		//Check if player has clicked mouse and is in the door zone
+		if (@event is InputEventMouseButton)
 		{
-				//When player is hovering over hidingSpot and player is not yet hidden
-				if(mouse_over && !player_already_hidden && player_reach)
-				{
-					//call hide_player
-					hide_player();
-					GD.Print("hide me");
-				}
-				//If player is hidden then show the player
-				else if (player_already_hidden) {
-					show_player();
-                    GD.Print("reveal me");
-					
-                }
+
+			//Convert the event into mousebutton event
+			InputEventMouseButton e = (InputEventMouseButton)@event;
+			//Check if e is the left mouse button pressed
+			if (e.Pressed && e.ButtonMask == (int)ButtonList.Left)
+			{
+					//When player is hovering over hidingSpot and player is not yet hidden
+					if(mouse_over && !player_already_hidden && player_reach)
+					{
+						//call hide_player
+						hide_player();
+						GD.Print("hide me");
+					}
+					//If player is hidden then show the player
+					else if (player_already_hidden) {
+						show_player();
+						GD.Print("reveal me");
+					}
 				
+			}
+		}
+		//If player decides to reveal themselves by moving
+		if (@event is InputEventKey && player_already_hidden)
+		{
+			InputEventKey e = (InputEventKey)@event;
+
+			HashSet<float> keyCheck = new HashSet<float>{
+				e.GetActionStrength("Left"),
+				e.GetActionStrength("Right"),
+				e.GetActionStrength("Up"),
+				e.GetActionStrength("Down"),
+				e.GetActionStrength("Slap")
+			};
+
+			if (keyCheck.Contains((float)1)) {
+				show_player();
+				GD.Print("revealed me by moving");
+			}
 		}
 	}
-}
 
 }
 

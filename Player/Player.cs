@@ -40,6 +40,8 @@ public class Player : KinematicBody2D
     [Signal]
     public delegate void showGameOverScreen();
 
+
+    private Sprite playerSprite;
     public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -54,6 +56,8 @@ public class Player : KinematicBody2D
 		playerVisibleArea = GetNode<PlayerVisible>("PlayerVisible");
         playerVisibleCollisionShape = GetNode<CollisionShape2D>("PlayerVisible/CollisionShape2D");
         playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
+		playerSprite = GetNode<Sprite>("Sprite");
+
         SPEED = playerStats.Speed;
 
     }
@@ -78,6 +82,7 @@ public class Player : KinematicBody2D
         playerVisibleArea.SetDeferred("monitoring", false);
         playerVisibleArea.SetDeferred("monitorable", false);
 		playerVisibleCollisionShape.SetDeferred("disabled", true);
+		
     }
 
 	public void disableInvisibility()
@@ -87,9 +92,17 @@ public class Player : KinematicBody2D
         playerVisibleCollisionShape.SetDeferred("disabled", false);
     }
 
-	
+	public void enableSprite()
+	{
+		playerSprite.SetDeferred("visible", true);
+	}
+    public void disableSprite()
+    {
+        playerSprite.SetDeferred("visible", false);
+    }
 
-	//When player gets hit by mob with a hitPlayerBox
+
+    //When player gets hit by mob with a hitPlayerBox
     private void _on_hitPlayerBox_entered(object area)
     {
 		if(area is hitPlayerBox)
@@ -139,25 +152,26 @@ public class Player : KinematicBody2D
 				{
                 SPEED = playerStats.Speed;
 				}
-			
-			animation_playback.Travel("Moving");
+            animation_playback.Travel("Moving");
 			velocity = input_vector * SPEED;
-				
+			
 			}
 			
 		else
 		{
-			animation_playback.Travel("Idle");
+            animation_playback.Travel("Idle");
 			velocity = Godot.Vector2.Zero;
-		}
+            
+        }
 			
 
 		move();
 		
 		if (Input.IsActionJustPressed("Slap"))
 			{
-				state = STATE.ATTACK;
-			}
+            state = STATE.ATTACK;
+				
+        }
 	}
 
 	public void attack_state()
@@ -175,8 +189,6 @@ public class Player : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
-
-		
 
 		if(state == STATE.MOVING)
 		{

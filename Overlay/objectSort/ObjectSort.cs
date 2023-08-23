@@ -1,6 +1,13 @@
 using Godot;
 using System;
 
+
+/*
+ Observer class that:
+	- spawns cops and allows them to follow the callers player position
+	- allows the player to hid in hiding spots
+	- Notifies the World class that the player has left the area
+ */
 public class ObjectSort : YSort
 {
 	Godot.Collections.Array children;
@@ -8,11 +15,10 @@ public class ObjectSort : YSort
 	private Area2D spawn, exit;
 	private PackedScene copScene;
 	private Random rnd = new Random();
-	private bool hardMode = false;
 	private Player player;
 	private Vector2 man_sees_player;
-	private Vector2 previousPlayerPosition;
 	private bool canPlayerHide = true;
+
 	[Signal]
 	public delegate void endLevel();
 
@@ -55,24 +61,26 @@ public class ObjectSort : YSort
 
     }
 
+
 	public void hideThePlayerInMe(Vector2 hidingSpotPosition)
 	{
 		//Change the players position to the hidding spot (ideally its in the center of the object)
 		
 		if (canPlayerHide)
 		{
-			GD.Print("visibility disabled");
+			GD.Print("invisible");
 			player.enableInvisibility();
         }
-		previousPlayerPosition = player.GlobalPosition;
+		player.disableSprite();
         player.GlobalPosition = hidingSpotPosition;
 
     }
 
-	public void showThePlayer()
+	public void showThePlayer(Vector2 releasePosition)
 	{
         player.disableInvisibility();
-		player.GlobalPosition = previousPlayerPosition;
+		player.enableSprite();
+		player.GlobalPosition = releasePosition;
 		//Disable players movements
         //Release the player 
         //But where and how would it know where to release?
