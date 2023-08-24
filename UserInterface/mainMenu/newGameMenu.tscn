@@ -1,0 +1,46 @@
+[gd_scene format=2]
+
+[node name="newGameMenu" type="Panel"]
+margin_right = 384.0
+margin_bottom = 280.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 384.0
+margin_bottom = 280.0
+
+[node name="title" type="RichTextLabel" parent="."]
+margin_left = 152.0
+margin_top = 16.0
+margin_right = 232.0
+margin_bottom = 48.0
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+text = "New Game"
+
+[node name="error" type="RichTextLabel" parent="."]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 272.0
+margin_bottom = 80.0
+custom_colors/default_color = Color( 1, 0.0941176, 0, 1 )
+text = "*Please enter letters only!"
+
+[node name="newSaveName" type="LineEdit" parent="."]
+margin_left = 64.0
+margin_top = 80.0
+margin_right = 320.0
+margin_bottom = 144.0
+placeholder_text = "Enter a name for new save"
+
+[node name="back" type="Button" parent="."]
+margin_left = 48.0
+margin_top = 208.0
+margin_right = 160.0
+margin_bottom = 248.0
+text = "Back"
+
+[node name="go" type="Button" parent="."]
+margin_left = 224.0
+margin_top = 208.0
+margin_right = 336.0
+margin_bottom = 248.0
+text = "Go"

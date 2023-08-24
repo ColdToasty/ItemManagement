@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UserInterface/mainMenu/mainMenu.cs" type="Script" id=1]
+[ext_resource path="res://UserInterface/mainMenu/newGameMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UserInterface/GameFiles.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UserInterface/mainMenu/loadMenu.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Theme" id=1]
 
@@ -10,6 +13,8 @@ anchor_bottom = 1.0
 margin_right = 896.0
 margin_bottom = 480.0
 script = ExtResource( 1 )
+
+[node name="GameFiles" parent="." instance=ExtResource( 3 )]
 
 [node name="continue" type="Button" parent="."]
 anchor_right = 0.0583333
@@ -57,8 +62,21 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="newGameMenu" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[node name="loadMenu" parent="." instance=ExtResource( 4 )]
+
 [connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="new" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
+[connection signal="text_changed" from="newGameMenu/newSaveName" to="." method="_on_newSaveName_text_changed"]
+[connection signal="pressed" from="newGameMenu/back" to="." method="_on_NewGameMenuBack_pressed"]
+[connection signal="pressed" from="newGameMenu/go" to="." method="_on_NewGameMenuGo_pressed"]
+[connection signal="pressed" from="loadMenu/back" to="." method="_on_loadGameBack_pressed"]
+[connection signal="pressed" from="loadMenu/load" to="." method="_on_loadGameLoad_pressed"]
+
+[editable path="newGameMenu"]
+[editable path="loadMenu"]

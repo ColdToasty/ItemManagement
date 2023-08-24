@@ -164,13 +164,11 @@ public class Player : KinematicBody2D
             
         }
 			
-
 		move();
 		
 		if (Input.IsActionJustPressed("Slap"))
 			{
             state = STATE.ATTACK;
-				
         }
 	}
 

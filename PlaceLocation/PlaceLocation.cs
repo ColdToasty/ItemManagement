@@ -22,6 +22,9 @@ public class PlaceLocation : Node2D
 	public World level;
     public List<Texture> item_textures = new List<Texture>();
 
+	[Signal]
+	public delegate void item_placed();
+
     public override void _Ready()
 	{
 
@@ -62,6 +65,7 @@ public class PlaceLocation : Node2D
 		//Remove the texture from the list 
         level.item_textures.RemoveAt(0);
 		item_glow.SetDeferred("visible", false);
+		EmitSignal("item_placed");
 
     }
 

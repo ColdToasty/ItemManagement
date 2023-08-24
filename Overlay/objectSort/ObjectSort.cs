@@ -19,8 +19,11 @@ public class ObjectSort : YSort
 	private Vector2 man_sees_player;
 	private bool canPlayerHide = true;
 
+	private bool canExit = false;
+	private bool hasLevelEnded = false;
+
 	[Signal]
-	public delegate void endLevel();
+	public delegate void end_level();
 
 	public override void _Ready()
 	{
@@ -130,7 +133,12 @@ public class ObjectSort : YSort
 
     private void _player_exit(object player)
     {
-		EmitSignal("endLevel");
+		if (!hasLevelEnded)
+		{
+            EmitSignal("end_level");
+			hasLevelEnded = true;
+			//Now stop processors of all children
+        }
     }
 
 

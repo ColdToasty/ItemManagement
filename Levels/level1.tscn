@@ -7,7 +7,6 @@
 [ext_resource path="res://Tiles/borders/borderParent.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Cookies/CookieCounter.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Doors/doorDown/Door.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://mob/npcs/woman.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Tiles/Flooring/flooring/flooring.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Tiles/blackUnderLay.tscn" type="PackedScene" id=13]
@@ -329,6 +328,8 @@ vertices = PoolVector2Array( 613.409, -95.6282, 356.633, -95.6282, 349.501, -210
 polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArray( 8, 4, 7, 0, 3 ), PoolIntArray( 9, 10, 11, 12, 13, 14 ), PoolIntArray( 14, 13, 15, 16 ), PoolIntArray( 17, 18, 19, 20 ), PoolIntArray( 21, 22, 16, 15, 23, 24 ), PoolIntArray( 25, 6, 5 ), PoolIntArray( 25, 5, 26, 27 ), PoolIntArray( 28, 27, 26 ), PoolIntArray( 12, 11, 29, 30, 31 ), PoolIntArray( 8, 3, 32 ), PoolIntArray( 8, 32, 33, 34 ), PoolIntArray( 34, 33, 35 ), PoolIntArray( 26, 34, 35, 36 ), PoolIntArray( 37, 17, 20, 38, 39 ), PoolIntArray( 40, 41, 28, 26, 42 ), PoolIntArray( 43, 42, 26 ), PoolIntArray( 44, 45, 37, 39, 46, 47 ), PoolIntArray( 48, 49, 50, 51 ), PoolIntArray( 52, 53, 54, 55, 56, 57 ), PoolIntArray( 58, 57, 56, 59, 60, 61 ), PoolIntArray( 62, 63, 64, 65, 66, 67 ), PoolIntArray( 68, 69, 62, 67, 22, 21 ), PoolIntArray( 70, 71, 72, 73, 74, 75 ), PoolIntArray( 76, 77, 78, 79, 80, 81 ), PoolIntArray( 82, 83, 84, 85, 86, 87, 88, 89 ), PoolIntArray( 88, 90, 91 ), PoolIntArray( 89, 88, 91 ), PoolIntArray( 92, 89, 91, 93 ), PoolIntArray( 94, 92, 93, 95 ), PoolIntArray( 96, 97, 98, 99 ), PoolIntArray( 100, 101, 102, 103 ), PoolIntArray( 104, 105, 106, 107, 108, 109, 110, 111 ), PoolIntArray( 111, 112, 113 ), PoolIntArray( 104, 111, 113 ), PoolIntArray( 114, 104, 113, 115 ), PoolIntArray( 116, 114, 115, 117 ), PoolIntArray( 118, 119, 120, 121, 122, 123, 124, 125 ), PoolIntArray( 102, 116, 117, 118, 125, 126, 103 ), PoolIntArray( 127, 103, 126 ), PoolIntArray( 128, 127, 126, 129, 44 ), PoolIntArray( 130, 131, 132, 133, 134, 135, 136, 137 ), PoolIntArray( 73, 130, 137, 74 ), PoolIntArray( 76, 81, 70, 75, 138, 139 ), PoolIntArray( 140, 141, 142, 143, 12 ), PoolIntArray( 144, 145, 69, 68 ), PoolIntArray( 146, 24, 23 ), PoolIntArray( 146, 23, 147, 148 ), PoolIntArray( 148, 147, 149 ), PoolIntArray( 148, 149, 150 ), PoolIntArray( 148, 150, 151, 46 ), PoolIntArray( 94, 95, 96, 99, 152 ), PoolIntArray( 143, 153, 152, 99, 44 ), PoolIntArray( 1, 154, 155 ), PoolIntArray( 2, 1, 155 ), PoolIntArray( 156, 2, 155, 157 ), PoolIntArray( 29, 156, 157, 30 ), PoolIntArray( 12, 31, 158, 159, 160 ), PoolIntArray( 12, 160, 140 ), PoolIntArray( 143, 142, 153 ), PoolIntArray( 44, 99, 128 ), PoolIntArray( 44, 129, 45 ), PoolIntArray( 151, 47, 46 ), PoolIntArray( 161, 162, 148, 46, 80, 79 ), PoolIntArray( 35, 163, 164, 165 ), PoolIntArray( 59, 166, 167, 60 ), PoolIntArray( 168, 58, 61, 162 ), PoolIntArray( 161, 168, 162 ), PoolIntArray( 169, 139, 138, 170 ), PoolIntArray( 171, 169, 170, 48, 51 ), PoolIntArray( 172, 171, 51 ), PoolIntArray( 36, 43, 26 ), PoolIntArray( 51, 36, 35, 172 ), PoolIntArray( 172, 35, 165 ) ]
 outlines = [ PoolVector2Array( -1840.23, -1255.92, -1619.12, 1364.3, 1611.98, 1319.67, 2203.99, -1262.29, 78.4593, -1440.8 ), PoolVector2Array( -46.6993, -221.904, -38.2839, -230.93, -8.82989, -234.691, 112.352, -235.443, 122.451, -227.921, 129.183, -212.125, 128.342, -154.208, 120.768, -144.43, -32.3931, -143.677, -42.4916, -149.695, -51.7486, -175.269 ), PoolVector2Array( -456.491, 38.2513, -477.889, 57.3769, -641.94, 57.3769, -649.073, 63.7521, -649.073, 216.757, -641.94, 223.132, -427.96, 223.132, -420.827, 216.757, -420.827, 153.116, -413.695, 146.63, -406.562, 146.63, -399.429, 140.255, -399.429, -82.8778, -385.164, -89.253, -363.766, -89.253, -335.235, -76.5026, -335.235, 172.131, -342.368, 184.881, -349.501, 197.632, -356.633, 204.007, -356.633, 216.757, -335.235, 216.757, -306.705, 210.382, -106.99, 210.382, -71.3267, 229.508, -71.3267, 344.262, -92.7247, 363.387, -356.633, 363.387, -363.766, 369.762, -363.766, 599.27, -356.633, 605.645, 185.449, 605.645, 192.582, 599.27, 192.582, 567.394, 213.98, 548.268, 271.041, 548.268, 292.439, 567.394, 292.439, 599.27, 299.572, 605.645, 556.348, 605.645, 563.481, 599.27, 563.481, 433.514, 556.348, 427.139, 299.572, 427.139, 292.439, 433.514, 292.439, 478.141, 271.041, 497.267, 213.98, 497.267, 192.582, 478.141, 192.582, 369.762, 185.449, 363.387, 7.13267, 363.387, -14.2653, 344.262, -14.2653, 229.508, 14.2653, 210.382, 185.449, 210.382, 192.582, 204.007, 192.582, 184.881, 213.98, 165.756, 271.041, 165.756, 292.439, 184.881, 292.439, 293.26, 299.572, 299.635, 556.348, 299.635, 563.481, 293.26, 563.481, 51.0017, 556.348, 44.6265, 299.572, 44.6265, 292.439, 51.0017, 292.439, 95.6282, 271.041, 114.754, 213.98, 114.754, 199.715, 95.6282, 199.715, 1.52588e-05, 206.847, -6.3752, 213.98, -12.7504, 213.98, -70.1273, 228.245, -82.8778, 242.511, -89.253, 249.643, -95.6282, 249.643, -121.129, 271.041, -140.255, 328.103, -140.255, 349.501, -121.129, 349.501, -102.003, 356.633, -95.6282, 613.409, -95.6282, 634.807, -76.5025, 634.807, 726.774, 613.409, 745.9, -413.695, 745.9, -435.093, 726.774, -435.093, 369.762, -442.225, 363.387, -699.001, 363.387, -720.399, 344.262, -720.399, -76.5025, -699.001, -95.6282, -556.348, -95.6282, -549.215, -102.003, -549.215, -114.754, -527.817, -140.255, -470.756, -140.255, -456.491, -121.129 ), PoolVector2Array( -527.817, -191.256, -470.756, -191.256, -449.358, -210.382, -449.358, -242.258, -442.225, -248.633, -206.847, -248.633, -185.449, -267.759, -185.449, -280.509, -185.449, -382.513, -213.98, -401.638, -399.429, -401.638, -406.562, -408.014, -406.562, -561.019, -399.429, -567.394, -42.796, -567.394, -35.6633, -561.019, -35.6633, -408.014, -42.796, -401.638, -99.8573, -401.638, -128.388, -382.513, -128.388, -267.759, -106.99, -248.633, 78.4593, -248.633, 99.8573, -267.759, 99.8573, -382.513, 78.4593, -395.263, 28.5307, -395.263, 21.398, -401.638, 21.398, -561.019, 28.5307, -567.394, 271.041, -567.394, 278.174, -561.019, 278.174, -401.638, 271.041, -395.263, 178.317, -395.263, 156.919, -382.513, 156.919, -267.759, 178.317, -248.633, 242.511, -248.633, 249.643, -242.258, 249.643, -210.382, 271.041, -191.256, 328.103, -191.256, 349.501, -210.382, 349.501, -688.523, 328.103, -707.649, -449.358, -707.649, -477.889, -688.523, -477.889, -395.263, -485.021, -388.888, -542.083, -388.888, -549.215, -382.513, -549.215, -210.382 ) ]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+
 [node name="level1" type="Node2D"]
 script = ExtResource( 19 )
 
@@ -362,7 +363,6 @@ collision_mask = 0
 tile_data = PoolIntArray( -131077, 8, 0, -131075, 7, 0, -196608, 8, 0, -196606, 7, 0, 131063, 1, 0, 393213, 8, 0, 393215, 7, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -808, -72 )
 current = true
 
 [node name="TileMap2" type="TileMap" parent="."]
@@ -408,6 +408,12 @@ position = Vector2( -1088, -104 )
 [node name="Exit" parent="objectSort" index="1"]
 position = Vector2( 1228.65, -77.7827 )
 
+[node name="RemoteTransform2D" parent="objectSort/Player" index="0"]
+remote_path = NodePath("../../../Camera2D")
+
+[node name="AnimationTree" parent="objectSort/Player" index="3"]
+parameters/playback = SubResource( 22 )
+
 [node name="man" parent="objectSort" instance=ExtResource( 3 )]
 position = Vector2( 479, 760 )
 
@@ -422,12 +428,6 @@ position = Vector2( 464, -32 )
 
 [node name="woman" parent="objectSort" instance=ExtResource( 11 )]
 position = Vector2( -363, 832 )
-
-[node name="Player" parent="objectSort" instance=ExtResource( 10 )]
-position = Vector2( -808, -72 )
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="objectSort/Player"]
-remote_path = NodePath("../../../Camera2D")
 
 [node name="DoorSort" parent="objectSort" instance=ExtResource( 21 )]
 
@@ -503,5 +503,4 @@ position = Vector2( 91.2975, 236.496 )
 [editable path="walls"]
 [editable path="borderParent"]
 [editable path="objectSort"]
-[editable path="objectSort/man2"]
-[editable path="objectSort/man2/hurtbox"]
+[editable path="objectSort/Player"]

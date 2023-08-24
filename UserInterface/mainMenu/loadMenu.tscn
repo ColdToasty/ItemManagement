@@ -1,0 +1,34 @@
+[gd_scene format=2]
+
+[node name="Panel" type="Panel"]
+margin_right = 384.0
+margin_bottom = 280.0
+
+[node name="title" type="RichTextLabel" parent="."]
+margin_left = 152.0
+margin_top = 16.0
+margin_right = 224.0
+margin_bottom = 40.0
+text = "Load Game"
+
+[node name="listOfSaves" type="ItemList" parent="."]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 376.0
+margin_bottom = 192.0
+
+[node name="back" type="Button" parent="."]
+margin_left = 48.0
+margin_top = 208.0
+margin_right = 160.0
+margin_bottom = 248.0
+text = "Back"
+
+[node name="load" type="Button" parent="."]
+anchor_right = 0.042
+anchor_bottom = 0.057
+margin_left = 224.0
+margin_top = 208.0
+margin_right = 319.872
+margin_bottom = 232.04
+text = "Load"
