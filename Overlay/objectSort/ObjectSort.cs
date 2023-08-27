@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using static Mob;
 
 
 /*
@@ -21,7 +23,9 @@ public class ObjectSort : YSort
 
 	private bool canExit = false;
 	private bool hasLevelEnded = false;
-
+	public Vector2 closestParentPosition = Vector2.Zero;
+	public Vector2 playerPosition = Vector2.Zero;
+    
 	[Signal]
 	public delegate void end_level();
 
@@ -54,10 +58,55 @@ public class ObjectSort : YSort
 			{
 				player = (Player)children[i];
 			}
+			if (children[i] is Child)
+			{
+                ((Child)children[i]).Connect("get_parent", this, "getParent");
+            }
 		}
 
 	}
 	
+
+    public void getParent(Vector2 childPosition, Vector2 playerPosition)
+	{
+		this.playerPosition = playerPosition;
+        Stack<double> magnitude = new Stack<double>();
+        //Check which parent is closest
+        //Check the magnitude of vectors
+
+        for (int i = 0; i < children.Count; i++)
+		{
+			if (children[i] is Man || children[i] is Cop || children[i] is Old)
+			{
+				Vector2 adultPosition = ((Mob)children[i]).GlobalPosition;
+				//Calculate x
+				double xPoint = Math.Pow(adultPosition.x - childPosition.x, 2);
+                //Calculate y
+				double yPoint = Math.Pow(adultPosition.y - childPosition.y,  2);
+				
+				//Get Magnitude of vector
+				double adultMagnitude = Math.Sqrt(xPoint + yPoint);
+
+				if(magnitude.Count == 0)
+				{
+					magnitude.Push(adultMagnitude);
+					closestParentPosition = adultPosition;
+				}
+				else
+				{
+					if(magnitude.Peek() >= adultMagnitude)
+					{
+						magnitude.Pop();
+						magnitude.Push(adultMagnitude);
+						closestParentPosition = adultPosition;
+					}
+				}
+			}
+		}
+		
+
+	}
+
 	public void playerCanHide(bool hidingPossible)
 	{
         canPlayerHide = hidingPossible;

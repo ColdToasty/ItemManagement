@@ -567,7 +567,7 @@ tree_root = SubResource( 13 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 14 )
 parameters/Idle/blend_position = Vector2( 0, 1 )
-parameters/Moving/blend_position = Vector2( -0.623616, 1.2526 )
+parameters/Moving/blend_position = Vector2( -0.640099, 0.826829 )
 parameters/Slapping/blend_position = Vector2( 0, 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

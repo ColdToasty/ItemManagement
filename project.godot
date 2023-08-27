@@ -169,6 +169,8 @@ menu={
 2d_physics/layer_17="hitPlayerBox"
 2d_physics/layer_18="mouseBox"
 2d_physics/layer_19="object"
+2d_physics/layer_20="childAlertArea"
+2d_physics/layer_21="parentAlertArea"
 
 [mono]
 

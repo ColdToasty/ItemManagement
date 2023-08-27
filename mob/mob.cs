@@ -52,11 +52,14 @@ public class Mob : KinematicBody2D
 	[Signal]
 	public delegate void stop_route();
 
-    [Signal]
-    public delegate void can_player_hide();
+	[Signal]
+	public delegate void can_player_hide();
 
 
-    Random rnd = new Random();
+	public Random rnd = new Random();
+
+	private AnimationPlayer viewConeAnimationPlayer;
+	private AnimationTree viewConeAnimationTree;
 
 	public enum STATE
 	{
@@ -77,6 +80,8 @@ public class Mob : KinematicBody2D
 		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		original_position = this.GlobalPosition;
 
+		viewConeAnimationPlayer = GetNode<AnimationPlayer>("ViewBox/ViewCone/AnimationPlayer");
+		viewConeAnimationTree = GetNode<AnimationTree>("ViewBox/ViewCone/AnimationTree");
 	}
 
 
@@ -124,7 +129,7 @@ public class Mob : KinematicBody2D
 
 
 	//Move our mob towards a certain location
-	private void move()
+	public void move()
 	{
 		direction = this.GlobalPosition.DirectionTo(nav_agent.GetNextLocation());
 		//Set the speed and which way to go
@@ -148,6 +153,7 @@ public class Mob : KinematicBody2D
 	{
 	
 	}
+
 	//When the player is heard in its detection zone
 	private void _on_idleTimer_timeout()
 	{
@@ -162,10 +168,51 @@ public class Mob : KinematicBody2D
 	}
 
 
-	//When player makes sound in the zone
-	//Have the viewcone shift towards it even if the player is not in zone anymore
+	public void navigateToPosition(float delta)
+	{
+		//If mob hasnt arrived at target location
+		if (!arrived_at_location() && can_move)
+		{
+			idleTimer.Stop();
+			original_location_timer.Stop();
 
-	public override void _PhysicsProcess(float delta)
+			//GD.Print(nav_agent.GetNextLocation());
+			rotate_cone(delta, nav_agent.GetNextLocation());
+
+			//Make it so that when player is heard stop movement and follow 185
+
+			move();
+
+
+		}
+		//If back to original position
+		else if (arrived_at_location() && can_move)
+		{
+			can_move = false;
+			timerStarted = false;
+
+			//Means we need to navigate back to the original position 
+			if (nav_agent.GetTargetLocation() != original_position)
+			{
+				original_location_timer.Start(rnd.Next(4, 7));
+			}
+
+		}
+	}
+
+
+
+    private void _on_parentAlertArea_area_entered(object area)
+    {
+		nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).playerPosition);
+		can_move = true;
+    }
+
+
+    //When player makes sound in the zone
+    //Have the viewcone shift towards it even if the player is not in zone anymore
+
+    public override void _PhysicsProcess(float delta)
 	{
 		//If the viewcone sees the player
 		if (view_cone.can_see_player())
@@ -181,6 +228,7 @@ public class Mob : KinematicBody2D
 			can_move = true;
 
 			EmitSignal("can_player_hide", false);
+			//Change viewCone to red
 
 		}
 		else if (detectionZone.can_hear_player())
@@ -191,8 +239,9 @@ public class Mob : KinematicBody2D
 			EmitSignal("stop_route", false);
 			rotate_cone(delta, detectionZone.last_heard);
 			nav_agent.SetTargetLocation(detectionZone.last_heard);
-            EmitSignal("can_player_hide", true);
-            if (!timerStarted)
+			EmitSignal("can_player_hide", true);
+			//Change Animation to yellow
+			if (!timerStarted)
 			{
 				timerStarted = true;
 				idleTimer.Start(1);
@@ -200,39 +249,13 @@ public class Mob : KinematicBody2D
 		}
 		else
 		{
-            EmitSignal("can_player_hide", true);
-            player = null;
+			EmitSignal("can_player_hide", true);
+			player = null;
+			//Play animation to yellow to white
 		}
-		
-		//If mob hasnt arrived at target location
-		if (!arrived_at_location() && can_move)
-		{
-				idleTimer.Stop();
-				original_location_timer.Stop();
 
-				//GD.Print(nav_agent.GetNextLocation());
-				rotate_cone(delta, nav_agent.GetNextLocation());
-				
-				//Make it so that when player is heard stop movement and follow 185
 
-				move();
-				
-
-				
-		}
-		//If back to original position
-		else if (arrived_at_location() && can_move)
-		{
-			can_move = false;
-			timerStarted = false;
-
-			//Means we need to navigate back to the original position 
-			if(nav_agent.GetTargetLocation() != original_position)
-			{
-				original_location_timer.Start(rnd.Next(4, 7));
-			}
-
-		}
+		navigateToPosition(delta);
 		//GD.Print(idleTimer.TimeLeft);
 
 	}
@@ -241,7 +264,6 @@ public class Mob : KinematicBody2D
 
 
 }
-
 
 
 
