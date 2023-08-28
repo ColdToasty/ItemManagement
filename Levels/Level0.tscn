@@ -276,7 +276,7 @@ collision_layer = 16385
 tile_data = PoolIntArray( -196606, 8, 0, -196604, 7, 0, -65529, 8, 0, -65527, 7, 0, 65536, 8, 0, 65538, 7, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -152, -40 )
+position = Vector2( -144, -104 )
 current = true
 
 [node name="objectSort" parent="." instance=ExtResource( 7 )]
@@ -288,7 +288,7 @@ position = Vector2( -304, -80 )
 position = Vector2( -304, -80 )
 
 [node name="Player" parent="objectSort" index="2"]
-position = Vector2( -152, -40 )
+position = Vector2( -144, -104 )
 
 [node name="RemoteTransform2D" parent="objectSort/Player" index="0"]
 remote_path = NodePath("../../../Camera2D")
@@ -310,6 +310,9 @@ rotation = -3.38943
 
 [node name="Child" parent="objectSort" instance=ExtResource( 10 )]
 position = Vector2( -176, 288 )
+
+[node name="Child2" parent="objectSort" instance=ExtResource( 10 )]
+position = Vector2( -360, 64 )
 
 [node name="PlaceLocations" type="YSort" parent="."]
 
@@ -354,7 +357,9 @@ navpoly = SubResource( 13 )
 [editable path="objectSort"]
 [editable path="objectSort/Player"]
 [editable path="objectSort/man"]
+[editable path="objectSort/man/ViewBox"]
 [editable path="objectSort/man/hurtbox"]
 [editable path="objectSort/man2"]
+[editable path="objectSort/man2/ViewBox"]
 [editable path="objectSort/man2/hurtbox"]
 [editable path="CookieCounter"]

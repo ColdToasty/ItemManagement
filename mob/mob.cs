@@ -58,10 +58,11 @@ public class Mob : KinematicBody2D
 
 	public Random rnd = new Random();
 
-	private AnimationPlayer viewConeAnimationPlayer;
-	private AnimationTree viewConeAnimationTree;
+	public AnimatedSprite viewConeSprite;
+	public bool seenPlayer, investigatingPosition = false;
 
-	public enum STATE
+
+    public enum STATE
 	{
 		CHASE,
 		IDLE
@@ -79,10 +80,9 @@ public class Mob : KinematicBody2D
 		original_location_timer = GetNode<Timer>("originalLocationTimer");
 		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		original_position = this.GlobalPosition;
+        viewConeSprite = GetNode<AnimatedSprite>("ViewBox/ViewCone/AnimatedSprite");
 
-		viewConeAnimationPlayer = GetNode<AnimationPlayer>("ViewBox/ViewCone/AnimationPlayer");
-		viewConeAnimationTree = GetNode<AnimationTree>("ViewBox/ViewCone/AnimationTree");
-	}
+    }
 
 
 	private void _on_hurtbox_area_entered(Slap area)
@@ -195,9 +195,15 @@ public class Mob : KinematicBody2D
 			if (nav_agent.GetTargetLocation() != original_position)
 			{
 				original_location_timer.Start(rnd.Next(4, 7));
-			}
+                
+            }
+            else
+            {
+                seenPlayer = false;
+                investigatingPosition = false;
+            }
 
-		}
+        }
 	}
 
 
@@ -208,6 +214,23 @@ public class Mob : KinematicBody2D
 		can_move = true;
     }
 
+	public void checkAnimatedFrames()
+	{
+        if (seenPlayer)
+        {
+            viewConeSprite.SetDeferred("animation", "seen");
+        }
+        else if (investigatingPosition)
+        {
+            viewConeSprite.SetDeferred("animation", "investigating");
+        }
+        else
+        {
+            viewConeSprite.SetDeferred("animation", "idle");
+        }
+        //Have checks on if a player is seen, heard, sus or idle
+        viewConeSprite.Playing = true;
+    }
 
     //When player makes sound in the zone
     //Have the viewcone shift towards it even if the player is not in zone anymore
@@ -220,7 +243,10 @@ public class Mob : KinematicBody2D
 			//Stop the route, if any
 			EmitSignal("stop_route", false);
 			player = view_cone.player;
-			idleTimer.Stop();
+
+
+
+            idleTimer.Stop();
 			original_location_timer.Stop();
 			//Rotate the cone towards the player
 			rotate_cone(delta, player.GlobalPosition);
@@ -229,9 +255,10 @@ public class Mob : KinematicBody2D
 
 			EmitSignal("can_player_hide", false);
 			//Change viewCone to red
+			seenPlayer = true;
 
-		}
-		else if (detectionZone.can_hear_player())
+        }
+		else if (detectionZone.can_hear_player() && !seenPlayer)
 		{
 			timerStarted = false;
 			idleTimer.Stop();
@@ -240,22 +267,27 @@ public class Mob : KinematicBody2D
 			rotate_cone(delta, detectionZone.last_heard);
 			nav_agent.SetTargetLocation(detectionZone.last_heard);
 			EmitSignal("can_player_hide", true);
-			//Change Animation to yellow
-			if (!timerStarted)
+
+			investigatingPosition = true;
+            if (!timerStarted)
 			{
 				timerStarted = true;
 				idleTimer.Start(1);
+				//play animation
 			}
-		}
+           
+        }
 		else
 		{
 			EmitSignal("can_player_hide", true);
 			player = null;
-			//Play animation to yellow to white
-		}
+
+            
+        }
 
 
-		navigateToPosition(delta);
+		checkAnimatedFrames();
+        navigateToPosition(delta);
 		//GD.Print(idleTimer.TimeLeft);
 
 	}

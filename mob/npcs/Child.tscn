@@ -22,4 +22,5 @@ visible = false
 [node name="CollisionShape2D" parent="parentAlertArea" index="0"]
 disabled = true
 
+[editable path="ViewBox"]
 [editable path="hurtbox"]

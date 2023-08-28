@@ -5,15 +5,18 @@ public class viewCone : Area2D
 {
 	public Player player;
 	public Node2D raycast_nodes;
+	public bool seen_player = false;
+	public bool investigating = false;
 
-
+	
 	public override void _Ready()
 	{
 		raycast_nodes = GetNode<Node2D>("CollisionPolygon2D");
-	}
+
+    }
 
 
-	public Boolean can_see_player()
+	public bool can_see_player()
 	{
 		return player != null;
 	}
@@ -22,6 +25,7 @@ public class viewCone : Area2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+
 	
 		//Check each ray
 		foreach (RayCast2D ray in raycast_nodes.GetChildren())
@@ -37,7 +41,6 @@ public class viewCone : Area2D
 			}
 			player = null;
 		}
-		
 	}
 
 

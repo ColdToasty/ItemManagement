@@ -11,14 +11,18 @@ public class Child : Mob
     [Signal]
     public delegate void alert_parent(Vector2 player_position);
     private bool findingParent = false;
-    private bool seenPlayer = false;
+
     private CollisionShape2D alertAreaCollisionShape;
+
+    private AnimatedSprite viewConeSprite; 
 
     public override void _Ready()
     {
         base._Ready();
         alertAreaCollisionShape = GetNode<CollisionShape2D>("alertArea/CollisionShape2D");
         alertAreaCollisionShape.SetDeferred("disabled", true);
+
+        viewConeSprite = GetNode<AnimatedSprite>("ViewBox/ViewCone/AnimatedSprite");
     }
 
     new public void navigateToPosition(float delta)
@@ -47,7 +51,12 @@ public class Child : Mob
             {
                 alertAreaCollisionShape.SetDeferred("disabled", true);
                 original_location_timer.Start(rnd.Next(4, 7));
-                seenPlayer = false;
+
+            }
+            else
+            {
+                seenPlayer= false;
+                investigatingPosition = false;
             }
         }
     }
@@ -61,19 +70,19 @@ public class Child : Mob
             //Stop the route, if any
             EmitSignal("stop_route", false);
             seenPlayer = true;
+
             player = view_cone.player;
             idleTimer.Stop();
             original_location_timer.Stop();
 
             can_move = true;
 
-            GD.Print("sees player, get adult");
+            //GD.Print("sees player, get adult");
             EmitSignal("can_player_hide", false);
 
             //if sees player then find closest "adult"
             //send signal 
             EmitSignal("get_parent", this.GlobalPosition, player.GlobalPosition);
-            //Change viewCone to red
 
             //Set to closest parent
             nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).closestParentPosition);
@@ -81,6 +90,10 @@ public class Child : Mob
             rotate_cone(delta, ((ObjectSort)this.GetParent()).closestParentPosition);
             //Activate area
             alertAreaCollisionShape.SetDeferred("disabled", false);
+
+            //play red view cone animation
+            investigatingPosition = true;
+
         }
         //Check detection zone
         //if hears player investigate
@@ -90,14 +103,13 @@ public class Child : Mob
             idleTimer.Stop();
             original_location_timer.Stop();
             EmitSignal("stop_route", false);
-            //Add sees player
-            if (!seenPlayer)
-            {
-                rotate_cone(delta, detectionZone.last_heard);
-            }
+
+            rotate_cone(delta, detectionZone.last_heard);
+
             nav_agent.SetTargetLocation(detectionZone.last_heard);
             EmitSignal("can_player_hide", true);
-            //Change Animation to yellow
+
+            investigatingPosition = true;
             if (!timerStarted)
             {
                 timerStarted = true;
@@ -110,10 +122,12 @@ public class Child : Mob
             EmitSignal("can_player_hide", true);
             player = null;
             alertAreaCollisionShape.SetDeferred("disabled", false);
-            //Play animation to yellow to white
+
         }
 
-        this.navigateToPosition(delta);
+
+        checkAnimatedFrames();
+        navigateToPosition(delta);
 
 
     }

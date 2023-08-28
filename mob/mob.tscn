@@ -71,4 +71,5 @@ shape = SubResource( 4 )
 [connection signal="timeout" from="originalLocationTimer" to="." method="_on_originalLocationTimer_timeout"]
 [connection signal="area_entered" from="parentAlertArea" to="." method="_on_parentAlertArea_area_entered"]
 
+[editable path="ViewBox"]
 [editable path="hurtbox"]
