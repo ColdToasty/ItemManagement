@@ -208,9 +208,18 @@ public class Mob : KinematicBody2D
 
 
 
-    private void _on_parentAlertArea_area_entered(object area)
+    private void _on_parentAlertArea_area_entered(Area2D area)
     {
-		nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).playerPosition);
+		GD.Print(area.Name);
+		if (area.GetParent() is Child)
+		{
+            nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).playerPosition);
+        }
+		else
+		{
+            nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).gatherPosition);
+        }
+
 		can_move = true;
     }
 

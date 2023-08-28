@@ -60,7 +60,7 @@ one_shot = true
 
 [node name="parentAlertArea" type="Area2D" parent="."]
 collision_layer = 1048576
-collision_mask = 524288
+collision_mask = 2621440
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="parentAlertArea"]
 shape = SubResource( 4 )

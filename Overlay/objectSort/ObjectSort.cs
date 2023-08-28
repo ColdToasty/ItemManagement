@@ -25,7 +25,7 @@ public class ObjectSort : YSort
 	private bool hasLevelEnded = false;
 	public Vector2 closestParentPosition = Vector2.Zero;
 	public Vector2 playerPosition = Vector2.Zero;
-    
+    public Vector2 gatherPosition = Vector2.Zero;
 	[Signal]
 	public delegate void end_level();
 
@@ -60,14 +60,23 @@ public class ObjectSort : YSort
 			}
 			if (children[i] is Child)
 			{
-                ((Child)children[i]).Connect("get_parent", this, "getParent");
+                ((Child)children[i]).Connect("get_parents", this, "getParents");
             }
-		}
+            if (children[i] is Baby)
+            {
+                ((Baby)children[i]).Connect("gather_parents", this, "gatherParents");
+            }
+
+        }
 
 	}
 	
+	public void gatherParents(Vector2 gatherPosition)
+	{
+		this.gatherPosition = gatherPosition;
 
-    public void getParent(Vector2 childPosition, Vector2 playerPosition)
+    }
+    public void getParents(Vector2 childPosition, Vector2 playerPosition)
 	{
 		this.playerPosition = playerPosition;
         Stack<double> magnitude = new Stack<double>();

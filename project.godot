@@ -171,6 +171,7 @@ menu={
 2d_physics/layer_19="object"
 2d_physics/layer_20="childAlertArea"
 2d_physics/layer_21="parentAlertArea"
+2d_physics/layer_22="babyAlertArea"
 
 [mono]
 

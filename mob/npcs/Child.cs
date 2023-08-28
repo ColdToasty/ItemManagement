@@ -5,7 +5,7 @@ public class Child : Mob
 {
     //Signal to alert objectSort observer to set navigateToPosition
     [Signal]
-    public delegate void get_parent();
+    public delegate void get_parents(Vector2 childPosition, Vector2 playerPosition);
 
     //Signal when child reaches parent
     [Signal]
@@ -82,7 +82,7 @@ public class Child : Mob
 
             //if sees player then find closest "adult"
             //send signal 
-            EmitSignal("get_parent", this.GlobalPosition, player.GlobalPosition);
+            EmitSignal("get_parents", this.GlobalPosition, player.GlobalPosition);
 
             //Set to closest parent
             nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).closestParentPosition);
