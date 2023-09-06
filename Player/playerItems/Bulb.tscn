@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Player/playerItems/Bulb.cs" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 96.0
+
+[node name="Bulb" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+
+[node name="waitTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="noiseTimer" type="Timer" parent="."]
+
+[node name="noiseArea" type="Area2D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="noiseArea"]
+shape = SubResource( 1 )
+
+[connection signal="timeout" from="waitTimer" to="." method="_on_waitTimer_timeout"]
+[connection signal="timeout" from="noiseTimer" to="." method="_on_noiseTimer_timeout"]

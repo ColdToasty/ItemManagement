@@ -60,9 +60,10 @@ public class Mob : KinematicBody2D
 
 	public AnimatedSprite viewConeSprite;
 	public bool seenPlayer, investigatingPosition = false;
+	public Timer tinselTimer;
+	
 
-
-    public enum STATE
+	public enum STATE
 	{
 		CHASE,
 		IDLE
@@ -80,9 +81,10 @@ public class Mob : KinematicBody2D
 		original_location_timer = GetNode<Timer>("originalLocationTimer");
 		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		original_position = this.GlobalPosition;
-        viewConeSprite = GetNode<AnimatedSprite>("ViewBox/ViewCone/AnimatedSprite");
-
-    }
+		viewConeSprite = GetNode<AnimatedSprite>("ViewBox/ViewCone/AnimatedSprite");
+		tinselTimer = GetNode<Timer>("playerObjectDetectionZone/tinselTimer");
+		
+	}
 
 
 	private void _on_hurtbox_area_entered(Slap area)
@@ -195,56 +197,81 @@ public class Mob : KinematicBody2D
 			if (nav_agent.GetTargetLocation() != original_position)
 			{
 				original_location_timer.Start(rnd.Next(4, 7));
-                
-            }
-            else
-            {
-                seenPlayer = false;
-                investigatingPosition = false;
-            }
+				
+			}
+			else
+			{
+				seenPlayer = false;
+				investigatingPosition = false;
+			}
 
-        }
+		}
 	}
 
 
+	//Stop the movement of mob
+private void _on_playerObjectDetectionZone_area_entered(Area2D area)
+{
+		if(area.GetParent() is Tinsel)
+		{
+			Tinsel tinsel = ((Tinsel)area.GetParent());
+			can_move = false;
+			this.GlobalPosition = tinsel.GlobalPosition;
+			tinselTimer.Start((float)tinsel.tinselHoldTime);
+		}
+		else if(area.GetParent() is Bulb)
+		{
+			GD.Print("bulb here");
+			Bulb bulb = area.GetParent() as Bulb;
+            nav_agent.SetTargetLocation(bulb.GlobalPosition);
+			can_move = true;
+        }
+		
+}
 
-    private void _on_parentAlertArea_area_entered(Area2D area)
-    {
-		GD.Print(area.Name);
+	private void _on_tinselTimer_timeout()
+	{
+		can_move = true;
+	}
+
+
+	private void _on_parentAlertArea_area_entered(Area2D area)
+	{
+
 		if (area.GetParent() is Child)
 		{
-            nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).playerPosition);
-        }
+			nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).playerPosition);
+		}
 		else
 		{
-            nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).gatherPosition);
-        }
+			nav_agent.SetTargetLocation(((ObjectSort)this.GetParent()).gatherPosition);
+		}
 
 		can_move = true;
-    }
+	}
 
 	public void checkAnimatedFrames()
 	{
-        if (seenPlayer)
-        {
-            viewConeSprite.SetDeferred("animation", "seen");
-        }
-        else if (investigatingPosition)
-        {
-            viewConeSprite.SetDeferred("animation", "investigating");
-        }
-        else
-        {
-            viewConeSprite.SetDeferred("animation", "idle");
-        }
-        //Have checks on if a player is seen, heard, sus or idle
-        viewConeSprite.Playing = true;
-    }
+		if (seenPlayer)
+		{
+			viewConeSprite.SetDeferred("animation", "seen");
+		}
+		else if (investigatingPosition)
+		{
+			viewConeSprite.SetDeferred("animation", "investigating");
+		}
+		else
+		{
+			viewConeSprite.SetDeferred("animation", "idle");
+		}
+		//Have checks on if a player is seen, heard, sus or idle
+		viewConeSprite.Playing = true;
+	}
 
-    //When player makes sound in the zone
-    //Have the viewcone shift towards it even if the player is not in zone anymore
+	//When player makes sound in the zone
+	//Have the viewcone shift towards it even if the player is not in zone anymore
 
-    public override void _PhysicsProcess(float delta)
+	public override void _PhysicsProcess(float delta)
 	{
 		//If the viewcone sees the player
 		if (view_cone.can_see_player())
@@ -255,7 +282,7 @@ public class Mob : KinematicBody2D
 
 
 
-            idleTimer.Stop();
+			idleTimer.Stop();
 			original_location_timer.Stop();
 			//Rotate the cone towards the player
 			rotate_cone(delta, player.GlobalPosition);
@@ -266,7 +293,7 @@ public class Mob : KinematicBody2D
 			//Change viewCone to red
 			seenPlayer = true;
 
-        }
+		}
 		else if (detectionZone.can_hear_player() && !seenPlayer)
 		{
 			timerStarted = false;
@@ -278,25 +305,23 @@ public class Mob : KinematicBody2D
 			EmitSignal("can_player_hide", true);
 
 			investigatingPosition = true;
-            if (!timerStarted)
+			if (!timerStarted)
 			{
 				timerStarted = true;
 				idleTimer.Start(1);
 				//play animation
 			}
-           
-        }
+		   
+		}
 		else
 		{
 			EmitSignal("can_player_hide", true);
 			player = null;
-
-            
-        }
-
+			
+		}
 
 		checkAnimatedFrames();
-        navigateToPosition(delta);
+		navigateToPosition(delta);
 		//GD.Print(idleTimer.TimeLeft);
 
 	}
@@ -305,6 +330,7 @@ public class Mob : KinematicBody2D
 
 
 }
+
 
 
 

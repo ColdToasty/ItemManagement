@@ -31,14 +31,14 @@ public class World : Node2D
 		db = GetNode<ItemDatabase>("/root/ItemDatabase");
 		//Gets the number of placeLocation nodes
 		placeLocationNumber = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
-        presentsTBD = placeLocationNumber;
+		presentsTBD = placeLocationNumber;
 
-        add_textures();
+		add_textures();
 		player = GetTree().CurrentScene.GetNode<Player>("objectSort/Player");
 		player.Connect("showGameOverScreen", this, "showGameOverScreen");
 
-        objectSort = GetNode<ObjectSort>("objectSort");
-        objectSort.Connect("end_level", this, "endLevel");
+		objectSort = GetNode<ObjectSort>("objectSort");
+		objectSort.Connect("end_level", this, "endLevel");
 		cookieCounter = GetNode<CookieCounter>("/root/CookieCounter");
 		//Get gameOverScreen
 		//add it but disable visibility
@@ -47,12 +47,12 @@ public class World : Node2D
 		{
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
-    }
+	}
 
 
 	public void itemPlaced()
 	{
-        presentsTBD--;
+		presentsTBD--;
 		if(presentsTBD == 0)
 		{
 			//Pop up saying all presents delivered and can leave
@@ -70,8 +70,8 @@ public class World : Node2D
 	{
 		//Prevent cookies being added multiple times
 		if(!level_ended && presentsTBD < placeLocationNumber) {
-            GD.Print("End Level");
-            level_ended = true;
+			GD.Print("End Level");
+			level_ended = true;
 			cookieCounter.Save_global_cookies();
 			int cookies = cookieCounter.Global_Cookie_Counter;
 			int stars = 0;
@@ -82,22 +82,22 @@ public class World : Node2D
 			//Save presents delivered
 			//Save highScore for level
 			//saveGame.saveGameData();
-            float percentage = (float)(placeLocationNumber-presentsTBD)/ (float)placeLocationNumber * 100;
+			float percentage = (float)(placeLocationNumber-presentsTBD)/ (float)placeLocationNumber * 100;
 			if (percentage == 100) {
-                //This really is a perfect christmas for these people
-                //I hope you enjoyed the cookies because you deserve it
-            }
-            else if (percentage <100 && percentage > 80)
+				//This really is a perfect christmas for these people
+				//I hope you enjoyed the cookies because you deserve it
+			}
+			else if (percentage <100 && percentage > 80)
 			{
-                //Presents delivered and happy family what else could you ask 
-                //You really inspire me to do better 
-            }
-            else if(percentage < 80 && percentage > 60)
+				//Presents delivered and happy family what else could you ask 
+				//You really inspire me to do better 
+			}
+			else if(percentage < 80 && percentage > 60)
 			{
-                //Wow great job I can see their joy already rising
+				//Wow great job I can see their joy already rising
 				//I hope they enjoy christmas, but do go easy on those cookies or they'll make you sloppy
-            }
-            else if(percentage < 60 && percentage > 40)
+			}
+			else if(percentage < 60 && percentage > 40)
 			{
 				//I guess this will make them happy
 			}
@@ -110,7 +110,7 @@ public class World : Node2D
 				//Are you even trying to make christmas enjoyable
 			}
 
-        }
+		}
 		else
 		{
 			//Popup rudolph critizing player

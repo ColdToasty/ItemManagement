@@ -13,7 +13,7 @@ public class Player : KinematicBody2D
 	}
 	public STATE state = STATE.MOVING;
 	public Godot.Vector2 input_vector = Godot.Vector2.Zero;
-    public Godot.Vector2 velocity = Godot.Vector2.Zero;
+	public Godot.Vector2 velocity = Godot.Vector2.Zero;
 
 	
 	public GridContainer hotbar;
@@ -21,9 +21,9 @@ public class Player : KinematicBody2D
 
 	[Export]
 	private playerStats playerStats;
-    
+	
 	//Animations and movements
-    public AnimationNodeStateMachinePlayback animation_playback;
+	public AnimationNodeStateMachinePlayback animation_playback;
 	public AnimationTree animationTree;
 	public AnimationPlayer animationPlayer;
 
@@ -37,12 +37,12 @@ public class Player : KinematicBody2D
 	private PlayerVisible playerVisibleArea;
 	private CollisionShape2D playerVisibleCollisionShape;
 
-    [Signal]
-    public delegate void showGameOverScreen();
+	[Signal]
+	public delegate void showGameOverScreen();
 
 
-    private Sprite playerSprite;
-    public override void _Ready()
+	private Sprite playerSprite;
+	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
@@ -54,13 +54,13 @@ public class Player : KinematicBody2D
 		timer = GetNode<Timer>("Timer");
 
 		playerVisibleArea = GetNode<PlayerVisible>("PlayerVisible");
-        playerVisibleCollisionShape = GetNode<CollisionShape2D>("PlayerVisible/CollisionShape2D");
-        playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
+		playerVisibleCollisionShape = GetNode<CollisionShape2D>("PlayerVisible/CollisionShape2D");
+		playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
 		playerSprite = GetNode<Sprite>("Sprite");
 
-        SPEED = playerStats.Speed;
+		SPEED = playerStats.Speed;
 
-    }
+	}
 
 
 	public void move()
@@ -79,32 +79,32 @@ public class Player : KinematicBody2D
 
 	public void enableInvisibility()
 	{
-        playerVisibleArea.SetDeferred("monitoring", false);
-        playerVisibleArea.SetDeferred("monitorable", false);
+		playerVisibleArea.SetDeferred("monitoring", false);
+		playerVisibleArea.SetDeferred("monitorable", false);
 		playerVisibleCollisionShape.SetDeferred("disabled", true);
 		
-    }
+	}
 
 	public void disableInvisibility()
 	{
-        playerVisibleArea.SetDeferred("monitoring", true);
-        playerVisibleArea.SetDeferred("monitorable", true);
-        playerVisibleCollisionShape.SetDeferred("disabled", false);
-    }
+		playerVisibleArea.SetDeferred("monitoring", true);
+		playerVisibleArea.SetDeferred("monitorable", true);
+		playerVisibleCollisionShape.SetDeferred("disabled", false);
+	}
 
 	public void enableSprite()
 	{
 		playerSprite.SetDeferred("visible", true);
 	}
-    public void disableSprite()
-    {
-        playerSprite.SetDeferred("visible", false);
-    }
+	public void disableSprite()
+	{
+		playerSprite.SetDeferred("visible", false);
+	}
 
 
-    //When player gets hit by mob with a hitPlayerBox
-    private void _on_hitPlayerBox_entered(object area)
-    {
+	//When player gets hit by mob with a hitPlayerBox
+	private void _on_hitPlayerBox_entered(object area)
+	{
 		if(area is hitPlayerBox)
 		{
 			if(((hitPlayerBox)area).GetParent() is Old)
@@ -124,10 +124,10 @@ public class Player : KinematicBody2D
 			//Emit gameOver signal
 			EmitSignal("showGameOverScreen");
 		}
-    }
+	}
 
 
-    public void move_state()
+	public void move_state()
 	{
 		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
 		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
@@ -146,30 +146,30 @@ public class Player : KinematicBody2D
 			//Then use the input_vector as direction for which way to move
 			if (Input.IsActionPressed("Sprint"))
 				{
-                SPEED = playerStats.SprintSpeed;
+				SPEED = playerStats.SprintSpeed;
 				}
 			else
 				{
-                SPEED = playerStats.Speed;
+				SPEED = playerStats.Speed;
 				}
-            animation_playback.Travel("Moving");
+			animation_playback.Travel("Moving");
 			velocity = input_vector * SPEED;
 			
 			}
 			
 		else
 		{
-            animation_playback.Travel("Idle");
+			animation_playback.Travel("Idle");
 			velocity = Godot.Vector2.Zero;
-            
-        }
+			
+		}
 			
 		move();
 		
 		if (Input.IsActionJustPressed("Slap"))
 			{
-            state = STATE.ATTACK;
-        }
+			state = STATE.ATTACK;
+		}
 	}
 
 	public void attack_state()
