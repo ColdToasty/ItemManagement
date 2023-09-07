@@ -1,6 +1,6 @@
 [gd_scene load_steps=47 format=2]
 
-[ext_resource path="res://Player/PlayerSprite/Walk.png" type="Texture" id=1]
+[ext_resource path="res://Player/PlayerSprite/player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Slap.cs" type="Script" id=2]
 [ext_resource path="res://Player/RunNoise.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/PlayerReach.cs" type="Script" id=4]
@@ -249,7 +249,7 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
+"update": 1,
 "values": [ 0 ]
 }
 
@@ -267,7 +267,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 16 ]
+"values": [ 3 ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -283,8 +283,8 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 11 ]
+"update": 1,
+"values": [ 2 ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -300,8 +300,8 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 5 ]
+"update": 1,
+"values": [ 1 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -345,68 +345,68 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=50]
 resource_name = "WalkDown"
-length = 0.75
+length = 1.2
 loop = true
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 1.0, 2.0, 0.0, 3.0, 4.0 ]
+"values": [ 4, 5, 6, 7, 8, 9 ]
 }
 
 [sub_resource type="Animation" id=52]
-length = 0.75
+length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 17.0, 18.0, 19.0, 20.0, 21.0 ]
+"values": [ 22, 23, 24, 25, 26, 27 ]
 }
 
 [sub_resource type="Animation" id=53]
-length = 0.75
+length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 12.0, 13.0, 11.0, 14.0, 15.0 ]
+"values": [ 16, 17, 18, 19, 20, 21 ]
 }
 
 [sub_resource type="Animation" id=54]
-length = 0.75
+length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 6.0, 7.0, 8.0, 9.0, 10.0 ]
+"values": [ 10, 11, 12, 13, 14, 15 ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=22]
@@ -588,7 +588,7 @@ shape = SubResource( 48 )
 position = Vector2( 2, -38 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
-hframes = 5
+hframes = 6
 vframes = 5
 __meta__ = {
 "_aseprite_wizard_config_": {
