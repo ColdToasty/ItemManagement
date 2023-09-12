@@ -47,6 +47,7 @@ public class World : Node2D
 		{
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
+		
 	}
 
 

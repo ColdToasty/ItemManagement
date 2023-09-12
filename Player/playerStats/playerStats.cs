@@ -4,6 +4,9 @@ using System.Drawing.Design;
 
 public class playerStats : Resource
 {
+    public int latestLevel { get; set; }
+    public int currentLevel { get; set; }
+
     [Export]
     public int Health { get; set; }
 

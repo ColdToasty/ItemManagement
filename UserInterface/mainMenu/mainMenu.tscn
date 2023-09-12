@@ -35,8 +35,9 @@ __meta__ = {
 }
 
 [node name="load" type="Button" parent="."]
+anchor_left = 0.00416667
 anchor_top = 0.103704
-anchor_right = 0.0583333
+anchor_right = 0.0625
 anchor_bottom = 0.133333
 text = "Load"
 __meta__ = {
@@ -75,6 +76,7 @@ visible = false
 [connection signal="text_changed" from="newGameMenu/newSaveName" to="." method="_on_newSaveName_text_changed"]
 [connection signal="pressed" from="newGameMenu/back" to="." method="_on_NewGameMenuBack_pressed"]
 [connection signal="pressed" from="newGameMenu/go" to="." method="_on_NewGameMenuGo_pressed"]
+[connection signal="item_selected" from="loadMenu/listOfSaves" to="." method="_on_file_selected"]
 [connection signal="pressed" from="loadMenu/back" to="." method="_on_loadGameBack_pressed"]
 [connection signal="pressed" from="loadMenu/load" to="." method="_on_loadGameLoad_pressed"]
 

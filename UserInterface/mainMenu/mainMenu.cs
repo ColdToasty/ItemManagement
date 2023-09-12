@@ -1,5 +1,8 @@
 using Godot;
+using Godot.Collections;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 public class mainMenu : Control
@@ -14,9 +17,17 @@ public class mainMenu : Control
 	GameFiles gameFileExplorer;
 	private string regex = "^[a-zA-Z]+$";
 
+	ItemList listOfSaves;
+
+
 	//load menu
 	Panel loadMenu;
 	Button loadMenuLoadButton;
+
+	private static string save_directory = "user://saves/";
+	Directory fileDirectory = new Directory();
+
+	private string loadFileName = "";
 	public override void _Ready()
 	{
 		continueButton = GetNode<Button>("continue");
@@ -42,12 +53,12 @@ public class mainMenu : Control
 		}
 
 		loadMenu = GetNode<Panel>("loadMenu");
-        loadMenuLoadButton = GetNode<Button>("loadMenu/load");
-        loadMenuLoadButton.SetDeferred("disabled", true);
-        loadMenu.SetDeferred("visible", false);
+		loadMenuLoadButton = GetNode<Button>("loadMenu/load");
+		loadMenuLoadButton.SetDeferred("disabled", true);
+		loadMenu.SetDeferred("visible", false);
 
-
-    }
+		listOfSaves = GetNode<ItemList>("loadMenu/listOfSaves");
+	}
 
 
 	//continue
@@ -67,7 +78,7 @@ public class mainMenu : Control
 		string newFileName = newGameName.Text.ToLower();
 		gameFileExplorer.SaveGameData(newFileName);
 		//call gameFiles load method
-		//GetTree().ChangeScene("res://Levels/level1.tscn");
+		//GetTree().ChangeScene("res://Levels/level0.tscn");
 	}
 
 	//Go Back to main menu
@@ -105,38 +116,76 @@ public class mainMenu : Control
 
 
 
-    
-	//load
-    //pop up a menu with all saves
-    //each save should be clickable
-    //load button, back arrow button, delete button
-    private void _on_load_pressed()
-	{
-        loadMenu.SetDeferred("visible", true);
-        //open save dir
-        //get get list of all saves
-        //display it with its info - name, time, date
 
-        //load button should be disabled when no option is selected
-        //When a save is pressed load button should be clickable
+	//load
+	//pop up a menu with all saves
+	//each save should be clickable
+	//load button, back arrow button, delete button
+	private void _on_load_pressed()
+	{
+		loadMenu.SetDeferred("visible", true);
+		List<string> savedGames = gameFileExplorer.LoadAllFiles();
+
+		fileDirectory.Open(GameFiles.save_directory);
+		File save_file = new File();
+
+		foreach (string gameFile in savedGames)
+		{
+			Error error = save_file.Open(GameFiles.save_directory + gameFile + GameFiles.file_extension, File.ModeFlags.Read);
+
+			if (error == Error.Ok)
+			{
+				string file_name = GameFiles.save_directory + gameFile + GameFiles.file_extension;
+				if (save_file.FileExists(file_name))
+				{
+					var file_info = save_file.GetAsText();
+					JSONParseResult save_data = JSON.Parse(file_info);
+					Dictionary result = save_data.Result as Dictionary;
+
+
+					string game_file_date = result["date"].ToString();
+					string game_file_time = result["time"].ToString();
+
+
+					listOfSaves.AddItem(gameFile);
+					//display it with its info - name, time, date
+				}
+				save_file.Close();
+				//load button should be disabled when no option is selected
+				//When a save is pressed load button should be clickable
+			}
+		}
+		
+
+
+
+	}
+
+
+
+    private void _on_file_selected(int index)
+    {
+		loadFileName = listOfSaves.GetItemText(index);
+        loadMenuLoadButton.SetDeferred("disabled", false);
+
     }
 
 
 
     private void _on_loadGameLoad_pressed()
-    {
-        // Replace with function body.
-    }
+	{
+		gameFileExplorer.loadFile(loadFileName);
+	}
 
 
-    private void _on_loadGameBack_pressed()
-    {
-        loadMenu.SetDeferred("visible", false);
-    }
+	private void _on_loadGameBack_pressed()
+	{
+		loadMenu.SetDeferred("visible", false);
+	}
 
 
-    //settings
-    private void _on_options_pressed()
+	//settings
+	private void _on_options_pressed()
 	{
 		// open options 
 	}

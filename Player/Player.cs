@@ -59,6 +59,9 @@ public class Player : KinematicBody2D
 	private PackedScene ornamentScene;
 	private PackedScene tinselScene;
 
+	//Load the data from this dictionary
+	private Godot.Collections.Dictionary save_file_data = GameFiles.current_file_data;
+	
 	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -75,10 +78,13 @@ public class Player : KinematicBody2D
 		playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
 		playerSprite = GetNode<Sprite>("Sprite");
 
-		SPEED = playerStats.Speed;
+		
 
 		ornamentScene = GD.Load<PackedScene>("res://Player/playerItems/Bulb.tscn");
         tinselScene = GD.Load<PackedScene>("res://Player/playerItems/Tinsel.tscn");
+
+        //Load the player stats
+        SPEED = (int)save_file_data["walkSpeed"] ;
     }
 
 
