@@ -10,16 +10,36 @@ public class playerStats : Resource
     [Export]
     public int Speed
     {
-        get;
-        set;
+        get; set;
     }
 
     [Export]
     public int SprintSpeed
     {
-        get;
-        set;
+        get; set;
     }
+
+    [Export]
+    public int ornamentCount{ get; set; }
+
+    [Export]
+    public int ornamentMaxDistance { get; set; }
+
+    [Export]
+    public int tinselCount{ get; set; }
+
+
+    [Export]
+    public int tinselMaxDistance { get; set; }
+
+    [Export]
+    public int caneCount{ get; set; }
+
+    [Export]
+    public int invisibilityCount{ get; set; }
+
+    [Export]
+    public int invisibilityTime { get; set; }
 
     [Export]
     public float PlayerItemRadius { get; set; }

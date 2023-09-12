@@ -212,6 +212,7 @@ public class Mob : KinematicBody2D
 	//Stop the movement of mob
 private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 {
+		GD.Print("yes");
 		if(area.GetParent() is Tinsel)
 		{
 			Tinsel tinsel = ((Tinsel)area.GetParent());
@@ -310,13 +311,15 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 				timerStarted = true;
 				idleTimer.Start(1);
 				//play animation
-			}
+
+            }
 		   
 		}
 		else
 		{
 			EmitSignal("can_player_hide", true);
 			player = null;
+			seenPlayer = false;
 			
 		}
 

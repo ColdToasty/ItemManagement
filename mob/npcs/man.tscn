@@ -11,4 +11,5 @@ one_shot = true
 
 [connection signal="timeout" from="callCopTimer" to="." method="_on_callCopTimer_timeout"]
 
+[editable path="ViewBox"]
 [editable path="hurtbox"]

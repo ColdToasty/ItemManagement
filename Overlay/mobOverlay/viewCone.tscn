@@ -232,5 +232,5 @@ collide_with_areas = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -112.795, -253.222 )
 frames = SubResource( 45 )
-animation = "suspicious"
+animation = "idle"
 centered = false

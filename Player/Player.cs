@@ -12,6 +12,18 @@ public class Player : KinematicBody2D
 		ATTACK
 	}
 	public STATE state = STATE.MOVING;
+
+	public enum ITEMSTATE
+	{
+		NONE,
+		ORNAMENT,
+		CANE,
+		TINSEL,
+		INVISIBILITY
+	}
+
+	public ITEMSTATE itemState = ITEMSTATE.NONE;
+
 	public Godot.Vector2 input_vector = Godot.Vector2.Zero;
 	public Godot.Vector2 velocity = Godot.Vector2.Zero;
 
@@ -42,6 +54,11 @@ public class Player : KinematicBody2D
 
 
 	private Sprite playerSprite;
+	private bool invisible = false;
+
+	private PackedScene ornamentScene;
+	private PackedScene tinselScene;
+
 	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -60,10 +77,12 @@ public class Player : KinematicBody2D
 
 		SPEED = playerStats.Speed;
 
-	}
+		ornamentScene = GD.Load<PackedScene>("res://Player/playerItems/Bulb.tscn");
+        tinselScene = GD.Load<PackedScene>("res://Player/playerItems/Tinsel.tscn");
+    }
 
 
-	public void move()
+    public void move()
 	{
 		velocity = MoveAndSlide(velocity);
 	}
@@ -99,6 +118,22 @@ public class Player : KinematicBody2D
 	public void disableSprite()
 	{
 		playerSprite.SetDeferred("visible", false);
+	}
+
+	public void toggleInvisible()
+	{
+        invisible = !invisible;
+        if (invisible)
+		{
+			playerSprite.Modulate = new Color(1, 1, 1, (float)0.25);
+            playerVisibleCollisionShape.SetDeferred("disabled", true);
+        }
+		else
+		{
+			playerSprite.Modulate = new Color(1, 1, 1, 1);
+            playerVisibleCollisionShape.SetDeferred("disabled", false);
+        }
+		
 	}
 
 
@@ -166,16 +201,51 @@ public class Player : KinematicBody2D
 			
 		move();
 		
-		if (Input.IsActionJustPressed("Slap"))
+		if (Input.IsActionJustPressed("UseItem"))
 			{
 			state = STATE.ATTACK;
 		}
+		
 	}
 
+
+	//Need to add resource to each item
 	public void attack_state()
 	{
 		velocity = Godot.Vector2.Zero;
-		animation_playback.Travel("Slapping");
+		Godot.Vector2 mousePosition = GetGlobalMousePosition();
+		//Throw in direction of mouse position
+		if(itemState == ITEMSTATE.ORNAMENT)
+		{
+			//instance the ornament
+			//Navigate the npcSort tree 
+			Bulb ornament = (Bulb)ornamentScene.Instance();
+			GetParent().AddChild(ornament);
+			ornament.GlobalPosition = this.GlobalPosition;
+        }
+        else if (itemState == ITEMSTATE.TINSEL)
+        {
+			Tinsel tinsel = (Tinsel)tinselScene.Instance();
+			GetParent().AddChild(tinsel);
+            tinsel.GlobalPosition = this.GlobalPosition;
+        }
+
+		//Hit someone with cane
+        else if(itemState == ITEMSTATE.CANE)
+		{
+            GD.Print("smack some people");
+			//Set blend_position of cane based on input_vector
+        }
+
+		//turn invisible (might add timer) 
+		else if(itemState == ITEMSTATE.INVISIBILITY)
+		{
+            GD.Print("you cant see me");
+        }
+
+		state = STATE.MOVING;
+
+
 
 	}
 
@@ -187,19 +257,44 @@ public class Player : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+		if (Input.IsActionJustPressed("Ornament"))
+		{
+			itemState = ITEMSTATE.ORNAMENT;
+            GD.Print("ornament selected");
 
-		if(state == STATE.MOVING)
+
+        }
+
+        if (Input.IsActionJustPressed("Tinsel"))
+        {
+            itemState = ITEMSTATE.TINSEL;
+            GD.Print("tinsel selected");
+        }
+
+        if (Input.IsActionJustPressed("Cane"))
+        {
+            itemState = ITEMSTATE.CANE;
+            GD.Print("cane selected");
+        }
+
+        if (Input.IsActionJustPressed("Invisibility"))
+        {
+            itemState = ITEMSTATE.INVISIBILITY;
+            GD.Print("invisibility selected");
+        }
+
+        if (state == STATE.MOVING)
 		{
 			move_state();
 		}
 
-		else if(state == STATE.ATTACK)
+		if(state == STATE.ATTACK)
 		{
 			attack_state();
 		}
-		
+ 
 
-	}
+    }
 }
 
 
