@@ -62,6 +62,7 @@ public class Mob : KinematicBody2D
 	public bool seenPlayer, investigatingPosition = false;
 	public Timer tinselTimer;
 	
+	private bool heldByTinsel = false;
 
 	public enum STATE
 	{
@@ -212,14 +213,14 @@ public class Mob : KinematicBody2D
 	//Stop the movement of mob
 private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 {
-		GD.Print("yes");
 		if(area.GetParent() is Tinsel)
 		{
 			Tinsel tinsel = ((Tinsel)area.GetParent());
 			can_move = false;
-			this.GlobalPosition = tinsel.GlobalPosition;
 			tinselTimer.Start((float)tinsel.tinselHoldTime);
-		}
+			heldByTinsel = true;
+
+        }
 		else if(area.GetParent() is Bulb)
 		{
 			GD.Print("bulb here");
@@ -232,6 +233,7 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 
 	private void _on_tinselTimer_timeout()
 	{
+		heldByTinsel = false;
 		can_move = true;
 	}
 
@@ -285,11 +287,12 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 
 			idleTimer.Stop();
 			original_location_timer.Stop();
-			//Rotate the cone towards the player
 			rotate_cone(delta, player.GlobalPosition);
+
+			//Rotate the cone towards the player
 			nav_agent.SetTargetLocation(player.GlobalPosition);
 			can_move = true;
-
+			
 			EmitSignal("can_player_hide", false);
 			//Change viewCone to red
 			seenPlayer = true;
@@ -302,6 +305,7 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 			original_location_timer.Stop();
 			EmitSignal("stop_route", false);
 			rotate_cone(delta, detectionZone.last_heard);
+
 			nav_agent.SetTargetLocation(detectionZone.last_heard);
 			EmitSignal("can_player_hide", true);
 
@@ -310,7 +314,6 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 			{
 				timerStarted = true;
 				idleTimer.Start(1);
-				//play animation
 
             }
 		   
@@ -319,13 +322,18 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 		{
 			EmitSignal("can_player_hide", true);
 			player = null;
+			
 			seenPlayer = false;
 			
 		}
+        checkAnimatedFrames();
 
-		checkAnimatedFrames();
-		navigateToPosition(delta);
-		//GD.Print(idleTimer.TimeLeft);
+		if (!heldByTinsel)
+		{
+			navigateToPosition(delta);
+		}
+		
+
 
 	}
 

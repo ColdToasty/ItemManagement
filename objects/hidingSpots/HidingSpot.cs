@@ -104,7 +104,7 @@ public class HidingSpot : StaticBody2D
 				e.GetActionStrength("Right"),
 				e.GetActionStrength("Up"),
 				e.GetActionStrength("Down"),
-				e.GetActionStrength("Slap")
+				e.GetActionStrength("UseItem")
 			};
 
 			if (keyCheck.Contains((float)1)) {
