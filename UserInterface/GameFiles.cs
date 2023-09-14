@@ -112,7 +112,6 @@ public class GameFiles : Control
 
 						file.StoreString(JSON.Print(result));
 						file.Close();
-
 				}
 
 

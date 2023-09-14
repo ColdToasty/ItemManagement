@@ -37,7 +37,7 @@ public class World : Node2D
 
 		add_textures();
 		player = GetTree().CurrentScene.GetNode<Player>("objectSort/Player");
-		player.Connect("showGameOverScreen", this, "showGameOverScreen");
+		player.Connect("game_over", this, "showGameOverScreen");
 
 		objectSort = GetNode<ObjectSort>("objectSort");
 		objectSort.Connect("end_level", this, "endLevel");
@@ -87,6 +87,10 @@ public class World : Node2D
 			//Save presents delivered
 			//Save highScore for level
 			//saveGame.saveGameData();
+
+
+
+
 			float percentage = (float)(placeLocationNumber-presentsTBD)/ (float)placeLocationNumber * 100;
 			if (percentage == 100) {
 				//This really is a perfect christmas for these people

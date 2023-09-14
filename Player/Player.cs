@@ -86,6 +86,8 @@ public class Player : KinematicBody2D
 		set { itemReachHeight = value; }
 	}
 
+	private itemSelect currentItemDisplay; 
+
 	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -109,7 +111,7 @@ public class Player : KinematicBody2D
 
 
 		health = save_file_data["health"].ToString().ToInt();
-
+		currentItemDisplay = GetNode<itemSelect>("itemSelect");
 }
 
 
@@ -251,37 +253,46 @@ public class Player : KinematicBody2D
 		velocity = Godot.Vector2.Zero;
 		Godot.Vector2 mousePosition = GetGlobalMousePosition();
 		//Throw in direction of mouse position
-		if(itemState == ITEMSTATE.ORNAMENT)
-		{
-			//instance the ornament
-			//Navigate the npcSort tree 
-			Bulb ornament = (Bulb)ornamentScene.Instance();
-			GetParent().AddChild(ornament);
-			ornament.GlobalPosition = this.GlobalPosition;
-		}
-		else if (itemState == ITEMSTATE.TINSEL)
-		{
-			Tinsel tinsel = (Tinsel)tinselScene.Instance();
-			GetParent().AddChild(tinsel);
-			tinsel.GlobalPosition = this.GlobalPosition;
-		}
 
-		//Hit someone with cane
-		else if(itemState == ITEMSTATE.CANE)
+		if (currentItemDisplay.itemAvailable)
 		{
-			GD.Print("smack some people");
-			//Set blend_position of cane based on input_vector
-		}
+			if (itemState == ITEMSTATE.ORNAMENT)
+			{
+				//instance the ornament
+				//Navigate the npcSort tree 
+				Bulb ornament = (Bulb)ornamentScene.Instance();
+				GetParent().AddChild(ornament);
+				ornament.GlobalPosition = this.GlobalPosition;
+                currentItemDisplay.OrnamentCount--;
+				GD.Print(currentItemDisplay.OrnamentCount);
 
-		//turn invisible (might add timer) 
-		else if(itemState == ITEMSTATE.INVISIBILITY)
-		{
-			GD.Print("you cant see me");
+            }
+			else if (itemState == ITEMSTATE.TINSEL)
+			{
+				Tinsel tinsel = (Tinsel)tinselScene.Instance();
+				GetParent().AddChild(tinsel);
+				tinsel.GlobalPosition = this.GlobalPosition;
+                currentItemDisplay.TinselCount--;
+            }
+
+			//Hit someone with cane
+			else if (itemState == ITEMSTATE.CANE)
+			{
+				GD.Print("smack some people");
+                currentItemDisplay.CaneCount--;
+                //Set blend_position of cane based on input_vector
+            }
+
+			//turn invisible (might add timer) 
+			else if (itemState == ITEMSTATE.INVISIBILITY)
+			{
+                currentItemDisplay.InvisibilityCount--;
+                toggleInvisible();
+
+			}
 		}
 
 		state = STATE.MOVING;
-
-
 
 	}
 
