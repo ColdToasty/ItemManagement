@@ -6,6 +6,8 @@ using System.Xml.Linq;
 
 public class World : Node2D
 {
+	[Export]
+	private int level;
 
 	//What are the constants in every level
 	Navigation2D MobNavigation;
@@ -24,7 +26,7 @@ public class World : Node2D
 
 	private bool level_ended = false;
 
-	private gameOverScreen gameOver;
+	private gameOverScreen gameOverScreen;
 	private int presentsTBD; 
 	public override void _Ready()
 	{
@@ -39,6 +41,7 @@ public class World : Node2D
 
 		objectSort = GetNode<ObjectSort>("objectSort");
 		objectSort.Connect("end_level", this, "endLevel");
+		objectSort.Connect("game_over", this, "gameOver");
 		cookieCounter = GetNode<CookieCounter>("/root/CookieCounter");
 		//Get gameOverScreen
 		//add it but disable visibility
@@ -47,9 +50,15 @@ public class World : Node2D
 		{
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
+
+
 		
 	}
 
+	public void gameOver()
+	{
+
+	}
 
 	public void itemPlaced()
 	{
@@ -61,11 +70,6 @@ public class World : Node2D
 		}
 	}
 
-	public void showGameOverScreen()
-	{
-		GD.Print("Game Over");
-		//Load an instance of gameOver screen
-	}
 
 	public void endLevel()
 	{

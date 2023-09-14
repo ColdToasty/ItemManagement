@@ -34,14 +34,17 @@ public class GameFiles : Control
 	private playerStats player_stats;
 
 	//Looks at playerStats resource
-	private Godot.Collections.Dictionary<string, object> player_data;
+	private Godot.Collections.Dictionary<string, string> player_data;
 
 	public bool continueFileExist = false;
 
 	[Signal]
 	public delegate void noContinue();
 
-	File file = new File();
+	private static File file = new File();
+
+	private string date = Time.GetDateStringFromSystem();
+	private string time = Time.GetTimeStringFromSystem().Replace(':', '-');
 
 	//Need to implement way to get current save and save file
 	public void ContinueGame()
@@ -59,10 +62,10 @@ public class GameFiles : Control
 				var continueGameData = file.GetAsText();
 				JSONParseResult saveData = JSON.Parse(continueGameData);
 				Dictionary result = saveData.Result as Dictionary;
-				continue_save_file_name = result["name"].ToString();
-				continue_save_file_date = result["date"].ToString();
-				continue_save_file_time = result["time"].ToString();
-			}
+                continue_save_file_name = result["name"].ToString();
+                continue_save_file_date = result["date"].ToString();
+                continue_save_file_time = result["time"].ToString();
+            }
 			else
 			{
 				file.Close();
@@ -78,87 +81,115 @@ public class GameFiles : Control
 		}
 
 		file.Close();
-
-		//Everything below probably can be moved into own function
-		loadFile(continue_file_name);
-
+		try
+		{
+            this.LoadFile(continue_save_file_name);
+        }
+		catch(Exception e)
+		{
+			//Popup some alert
+			GD.Print(e.ToString());
+		}
 
 	}
 
-	public void loadFile(string fileName)
+	//Loads the game data from directory based on fileName
+	public void LoadFile(string fileName)
 	{
 		//Get the save file to be opened location
 		string loadSaveFileLocation = save_directory + fileName + file_extension;
-		Error checkSaveExist = file.Open(loadSaveFileLocation, File.ModeFlags.Read);
-		if (checkSaveExist == Error.Ok)
-		{
-			if (file.FileExists(loadSaveFileLocation))
-			{
+        if (file.FileExists(loadSaveFileLocation))
+        {
+            Error checkSaveExist = file.Open(loadSaveFileLocation, File.ModeFlags.ReadWrite);
 
-				Error checkFile = file.Open(loadSaveFileLocation, File.ModeFlags.Read);
-
-				if (checkFile == Error.Ok)
+			if (checkSaveExist == Error.Ok)
 				{
-					var continueGameData = file.GetAsText();
-					file.Close();
-					JSONParseResult saveData = JSON.Parse(continueGameData);
-					Dictionary result = saveData.Result as Dictionary;
-					current_file_data = result;
+						string continueGameData = file.GetAsText();
+						JSONParseResult saveData = JSON.Parse(continueGameData);
+					
+						Dictionary result = saveData.Result as Dictionary;
+						current_file_data = result;
+
+						file.StoreString(JSON.Print(result));
+						file.Close();
+
+				}
 
 
+			Error updateContinueFile = file.Open(save_directory + continue_file_name + file_extension, File.ModeFlags.Write);
 
 
-                }
-			}
-		}
+            //Gets the latest save file
+            Godot.Collections.Dictionary<string, string> latestSave = new Godot.Collections.Dictionary<string, string>
+                {
+                    { "name", fileName },
+                    { "date", Time.GetDateStringFromSystem() },
+                    { "time", Time.GetTimeStringFromSystem().Replace(':', '-') }
+                };
+
+            if (updateContinueFile == Error.Ok)
+			{
+                CreateContinueFile(latestSave);
+            }
+
+        }
+		file.Close();
+		//Reupdate file variables date and time
         GetTree().ChangeScene($"res://Levels/level{current_file_data["latestLevel"]}.tscn");
     }
 
 
+	public void CreateContinueFile(Godot.Collections.Dictionary<string, string> latestSave)
+	{
+
+
+        //Store the new save into continue
+        file.StoreString(JSON.Print(latestSave));
+
+        //Update the continueSave variables
+        continue_save_file_name = latestSave["name"];
+        continue_save_file_date = latestSave["date"];
+        continue_save_file_time = latestSave["time"];
+    }
+
 	public void SaveGameData(string saveName)
 	{
 		//Creates the key, pair values for player
-		player_data = new Godot.Collections.Dictionary<string, object>
+		player_data = new Godot.Collections.Dictionary<string, string>
 		{
 			//Date and time
-			{ "date", Time.GetDateStringFromSystem()},
-			{ "time", Time.GetTimeStringFromSystem().Replace(':', '-')},
+			{ "date", date},
+			{ "time", time},
 
 			//Level tracking
-			{"latestLevel", player_stats.latestLevel},
-			{"currentLevel", player_stats.currentLevel},
+			{"latestLevel", player_stats.latestLevel.ToString()},
+			{"currentLevel", player_stats.currentLevel.ToString()},
 
 			//Player related stats 
-			{"health", player_stats.Health },
-			{"walkSpeed", player_stats.Speed},
-			{"runSpeed", player_stats.SprintSpeed },
-			{"playerItemRadius", player_stats.PlayerItemRadius},
-			{"playerItemHeight", player_stats.PlayerItemHeight},
-			{"runNoiseRadius", player_stats.runNoiseRadius},
-			{"runNoiseHeight", player_stats.runNoiseHeight },
+			{"health", player_stats.Health.ToString() },
+			{"walkSpeed", player_stats.Speed.ToString()},
+			{"runSpeed", player_stats.SprintSpeed.ToString() },
+			{"playerItemRadius", player_stats.PlayerItemRadius.ToString()},
+			{"playerItemHeight", player_stats.PlayerItemHeight.ToString()},
+			{"runNoiseRadius", player_stats.runNoiseRadius.ToString()},
+			{"runNoiseHeight", player_stats.runNoiseHeight.ToString() },
 
 			//Player item count
-			{"ornamentCount", player_stats.ornamentCount},
-			{"ornamentMaxDistance", player_stats.ornamentMaxDistance},
-			{"tinselCount", player_stats.tinselCount},
-			{"caneCount", player_stats.caneCount},
-			{"invisibilityCount", player_stats.invisibilityCount},
-			{"invisibilityTime", player_stats.invisibilityTime },
+			{"ornamentCount", player_stats.ornamentCount.ToString()},
+			{"ornamentMaxDistance", player_stats.ornamentMaxDistance.ToString()},
+			{"tinselCount", player_stats.tinselCount.ToString()},
+			{"caneCount", player_stats.caneCount.ToString()},
+			{"invisibilityCount", player_stats.invisibilityCount.ToString()},
+			{"invisibilityTime", player_stats.invisibilityTime.ToString() },
 			
 			//Stats about presents delivered
-			{"totalPresentsDelivered", 0},
-			{"currentPresents", 0},
+			{"totalPresentsDelivered", "0"},
+			{"currentPresents", "0"},
 
 			//Stats about cookies
-			{"totalCookies", 0},
-			{"currentCookies", 0},
-
-
-
+			{"totalCookies", "0"},
+			{"currentCookies", "0"},
 		};
-
-		//Create a new file
-		File file = new File();
 
 
 		if (!saved_games.DirExists(save_directory))
@@ -188,17 +219,11 @@ public class GameFiles : Control
 		Error continueSave = file.Open(continue_file_location, File.ModeFlags.Write);
 		if (continueSave == Error.Ok)
 		{
-			//Store the new save into continue
-			file.StoreString(JSON.Print(latestSave));
-
-			//Update the continueSave variables
-			continue_save_file_name = latestSave["name"];
-			continue_save_file_date = latestSave["date"];
-			continue_save_file_time = latestSave["time"];
-
-
+			CreateContinueFile(latestSave);
 		}
+
 		file.Close();
+	
 	}
 
 
@@ -232,7 +257,7 @@ public class GameFiles : Control
 	}
 
 	//Method to update save file after every successful game
-	private void updatePlayerData(Dictionary savedPlayerData)
+	private void UpdatePlayerData(Dictionary savedPlayerData)
 	{
 		//Sets the players health
 		player_stats.Health = (savedPlayerData["health"].ToString()).ToInt();
@@ -241,12 +266,12 @@ public class GameFiles : Control
 
 	//Reload the current save
 	//But update date, time
-	private void resetLevel()
+	public void ResetLevel()
 	{
 
 	}
 
-	private void countNumberOfSaves()
+	private void CountNumberOfSaves()
 	{
 		number_of_saved_games = 0;
 		saved_games.Open(save_directory);

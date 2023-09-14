@@ -27,13 +27,9 @@ public class Player : KinematicBody2D
 	public Godot.Vector2 input_vector = Godot.Vector2.Zero;
 	public Godot.Vector2 velocity = Godot.Vector2.Zero;
 
-	
 	public GridContainer hotbar;
 	public GridContainer inventory_slots;
 
-	[Export]
-	private playerStats playerStats;
-	
 	//Animations and movements
 	public AnimationNodeStateMachinePlayback animation_playback;
 	public AnimationTree animationTree;
@@ -44,14 +40,14 @@ public class Player : KinematicBody2D
 	public RunNoise noise;
 	public Area2D slapBoxArea;
 
-	public int SPEED;
-
 	private PlayerVisible playerVisibleArea;
 	private CollisionShape2D playerVisibleCollisionShape;
 
-	[Signal]
-	public delegate void showGameOverScreen();
+	private CollisionShape2D runNoiseCollisionShape;
 
+
+	[Signal]
+	public delegate void game_over();
 
 	private Sprite playerSprite;
 	private bool invisible = false;
@@ -61,7 +57,35 @@ public class Player : KinematicBody2D
 
 	//Load the data from this dictionary
 	private Godot.Collections.Dictionary save_file_data = GameFiles.current_file_data;
-	
+
+	//Player stat variables
+	private int health { get; set; }
+	public int Health {
+		get { return health; }
+		set { health = value; }
+	}
+
+	private int speed { get; set; }
+
+	public int Speed
+	{
+		get { return speed; }
+		set { speed = value; }
+	}
+
+	private double itemReachRadius { get; set; }
+	public double ItemReachRadius {
+		get { return itemReachRadius; }
+		set { itemReachRadius = value; }
+	}
+
+	private double itemReachHeight { get; set; }
+	public double ItemReachHeight
+	{
+		get { return itemReachHeight; }
+		set { itemReachHeight = value; }
+	}
+
 	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -75,20 +99,22 @@ public class Player : KinematicBody2D
 
 		playerVisibleArea = GetNode<PlayerVisible>("PlayerVisible");
 		playerVisibleCollisionShape = GetNode<CollisionShape2D>("PlayerVisible/CollisionShape2D");
-		playerStats = ResourceLoader.Load("res://Player/playerStats/playerStats.tres") as playerStats;
+
+		runNoiseCollisionShape = GetNode<CollisionShape2D>("RunNoise/CollisionShape2D");
+		runNoiseCollisionShape.SetDeferred("disabled", true);
+
 		playerSprite = GetNode<Sprite>("Sprite");
-
-		
-
 		ornamentScene = GD.Load<PackedScene>("res://Player/playerItems/Bulb.tscn");
-        tinselScene = GD.Load<PackedScene>("res://Player/playerItems/Tinsel.tscn");
-
-        //Load the player stats
-        SPEED = (int)save_file_data["walkSpeed"] ;
-    }
+		tinselScene = GD.Load<PackedScene>("res://Player/playerItems/Tinsel.tscn");
 
 
-    public void move()
+		health = save_file_data["health"].ToString().ToInt();
+
+}
+
+
+
+	public void move()
 	{
 		velocity = MoveAndSlide(velocity);
 	}
@@ -128,17 +154,17 @@ public class Player : KinematicBody2D
 
 	public void toggleInvisible()
 	{
-        invisible = !invisible;
-        if (invisible)
+		invisible = !invisible;
+		if (invisible)
 		{
 			playerSprite.Modulate = new Color(1, 1, 1, (float)0.25);
-            playerVisibleCollisionShape.SetDeferred("disabled", true);
-        }
+			playerVisibleCollisionShape.SetDeferred("disabled", true);
+		}
 		else
 		{
 			playerSprite.Modulate = new Color(1, 1, 1, 1);
-            playerVisibleCollisionShape.SetDeferred("disabled", false);
-        }
+			playerVisibleCollisionShape.SetDeferred("disabled", false);
+		}
 		
 	}
 
@@ -151,19 +177,21 @@ public class Player : KinematicBody2D
 			if(((hitPlayerBox)area).GetParent() is Old)
 			{
 				GD.Print("Im hurt");
-				playerStats.Health -= 1;
+				Health -= 1;
+				GD.Print(Health);
 			}
 			else if(( (hitPlayerBox)area).GetParent() is Cop)
 			{
 				GD.Print("Im knocked out");
-				playerStats.Health = 0;
+				Health = 0;
+				EmitSignal("game_over");
 			}
 		}
-		if(playerStats.Health <= 0)
+		if(Health <= 0)
 		{
 			//Play disappear animation
 			//Emit gameOver signal
-			EmitSignal("showGameOverScreen");
+			EmitSignal("game_over");
 		}
 	}
 
@@ -187,14 +215,16 @@ public class Player : KinematicBody2D
 			//Then use the input_vector as direction for which way to move
 			if (Input.IsActionPressed("Sprint"))
 				{
-				SPEED = playerStats.SprintSpeed;
-				}
+				Speed = save_file_data["runSpeed"].ToString().ToInt();
+				runNoiseCollisionShape.SetDeferred("disabled", false) ;
+			}
 			else
 				{
-				SPEED = playerStats.Speed;
-				}
+				Speed = save_file_data["walkSpeed"].ToString().ToInt();
+				runNoiseCollisionShape.SetDeferred("disabled", true);
+			}
 			animation_playback.Travel("Moving");
-			velocity = input_vector * SPEED;
+			velocity = input_vector * Speed;
 			
 			}
 			
@@ -228,26 +258,26 @@ public class Player : KinematicBody2D
 			Bulb ornament = (Bulb)ornamentScene.Instance();
 			GetParent().AddChild(ornament);
 			ornament.GlobalPosition = this.GlobalPosition;
-        }
-        else if (itemState == ITEMSTATE.TINSEL)
-        {
+		}
+		else if (itemState == ITEMSTATE.TINSEL)
+		{
 			Tinsel tinsel = (Tinsel)tinselScene.Instance();
 			GetParent().AddChild(tinsel);
-            tinsel.GlobalPosition = this.GlobalPosition;
-        }
+			tinsel.GlobalPosition = this.GlobalPosition;
+		}
 
 		//Hit someone with cane
-        else if(itemState == ITEMSTATE.CANE)
+		else if(itemState == ITEMSTATE.CANE)
 		{
-            GD.Print("smack some people");
+			GD.Print("smack some people");
 			//Set blend_position of cane based on input_vector
-        }
+		}
 
 		//turn invisible (might add timer) 
 		else if(itemState == ITEMSTATE.INVISIBILITY)
 		{
-            GD.Print("you cant see me");
-        }
+			GD.Print("you cant see me");
+		}
 
 		state = STATE.MOVING;
 
@@ -266,30 +296,28 @@ public class Player : KinematicBody2D
 		if (Input.IsActionJustPressed("Ornament"))
 		{
 			itemState = ITEMSTATE.ORNAMENT;
-            GD.Print("ornament selected");
+			GD.Print("ornament selected");
+		}
 
+		else  if (Input.IsActionJustPressed("Tinsel"))
+		{
+			itemState = ITEMSTATE.TINSEL;
+			GD.Print("tinsel selected");
+		}
 
-        }
+		else if (Input.IsActionJustPressed("Cane"))
+		{
+			itemState = ITEMSTATE.CANE;
+			GD.Print("cane selected");
+		}
 
-        if (Input.IsActionJustPressed("Tinsel"))
-        {
-            itemState = ITEMSTATE.TINSEL;
-            GD.Print("tinsel selected");
-        }
+		else  if (Input.IsActionJustPressed("Invisibility"))
+		{
+			itemState = ITEMSTATE.INVISIBILITY;
+			GD.Print("invisibility selected");
+		}
 
-        if (Input.IsActionJustPressed("Cane"))
-        {
-            itemState = ITEMSTATE.CANE;
-            GD.Print("cane selected");
-        }
-
-        if (Input.IsActionJustPressed("Invisibility"))
-        {
-            itemState = ITEMSTATE.INVISIBILITY;
-            GD.Print("invisibility selected");
-        }
-
-        if (state == STATE.MOVING)
+		if (state == STATE.MOVING)
 		{
 			move_state();
 		}
@@ -298,9 +326,10 @@ public class Player : KinematicBody2D
 		{
 			attack_state();
 		}
- 
 
-    }
+	}
 }
+
+
 
 

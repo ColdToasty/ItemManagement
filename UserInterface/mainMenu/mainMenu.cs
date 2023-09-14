@@ -77,7 +77,7 @@ public class mainMenu : Control
 	{
 		string newFileName = newGameName.Text.ToLower();
 		gameFileExplorer.SaveGameData(newFileName);
-		//call gameFiles load method
+		gameFileExplorer.LoadFile(newFileName);
 		//GetTree().ChangeScene("res://Levels/level0.tscn");
 	}
 
@@ -124,57 +124,46 @@ public class mainMenu : Control
 	private void _on_load_pressed()
 	{
 		loadMenu.SetDeferred("visible", true);
-		List<string> savedGames = gameFileExplorer.LoadAllFiles();
-
-		fileDirectory.Open(GameFiles.save_directory);
-		File save_file = new File();
-
-		foreach (string gameFile in savedGames)
-		{
-			Error error = save_file.Open(GameFiles.save_directory + gameFile + GameFiles.file_extension, File.ModeFlags.Read);
-
-			if (error == Error.Ok)
-			{
-				string file_name = GameFiles.save_directory + gameFile + GameFiles.file_extension;
-				if (save_file.FileExists(file_name))
-				{
-					var file_info = save_file.GetAsText();
-					JSONParseResult save_data = JSON.Parse(file_info);
-					Dictionary result = save_data.Result as Dictionary;
 
 
-					string game_file_date = result["date"].ToString();
-					string game_file_time = result["time"].ToString();
+        List<string> savedGames = gameFileExplorer.LoadAllFiles();
 
 
+        fileDirectory.Open(GameFiles.save_directory);
+        File save_file = new File();
+
+        foreach (string gameFile in savedGames)
+        {
+            Error error = save_file.Open(GameFiles.save_directory + gameFile + GameFiles.file_extension, File.ModeFlags.Read);
+
+            if (error == Error.Ok)
+            {
+                string file_name = GameFiles.save_directory + gameFile + GameFiles.file_extension;
+                if (save_file.FileExists(file_name))
+                {
+					//Adds the save file name to itemList node
 					listOfSaves.AddItem(gameFile);
-					//display it with its info - name, time, date
-				}
-				save_file.Close();
-				//load button should be disabled when no option is selected
-				//When a save is pressed load button should be clickable
-			}
-		}
-		
+            
+                }
+                save_file.Close();
 
+            }
+        }
 
+    }
+
+	private void _on_file_selected(int index)
+	{
+		loadFileName = listOfSaves.GetItemText(index);
+		loadMenuLoadButton.SetDeferred("disabled", false);
 
 	}
 
 
 
-    private void _on_file_selected(int index)
-    {
-		loadFileName = listOfSaves.GetItemText(index);
-        loadMenuLoadButton.SetDeferred("disabled", false);
-
-    }
-
-
-
-    private void _on_loadGameLoad_pressed()
+	private void _on_loadGameLoad_pressed()
 	{
-		gameFileExplorer.loadFile(loadFileName);
+		gameFileExplorer.LoadFile(loadFileName);
 	}
 
 

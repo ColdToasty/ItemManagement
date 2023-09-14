@@ -2,8 +2,8 @@
 
 [ext_resource path="res://PlaceLocation/PlaceLocation.cs" type="Script" id=2]
 [ext_resource path="res://PlaceLocation/PlaceLocationPlayerDetectionZone.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Item-Images/glow/shinyGlow1.png" type="Texture" id=4]
-[ext_resource path="res://Item-Images/glow/shinyGlow2.png" type="Texture" id=5]
+[ext_resource path="res://DeliveryPresents/glow/shinyGlow1.png" type="Texture" id=4]
+[ext_resource path="res://DeliveryPresents/glow/shinyGlow2.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=3]
 resource_name = "shinyGlow1"

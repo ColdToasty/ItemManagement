@@ -29,7 +29,10 @@ public class ObjectSort : YSort
 	[Signal]
 	public delegate void end_level();
 
-	public override void _Ready()
+    [Signal]
+    public delegate void game_over();
+
+    public override void _Ready()
 	{
 
         spawn = GetNode<Area2D>("Spawn");
@@ -57,7 +60,8 @@ public class ObjectSort : YSort
 			if (children[i] is Player)
 			{
 				player = (Player)children[i];
-			}
+                player.Connect("game_over", this, "gameOver");
+            }
 			if (children[i] is Child)
 			{
                 ((Child)children[i]).Connect("get_parents", this, "getParents");
@@ -76,6 +80,12 @@ public class ObjectSort : YSort
 		this.gatherPosition = gatherPosition;
 
     }
+
+	public void gameOver()
+	{
+		EmitSignal("game_over");
+	}
+
     public void getParents(Vector2 childPosition, Vector2 playerPosition)
 	{
 		this.playerPosition = playerPosition;

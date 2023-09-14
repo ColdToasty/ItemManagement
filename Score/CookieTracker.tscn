@@ -9,8 +9,8 @@ margin_bottom = 196.0
 script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 54.0
+margin_bottom = 50.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 margin_top = 18.0

@@ -12,7 +12,7 @@ public class ItemDatabase : Node
     {
         //Open the path name
         Directory directory = new Directory();
-        directory.Open("res://ItemData/");
+        directory.Open("res://DeliveryPresentResources");
         directory.ListDirBegin();
 
         while (true)
@@ -25,7 +25,7 @@ public class ItemDatabase : Node
             else if (!filename.BeginsWith("."))
             {
                 //Adds resource to list
-                items.Add((ItemInfo)GD.Load<Resource>($"res://ItemData/{filename}"));
+                items.Add((ItemInfo)GD.Load<Resource>($"res://DeliveryPresentResources/{filename}"));
                 
             }
         }

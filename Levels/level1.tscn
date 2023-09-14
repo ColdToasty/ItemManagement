@@ -502,4 +502,5 @@ position = Vector2( 91.2975, 236.496 )
 [editable path="objectSort"]
 [editable path="objectSort/Player"]
 [editable path="objectSort/man3"]
+[editable path="objectSort/man3/ViewBox"]
 [editable path="objectSort/man3/hurtbox"]
