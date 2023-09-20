@@ -27,7 +27,11 @@ public class World : Node2D
 	private bool level_ended = false;
 
 	private gameOverScreen gameOverScreen;
-	private int presentsTBD; 
+	private int presentsTBD;
+
+	
+	private int ornamentCount, tinselCount, caneCount, invisibilityCount;
+
 	public override void _Ready()
 	{
 		db = GetNode<ItemDatabase>("/root/ItemDatabase");
@@ -35,9 +39,8 @@ public class World : Node2D
 		placeLocationNumber = GetTree().CurrentScene.GetNode<YSort>("PlaceLocations").GetChildCount();
 		presentsTBD = placeLocationNumber;
 
-		add_textures();
+        AddTextures();
 		player = GetTree().CurrentScene.GetNode<Player>("objectSort/Player");
-		player.Connect("game_over", this, "showGameOverScreen");
 
 		objectSort = GetNode<ObjectSort>("objectSort");
 		objectSort.Connect("end_level", this, "endLevel");
@@ -50,11 +53,11 @@ public class World : Node2D
 		{
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
-
-
-		
+		level = Name[Name.Length-1].ToString().ToInt();
 	}
 
+
+	//Shows game over screen
 	public void gameOver()
 	{
 
@@ -77,21 +80,15 @@ public class World : Node2D
 		if(!level_ended && presentsTBD < placeLocationNumber) {
 			GD.Print("End Level");
 			level_ended = true;
-			cookieCounter.Save_global_cookies();
-			int cookies = cookieCounter.Global_Cookie_Counter;
-			int stars = 0;
-			//Save the following by sending the values to the saveGame cs file
-			//Save cookies
-			//Save presents
-			//Save time
-			//Save presents delivered
-			//Save highScore for level
-			//saveGame.saveGameData();
 
 
+			float stars = 0;
 
-
-			float percentage = (float)(placeLocationNumber-presentsTBD)/ (float)placeLocationNumber * 100;
+            Godot.Collections.Dictionary<string, string> saveData = CreateSaveDictionary(GameFiles.save_name);
+			GameFiles.OnSaveGame(saveData);
+			GD.Print("saved");
+			
+            float percentage = (float)(placeLocationNumber-presentsTBD)/ (float)placeLocationNumber * 100;
 			if (percentage == 100) {
 				//This really is a perfect christmas for these people
 				//I hope you enjoyed the cookies because you deserve it
@@ -123,14 +120,77 @@ public class World : Node2D
 		else
 		{
 			//Popup rudolph critizing player
-			GD.Print("So you're going to come into someone's house and eat their cookies and dip?");
+			player.tryToLeaveDialogShow();
+			//GD.Print("So you're going to come into someone's house and eat their cookies and dip?");
 
 		}
 
 	}
 
+
+	private Godot.Collections.Dictionary<string, string> CreateSaveDictionary(string saveName)
+	{
+        UpdateCountOfItems();
+		Godot.Collections.Dictionary updatedSaveData = GameFiles.GetFileContents();
+		updatedSaveData["date"] = Time.GetDateStringFromSystem();
+        updatedSaveData["time"] = Time.GetTimeStringFromSystem().Replace(':', '-');
+
+		updatedSaveData["totalPresentsDelivered"] = updatedSaveData["totalPresentsDelivered"].ToString().ToInt() + 2;
+
+		GD.Print(updatedSaveData["currentLevel"]);
+		if (updatedSaveData["latestLevel"].ToString().ToInt() <= level)
+		{
+			updatedSaveData["latestLevel"] = level;
+			updatedSaveData["currentLevel"] = level + 1;
+        }
+        GD.Print(updatedSaveData["currentLevel"]);
+        updatedSaveData["ornamentCount"] = this.ornamentCount;
+        updatedSaveData["tinselCount"] = this.tinselCount;
+        updatedSaveData["caneCount"] = this.caneCount;
+        updatedSaveData["invisibilityCount"] = this.invisibilityCount;
+
+
+        //Increments totalPresentsDelivered from how many presents was delivered from level
+        int presentsDelivered = placeLocationNumber - presentsTBD;
+		updatedSaveData["totalPresentsDelivered"] = updatedSaveData["totalPresentsDelivered"].ToString().ToInt() + presentsDelivered;
+
+		//Updates currentPresents
+		updatedSaveData["currentPresents"] = updatedSaveData["currentPresents"].ToString().ToInt() + presentsDelivered;
+
+
+        //Get cookies collected from level
+        int cookiesCollectedForThisLevel = cookieCounter.Level_Cookie_Counter;
+        updatedSaveData["totalCookies"] = updatedSaveData["totalCookies"].ToString().ToInt() + cookiesCollectedForThisLevel;
+
+        updatedSaveData["currentCookies"] = updatedSaveData["currentCookies"].ToString().ToInt() + cookiesCollectedForThisLevel;
+
+
+		
+        Godot.Collections.Dictionary<string, string> returnDictionary = new Godot.Collections.Dictionary<string, string>();
+
+		foreach(string key in updatedSaveData.Keys)
+		{
+			returnDictionary.Add(key, updatedSaveData[key].ToString());
+		}
+
+		return returnDictionary;
+	}
+
+
+	//updates ornamentCount, tinselCount, caneCount and invisibilityCount variables
+	//From the players itemSelect
+	private void UpdateCountOfItems()
+	{
+		this.ornamentCount = player.currentItemDisplay.OrnamentCount;
+		this.tinselCount = player.currentItemDisplay.TinselCount;
+		this.caneCount = player.currentItemDisplay.CaneCount;
+		this.invisibilityCount = player.currentItemDisplay.InvisibilityCount;
+	}
+
+
+
 	//Loads the textures 
-	public void add_textures()
+	public void AddTextures()
 	{
 		Random rnd = new Random();
 		int item_data_count = db.get_list_length();
@@ -148,3 +208,6 @@ public class World : Node2D
 
 
 }
+
+
+

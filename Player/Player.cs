@@ -58,6 +58,7 @@ public class Player : KinematicBody2D
 	//Load the data from this dictionary
 	private Godot.Collections.Dictionary save_file_data = GameFiles.current_file_data;
 
+
 	//Player stat variables
 	private int health { get; set; }
 	public int Health {
@@ -72,6 +73,13 @@ public class Player : KinematicBody2D
 		get { return speed; }
 		set { speed = value; }
 	}
+	private int tempWalkSpeed;
+	private int tempRunSpeed;
+
+	private int walkSpeed;
+	private int runSpeed;
+
+	private bool freeze = false;
 
 	private double itemReachRadius { get; set; }
 	public double ItemReachRadius {
@@ -86,8 +94,11 @@ public class Player : KinematicBody2D
 		set { itemReachHeight = value; }
 	}
 
-	private itemSelect currentItemDisplay; 
+	public itemSelect currentItemDisplay;
 
+
+	public WindowDialog tryToLeaveDialog;
+	private TextureButton tryToLeaveCloseButton;
 	public override void _Ready()
 	{
 		animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -111,9 +122,34 @@ public class Player : KinematicBody2D
 
 
 		health = save_file_data["health"].ToString().ToInt();
-		currentItemDisplay = GetNode<itemSelect>("itemSelect");
+		walkSpeed = save_file_data["walkSpeed"].ToString().ToInt(); 
+		runSpeed = save_file_data["runSpeed"].ToString().ToInt();
+
+
+        currentItemDisplay = GetNode<itemSelect>("itemSelect");
+		tryToLeaveDialog = GetNode<WindowDialog>("WindowDialog");
+		tryToLeaveCloseButton = tryToLeaveDialog.GetCloseButton();
 }
 
+	//Disables movement
+	public void DisableSpeed()
+	{
+		tempWalkSpeed = walkSpeed;
+		tempRunSpeed = runSpeed;
+		freeze = true;
+
+		walkSpeed = 0;
+		runSpeed = 0;
+	}
+
+	//Re enables movemment
+	public void EnableSpeed()
+	{
+		walkSpeed = tempWalkSpeed;
+		runSpeed = tempRunSpeed;
+
+		freeze = false;
+	}
 
 
 	public void move()
@@ -127,7 +163,6 @@ public class Player : KinematicBody2D
 	private void _on_PlaceLocation_area_entered(object area)
 	{
 
-		
 	}
 
 	public void enableInvisibility()
@@ -197,51 +232,63 @@ public class Player : KinematicBody2D
 		}
 	}
 
+	public void tryToLeaveDialogShow()
+	{
+		tryToLeaveDialog.Show();
+		DisableSpeed();
+	}
+
 
 	public void move_state()
 	{
-		input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
-		input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
-
-		input_vector = input_vector.Normalized();
-		if (input_vector != Godot.Vector2.Zero)
+		if (!freeze)
 		{
+			input_vector.x = Input.GetActionStrength("Right") - Input.GetActionStrength("Left");
+			input_vector.y = Input.GetActionStrength("Down") - Input.GetActionStrength("Up");
 
-			//Set up animation blend_positions
-			animationTree.Set("parameters/Idle/blend_position", input_vector);
-			animationTree.Set("parameters/Slapping/blend_position", input_vector);
-			animationTree.Set("parameters/Moving/blend_position", input_vector);
-			facing = input_vector;
-			//When input vector signals to move
-			//Changes from Idle or starting node and travel to given state machine
-			//Then use the input_vector as direction for which way to move
-			if (Input.IsActionPressed("Sprint"))
+			input_vector = input_vector.Normalized();
+			if (input_vector != Godot.Vector2.Zero)
+			{
+
+				//Set up animation blend_positions
+				animationTree.Set("parameters/Idle/blend_position", input_vector);
+				animationTree.Set("parameters/Slapping/blend_position", input_vector);
+				animationTree.Set("parameters/Moving/blend_position", input_vector);
+				facing = input_vector;
+				//When input vector signals to move
+				//Changes from Idle or starting node and travel to given state machine
+				//Then use the input_vector as direction for which way to move
+				if (Input.IsActionPressed("Sprint"))
 				{
-				Speed = save_file_data["runSpeed"].ToString().ToInt();
-				runNoiseCollisionShape.SetDeferred("disabled", false) ;
+					Speed = runSpeed;
+					runNoiseCollisionShape.SetDeferred("disabled", false);
+				}
+				else
+				{
+					Speed = walkSpeed;
+					runNoiseCollisionShape.SetDeferred("disabled", true);
+				}
+				animation_playback.Travel("Moving");
+				velocity = input_vector * Speed;
 			}
+
 			else
-				{
-				Speed = save_file_data["walkSpeed"].ToString().ToInt();
-				runNoiseCollisionShape.SetDeferred("disabled", true);
+			{
+				animation_playback.Travel("Idle");
+				velocity = Godot.Vector2.Zero;
+
 			}
-			animation_playback.Travel("Moving");
-			velocity = input_vector * Speed;
-			
+
+			move();
+
+			if (Input.IsActionJustPressed("UseItem"))
+			{
+				state = STATE.ATTACK;
 			}
-			
+		}
 		else
 		{
-			animation_playback.Travel("Idle");
-			velocity = Godot.Vector2.Zero;
-			
-		}
-			
-		move();
-		
-		if (Input.IsActionJustPressed("UseItem"))
-			{
-			state = STATE.ATTACK;
+			animation_playback.Stop();
 		}
 		
 	}
@@ -263,35 +310,33 @@ public class Player : KinematicBody2D
 				Bulb ornament = (Bulb)ornamentScene.Instance();
 				GetParent().AddChild(ornament);
 				ornament.GlobalPosition = this.GlobalPosition;
-                currentItemDisplay.OrnamentCount--;
-				GD.Print(currentItemDisplay.OrnamentCount);
+				currentItemDisplay.OrnamentCount--;
 
-            }
+			}
 			else if (itemState == ITEMSTATE.TINSEL)
 			{
 				Tinsel tinsel = (Tinsel)tinselScene.Instance();
 				GetParent().AddChild(tinsel);
 				tinsel.GlobalPosition = this.GlobalPosition;
-                currentItemDisplay.TinselCount--;
-            }
+				currentItemDisplay.TinselCount--;
+			}
 
 			//Hit someone with cane
 			else if (itemState == ITEMSTATE.CANE)
 			{
 				GD.Print("smack some people");
-                currentItemDisplay.CaneCount--;
-                //Set blend_position of cane based on input_vector
-            }
+				currentItemDisplay.CaneCount--;
+				//Set blend_position of cane based on input_vector
+			}
 
 			//turn invisible (might add timer) 
 			else if (itemState == ITEMSTATE.INVISIBILITY)
 			{
-                currentItemDisplay.InvisibilityCount--;
-                toggleInvisible();
-
+				currentItemDisplay.InvisibilityCount--;
+				toggleInvisible();
 			}
 		}
-
+		
 		state = STATE.MOVING;
 
 	}
@@ -331,6 +376,8 @@ public class Player : KinematicBody2D
 		if (state == STATE.MOVING)
 		{
 			move_state();
+
+
 		}
 
 		if(state == STATE.ATTACK)
@@ -338,8 +385,26 @@ public class Player : KinematicBody2D
 			attack_state();
 		}
 
+		if (!freeze)
+		{
+			Godot.Vector2 tryToLeavePosition = new Godot.Vector2(this.GlobalPosition.x - (tryToLeaveDialog.RectSize.x / 2), this.GlobalPosition.y);
+			tryToLeaveDialog.SetGlobalPosition(tryToLeavePosition);
+		}
+
+		if (tryToLeaveCloseButton.Pressed)
+		{
+			EnableSpeed();
+		}
+
 	}
+
 }
+
+
+
+
+
+
 
 
 

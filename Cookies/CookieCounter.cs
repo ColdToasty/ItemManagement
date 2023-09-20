@@ -40,22 +40,9 @@ public class CookieCounter : Node
 
     public override void _Ready()
     {
-        //Set cookie_counter based on save
+        //Set Global_Cookie_Counter based on save
         Global_Cookie_Counter = 0;
         Level_Cookie_Counter = 0;
-    }
-
-    public void Save_Temp_Cookies()
-    {
-        //Save the cookies when a checkpoint is reached
-    }
-
-    //Make temp save file for scene.
-    //Make actual save when player leaves
-    public void Save_global_cookies()
-    {
-        Global_Cookie_Counter += Level_Cookie_Counter;
-        //Save global cookies
     }
 
 }

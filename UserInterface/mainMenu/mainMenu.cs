@@ -30,11 +30,11 @@ public class mainMenu : Control
 	private string loadFileName = "";
 	public override void _Ready()
 	{
-		continueButton = GetNode<Button>("continue");
+		continueButton = GetNode<Button>("VBoxContainer/continue");
 
 		//New Game menu
 		newGameMenu = GetNode<Panel>("newGameMenu");
-		newGameGo = GetNode<Button>("newGameMenu/go");
+		newGameGo = GetNode<Button>("newGameMenu/HBoxContainer/go");
 		newGameName = GetNode<LineEdit>("newGameMenu/newSaveName");
 		newGameError = GetNode<RichTextLabel>("newGameMenu/error");
 		newGameError.SetDeferred("visible", false);
@@ -53,11 +53,13 @@ public class mainMenu : Control
 		}
 
 		loadMenu = GetNode<Panel>("loadMenu");
-		loadMenuLoadButton = GetNode<Button>("loadMenu/load");
+		loadMenuLoadButton = GetNode<Button>("loadMenu/HBoxContainer/load");
 		loadMenuLoadButton.SetDeferred("disabled", true);
 		loadMenu.SetDeferred("visible", false);
 
 		listOfSaves = GetNode<ItemList>("loadMenu/listOfSaves");
+
+		
 	}
 
 
@@ -73,20 +75,20 @@ public class mainMenu : Control
 		newGameMenu.SetDeferred("visible", true);
 	}
 
-	private void _on_NewGameMenuGo_pressed()
+	private void _on_newGameGo_pressed()
 	{
 		string newFileName = newGameName.Text.ToLower();
-		gameFileExplorer.SaveGameData(newFileName);
+		gameFileExplorer.OnNewSaveGameData(newFileName);
 		gameFileExplorer.LoadFile(newFileName);
-		//GetTree().ChangeScene("res://Levels/level0.tscn");
 	}
 
 	//Go Back to main menu
-	private void _on_NewGameMenuBack_pressed()
+	private void _on_newGameback_pressed()
 	{
 		newGameName.Text = "";
 		newGameMenu.SetDeferred("visible", false);
 	}
+
 
 
 	//Checks the string of the newGame input
@@ -126,31 +128,31 @@ public class mainMenu : Control
 		loadMenu.SetDeferred("visible", true);
 
 
-        List<string> savedGames = gameFileExplorer.LoadAllFiles();
+		List<string> savedGames = gameFileExplorer.LoadAllFiles();
 
 
-        fileDirectory.Open(GameFiles.save_directory);
-        File save_file = new File();
+		fileDirectory.Open(GameFiles.save_directory);
+		File save_file = new File();
 
-        foreach (string gameFile in savedGames)
-        {
-            Error error = save_file.Open(GameFiles.save_directory + gameFile + GameFiles.file_extension, File.ModeFlags.Read);
+		foreach (string gameFile in savedGames)
+		{
+			Error error = save_file.Open(GameFiles.save_directory + gameFile + GameFiles.file_extension, File.ModeFlags.Read);
 
-            if (error == Error.Ok)
-            {
-                string file_name = GameFiles.save_directory + gameFile + GameFiles.file_extension;
-                if (save_file.FileExists(file_name))
-                {
+			if (error == Error.Ok)
+			{
+				string file_name = GameFiles.save_directory + gameFile + GameFiles.file_extension;
+				if (save_file.FileExists(file_name))
+				{
 					//Adds the save file name to itemList node
 					listOfSaves.AddItem(gameFile);
-            
-                }
-                save_file.Close();
+			
+				}
+				save_file.Close();
 
-            }
-        }
+			}
+		}
 
-    }
+	}
 
 	private void _on_file_selected(int index)
 	{
@@ -161,15 +163,15 @@ public class mainMenu : Control
 
 
 
-	private void _on_loadGameLoad_pressed()
-	{
-		gameFileExplorer.LoadFile(loadFileName);
-	}
 
-
-	private void _on_loadGameBack_pressed()
+	private void _on_loadMenuBack_pressed()
 	{
 		loadMenu.SetDeferred("visible", false);
+	}
+
+	private void _on_loadMenuLoad_pressed()
+	{
+		gameFileExplorer.LoadFile(loadFileName);
 	}
 
 
@@ -189,6 +191,10 @@ public class mainMenu : Control
 
 
 }
+
+
+
+
 
 
 

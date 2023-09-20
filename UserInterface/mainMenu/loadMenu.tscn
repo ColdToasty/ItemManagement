@@ -3,40 +3,61 @@
 [sub_resource type="ImageTexture" id=1]
 
 [node name="Panel" type="Panel"]
-margin_right = 384.0
-margin_bottom = 280.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -540.0
+margin_right = 960.0
+margin_bottom = 540.0
 
 [node name="title" type="RichTextLabel" parent="."]
-margin_left = 152.0
-margin_top = 16.0
-margin_right = 224.0
-margin_bottom = 32.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -40.0
+margin_top = 80.0
+margin_right = 32.0
+margin_bottom = 96.0
 text = "Load Game"
 
 [node name="listOfSaves" type="ItemList" parent="."]
-margin_left = 8.0
-margin_top = 40.0
-margin_right = 376.0
-margin_bottom = 192.0
+margin_left = 176.0
+margin_top = 152.0
+margin_right = 1712.0
+margin_bottom = 896.0
 items = [ "", SubResource( 1 ), false ]
 
-[node name="back" type="Button" parent="."]
-margin_left = 24.0
-margin_top = 216.0
-margin_right = 120.0
-margin_bottom = 256.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -864.0
+margin_top = -160.0
+margin_right = 836.0
+margin_bottom = -60.0
+
+[node name="back" type="Button" parent="HBoxContainer"]
+margin_left = 82.0
+margin_right = 482.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 400, 0 )
+size_flags_horizontal = 6
 text = "Back"
 
-[node name="delete" type="Button" parent="."]
-margin_left = 144.0
-margin_top = 216.0
-margin_right = 240.0
-margin_bottom = 256.0
+[node name="delete" type="Button" parent="HBoxContainer"]
+margin_left = 650.0
+margin_right = 1050.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 400, 0 )
+size_flags_horizontal = 6
 text = "Delete"
 
-[node name="load" type="Button" parent="."]
-margin_left = 264.0
-margin_top = 216.0
-margin_right = 360.0
-margin_bottom = 256.0
+[node name="load" type="Button" parent="HBoxContainer"]
+margin_left = 1218.0
+margin_right = 1618.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 400, 0 )
+size_flags_horizontal = 6
 text = "Load"

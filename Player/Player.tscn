@@ -635,6 +635,18 @@ script = ExtResource( 4 )
 position = Vector2( 5, 3 )
 shape = SubResource( 47 )
 
+[node name="WindowDialog" type="WindowDialog" parent="."]
+visible = true
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -448.0
+margin_top = 72.0
+margin_right = 1392.0
+margin_bottom = 572.0
+mouse_filter = 2
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="area_entered" from="PlayerVisible" to="." method="_on_hitPlayerBox_entered"]

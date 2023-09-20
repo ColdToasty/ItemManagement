@@ -30,6 +30,8 @@ public class GameFiles : Control
 	private string continue_save_file_date = "";
 	private string continue_save_file_time = "";
 
+	public static string save_name;
+
 	//Savefile 
 	private playerStats player_stats;
 
@@ -49,7 +51,6 @@ public class GameFiles : Control
 	//Need to implement way to get current save and save file
 	public void ContinueGame()
 	{
-		GD.Print("Continue Button pressed");
 		var file = new File();
 
 		Error checkFileContinue = file.Open(continue_file_location, File.ModeFlags.Read);
@@ -62,9 +63,8 @@ public class GameFiles : Control
 				var continueGameData = file.GetAsText();
 				JSONParseResult saveData = JSON.Parse(continueGameData);
 				Dictionary result = saveData.Result as Dictionary;
-                continue_save_file_name = result["name"].ToString();
-                continue_save_file_date = result["date"].ToString();
-                continue_save_file_time = result["time"].ToString();
+
+                UpdateContinueVariables(result["name"].ToString(), result["date"].ToString(), result["time"].ToString());
             }
 			else
 			{
@@ -83,7 +83,7 @@ public class GameFiles : Control
 		file.Close();
 		try
 		{
-            this.LoadFile(continue_save_file_name);
+            LoadFile(continue_save_file_name);
         }
 		catch(Exception e)
 		{
@@ -132,26 +132,45 @@ public class GameFiles : Control
             }
 
         }
+
 		file.Close();
 		//Reupdate file variables date and time
-        GetTree().ChangeScene($"res://Levels/level{current_file_data["latestLevel"]}.tscn");
+        GetTree().ChangeScene($"res://Levels/PlayableLevels/level{current_file_data["currentLevel"]}.tscn");
     }
 
+
+	//Returns the key value pairs of a certain saved file
+	public static Dictionary GetFileContents()
+	{
+        Error checkSaveExist = file.Open(save_directory + save_name + file_extension, File.ModeFlags.Read);
+
+        if (checkSaveExist == Error.Ok)
+        {
+            string fileContents = file.GetAsText();
+            JSONParseResult saveData = JSON.Parse(fileContents);
+
+            Dictionary result = saveData.Result as Dictionary;
+            file.Close();
+
+            return result;
+        }
+        else
+        {
+			GD.Print("No file exist");
+            return null;
+        }
+        
+	}
 
 	public void CreateContinueFile(Godot.Collections.Dictionary<string, string> latestSave)
 	{
-
-
         //Store the new save into continue
         file.StoreString(JSON.Print(latestSave));
-
-        //Update the continueSave variables
-        continue_save_file_name = latestSave["name"];
-        continue_save_file_date = latestSave["date"];
-        continue_save_file_time = latestSave["time"];
+		UpdateContinueVariables(latestSave["name"], latestSave["date"], latestSave["time"]);
+        save_name = latestSave["name"];
     }
 
-	public void SaveGameData(string saveName)
+	public void OnNewSaveGameData(string saveName)
 	{
 		//Creates the key, pair values for player
 		player_data = new Godot.Collections.Dictionary<string, string>
@@ -182,11 +201,15 @@ public class GameFiles : Control
 			{"invisibilityTime", player_stats.invisibilityTime.ToString() },
 			
 			//Stats about presents delivered
+			//Total presents player has delivered from every successful run
 			{"totalPresentsDelivered", "0"},
+			//Current number of presents they currently have
 			{"currentPresents", "0"},
 
 			//Stats about cookies
+			//Total amount of cookies eated
 			{"totalCookies", "0"},
+			//Amound of cookies they currently have
 			{"currentCookies", "0"},
 		};
 
@@ -224,6 +247,23 @@ public class GameFiles : Control
 		file.Close();
 	
 	}
+
+
+	public static void OnSaveGame(Godot.Collections.Dictionary<string, string> saveData)
+	{
+        //Make new folder with name
+        Error trySave = file.Open(save_directory + save_name + file_extension, File.ModeFlags.Write);
+
+        if (trySave == Error.Ok)
+        {
+            //Save our variables to this file
+            file.StoreString(JSON.Print(saveData));
+        }
+
+        //Gets the latest save file
+        file.Close();
+
+    }
 
 
 	//return all file names
@@ -292,10 +332,15 @@ public class GameFiles : Control
 	}
 
 
+    public void UpdateContinueVariables(string name, string date, string time)
+    {
+        continue_save_file_name = name;
+        continue_save_file_date = date;
+        continue_save_file_time = time;
+    }
 
 
-
-	public override void _Ready()
+    public override void _Ready()
 	{
 
 		//Loads playerStats resource
@@ -314,9 +359,7 @@ public class GameFiles : Control
 
 				JSONParseResult playerContinueData = JSON.Parse(continueGameData);
 				Dictionary result = playerContinueData.Result as Dictionary;
-				continue_save_file_name = result["name"].ToString();
-				continue_save_file_date = result["date"].ToString();
-				continue_save_file_time = result["time"].ToString();
+                UpdateContinueVariables(result["name"].ToString(), result["date"].ToString(), result["time"].ToString());
 			}
 		}
 		else
@@ -329,28 +372,6 @@ public class GameFiles : Control
 
 		//Last ready } bracket
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

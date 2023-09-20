@@ -20,15 +20,15 @@ one_shot = true
 
 [node name="itemIcon" type="TextureRect" parent="."]
 modulate = Color( 1, 1, 1, 0.262745 )
-margin_right = 195.0
-margin_bottom = 166.0
+margin_right = 1091.0
+margin_bottom = 646.0
 theme = SubResource( 1 )
 texture = ExtResource( 1 )
 expand = true
 
 [node name="itemCount" type="Label" parent="."]
-margin_top = 76.0
-margin_right = 195.0
-margin_bottom = 90.0
+margin_top = 316.0
+margin_right = 1091.0
+margin_bottom = 330.0
 align = 1
 valign = 1

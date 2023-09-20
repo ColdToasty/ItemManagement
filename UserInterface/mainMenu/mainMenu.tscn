@@ -1,83 +1,90 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UserInterface/mainMenu/mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://UserInterface/mainMenu/newGameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://UserInterface/GameFiles.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UserInterface/mainMenu/loadMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://border.png" type="Texture" id=5]
 
 [sub_resource type="Theme" id=1]
 
 [node name="mainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 896.0
-margin_bottom = 480.0
 script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+expand = true
 
 [node name="GameFiles" parent="." instance=ExtResource( 3 )]
 
-[node name="continue" type="Button" parent="."]
-anchor_right = 0.0583333
-anchor_bottom = 0.0296296
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 64.0
+margin_top = 280.0
+margin_right = 464.0
+margin_bottom = 980.0
+
+[node name="continue" type="Button" parent="VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 400, 100 )
+size_flags_vertical = 2
 theme = SubResource( 1 )
 text = "Continue"
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="new" type="Button" parent="."]
-anchor_top = 0.0518519
-anchor_right = 0.0583333
-anchor_bottom = 0.0814815
+[node name="new" type="Button" parent="VBoxContainer"]
+margin_top = 150.0
+margin_right = 400.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 400, 100 )
+size_flags_horizontal = 2
+size_flags_vertical = 2
 text = "New"
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="load" type="Button" parent="."]
-anchor_left = 0.00416667
-anchor_top = 0.103704
-anchor_right = 0.0625
-anchor_bottom = 0.133333
+[node name="load" type="Button" parent="VBoxContainer"]
+margin_top = 300.0
+margin_right = 400.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 400, 100 )
+size_flags_horizontal = 2
+size_flags_vertical = 2
 text = "Load"
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="options" type="Button" parent="."]
-anchor_top = 0.155556
-anchor_right = 0.0583333
-anchor_bottom = 0.185185
+[node name="options" type="Button" parent="VBoxContainer"]
+margin_top = 450.0
+margin_right = 400.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 400, 100 )
+size_flags_vertical = 2
 text = "Settings"
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="exit" type="Button" parent="."]
-anchor_top = 0.207407
-anchor_right = 0.0583333
-anchor_bottom = 0.237037
-margin_bottom = 1.52588e-05
+[node name="exit" type="Button" parent="VBoxContainer"]
+margin_top = 600.0
+margin_right = 400.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 400, 100 )
 text = "Exit"
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="newGameMenu" parent="." instance=ExtResource( 2 )]
+visible = false
 
 [node name="loadMenu" parent="." instance=ExtResource( 4 )]
+visible = false
 
-[connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
-[connection signal="pressed" from="new" to="." method="_on_new_pressed"]
-[connection signal="pressed" from="load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="VBoxContainer/new" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="VBoxContainer/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/exit" to="." method="_on_exit_pressed"]
 [connection signal="text_changed" from="newGameMenu/newSaveName" to="." method="_on_newSaveName_text_changed"]
-[connection signal="pressed" from="newGameMenu/back" to="." method="_on_NewGameMenuBack_pressed"]
-[connection signal="pressed" from="newGameMenu/go" to="." method="_on_NewGameMenuGo_pressed"]
+[connection signal="pressed" from="newGameMenu/HBoxContainer/back" to="." method="_on_newGameback_pressed"]
+[connection signal="pressed" from="newGameMenu/HBoxContainer/go" to="." method="_on_newGameGo_pressed"]
 [connection signal="item_selected" from="loadMenu/listOfSaves" to="." method="_on_file_selected"]
-[connection signal="pressed" from="loadMenu/back" to="." method="_on_loadGameBack_pressed"]
-[connection signal="pressed" from="loadMenu/load" to="." method="_on_loadGameLoad_pressed"]
+[connection signal="pressed" from="loadMenu/HBoxContainer/back" to="." method="_on_loadMenuBack_pressed"]
+[connection signal="pressed" from="loadMenu/HBoxContainer/load" to="." method="_on_loadMenuLoad_pressed"]
 
 [editable path="newGameMenu"]
 [editable path="loadMenu"]

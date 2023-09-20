@@ -136,7 +136,7 @@ public class ObjectSort : YSort
 	public void hideThePlayerInMe(Vector2 hidingSpotPosition)
 	{
 		//Change the players position to the hidding spot (ideally its in the center of the object)
-		
+		GD.Print(canPlayerHide);
 		if (canPlayerHide)
 		{
 			GD.Print("invisible");

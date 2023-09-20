@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Cookies/CookieCounter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PlaceLocation/PlaceLocation.tscn" type="PackedScene" id=2]
@@ -228,15 +228,17 @@ resource_local_to_scene = true
 } ]
 7/z_index = 0
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
+
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource( 5 )
-
-[node name="borderParent" parent="." instance=ExtResource( 8 )]
 
 [node name="walls" parent="." instance=ExtResource( 11 )]
 
 [node name="defaultWalls" parent="walls" index="0"]
 tile_set = SubResource( 12 )
+
+[node name="borderParent" parent="." instance=ExtResource( 8 )]
 
 [node name="blackUnderLay" parent="." instance=ExtResource( 9 )]
 
@@ -249,7 +251,7 @@ current = true
 [node name="PlaceLocations" type="YSort" parent="."]
 
 [node name="PlaceLocation" parent="PlaceLocations" instance=ExtResource( 2 )]
-position = Vector2( 383.544, 306.837 )
+position = Vector2( -72, -104 )
 
 [node name="CookiesHolder" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -2 )
@@ -268,11 +270,19 @@ position = Vector2( -304, -80 )
 [node name="Player" parent="objectSort" index="2"]
 position = Vector2( -192, -48 )
 
+[node name="RemoteTransform2D" parent="objectSort/Player" index="1"]
+remote_path = NodePath("../../../Camera2D")
+
+[node name="AnimationTree" parent="objectSort/Player" index="4"]
+parameters/playback = SubResource( 13 )
+
 [node name="CookieCounter" parent="." instance=ExtResource( 1 )]
+follow_viewport_enable = true
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 position = Vector2( 1.17987, 1.41581 )
 
-[editable path="borderParent"]
 [editable path="walls"]
+[editable path="borderParent"]
 [editable path="objectSort"]
+[editable path="objectSort/Player"]
