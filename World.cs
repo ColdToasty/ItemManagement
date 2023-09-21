@@ -53,6 +53,7 @@ public class World : Node2D
 		{
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
+		GD.Print(Name.ToString());
 		level = Name[Name.Length-1].ToString().ToInt();
 	}
 
@@ -83,7 +84,6 @@ public class World : Node2D
 
 
 			float stars = 0;
-
             Godot.Collections.Dictionary<string, string> saveData = CreateSaveDictionary(GameFiles.save_name);
 			GameFiles.OnSaveGame(saveData);
 			GD.Print("saved");

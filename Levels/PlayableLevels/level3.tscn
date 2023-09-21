@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Tiles/Walls/wallsTemplate.png" type="Texture" id=1]
 [ext_resource path="res://Levels/BaseLevel/levelBase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/hidingSpots/cardboardBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Cookies/CookieCounter.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 64, 0, 64, 96, 0, 96 )
@@ -224,8 +225,15 @@ resource_local_to_scene = true
 
 [node name="level3" instance=ExtResource( 2 )]
 
+[node name="Camera2D" type="Camera2D" parent="." index="0"]
+position = Vector2( -192, -48 )
+current = true
+
 [node name="defaultWalls" parent="walls" index="0"]
 tile_set = SubResource( 12 )
+
+[node name="RemoteTransform2D" parent="objectSort/Player" index="1"]
+remote_path = NodePath("../../../Camera2D")
 
 [node name="AnimationTree" parent="objectSort/Player" index="4"]
 parameters/playback = SubResource( 13 )
@@ -235,6 +243,8 @@ visible = false
 
 [node name="cardboardBox" parent="objectSort" index="3" instance=ExtResource( 3 )]
 position = Vector2( 200, -96 )
+
+[node name="CookieCounter" parent="." index="8" instance=ExtResource( 4 )]
 
 [editable path="walls"]
 [editable path="borderParent"]

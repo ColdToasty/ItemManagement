@@ -1,6 +1,5 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Cookies/CookieCounter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PlaceLocation/PlaceLocation.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Cookies/CookiesHolder.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Cookies/Cookies.tscn" type="PackedScene" id=4]
@@ -244,10 +243,6 @@ tile_set = SubResource( 12 )
 
 [node name="flooring" parent="." instance=ExtResource( 10 )]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -192, -48 )
-current = true
-
 [node name="PlaceLocations" type="YSort" parent="."]
 
 [node name="PlaceLocation" parent="PlaceLocations" instance=ExtResource( 2 )]
@@ -270,14 +265,8 @@ position = Vector2( -304, -80 )
 [node name="Player" parent="objectSort" index="2"]
 position = Vector2( -192, -48 )
 
-[node name="RemoteTransform2D" parent="objectSort/Player" index="1"]
-remote_path = NodePath("../../../Camera2D")
-
 [node name="AnimationTree" parent="objectSort/Player" index="4"]
 parameters/playback = SubResource( 13 )
-
-[node name="CookieCounter" parent="." instance=ExtResource( 1 )]
-follow_viewport_enable = true
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 position = Vector2( 1.17987, 1.41581 )
