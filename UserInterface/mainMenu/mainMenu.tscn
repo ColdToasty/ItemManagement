@@ -1,12 +1,26 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://UserInterface/mainMenu/mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://UserInterface/mainMenu/newGameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://UserInterface/GameFiles.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UserInterface/mainMenu/loadMenu.tscn" type="PackedScene" id=4]
-[ext_resource path="res://border.png" type="Texture" id=5]
-
-[sub_resource type="Theme" id=1]
+[ext_resource path="res://UserInterface/menuBorder.png" type="Texture" id=5]
+[ext_resource path="res://UserInterface/buttons/continueButton/continueButtonHover.png" type="Texture" id=6]
+[ext_resource path="res://UserInterface/buttons/newButton/newButtonPressed.png" type="Texture" id=7]
+[ext_resource path="res://UserInterface/buttons/continueButton/continueButtonDefault.png" type="Texture" id=8]
+[ext_resource path="res://UserInterface/buttons/continueButton/continueButtonDisabled.png" type="Texture" id=9]
+[ext_resource path="res://UserInterface/buttons/newButton/newButtonDefault.png" type="Texture" id=10]
+[ext_resource path="res://UserInterface/buttons/continueButton/continueButtonPressed.png" type="Texture" id=11]
+[ext_resource path="res://UserInterface/buttons/newButton/newButtonHover.png" type="Texture" id=12]
+[ext_resource path="res://UserInterface/buttons/loadButton/loadButtonPressed.png" type="Texture" id=13]
+[ext_resource path="res://UserInterface/buttons/loadButton/loadButtonHover.png" type="Texture" id=14]
+[ext_resource path="res://UserInterface/buttons/loadButton/loadButtonDefault.png" type="Texture" id=15]
+[ext_resource path="res://UserInterface/buttons/settingsButton/settingsButtonPressed.png" type="Texture" id=16]
+[ext_resource path="res://UserInterface/buttons/settingsButton/settingsButtonDefault.png" type="Texture" id=17]
+[ext_resource path="res://UserInterface/buttons/settingsButton/settingsButtonHover.png" type="Texture" id=18]
+[ext_resource path="res://UserInterface/buttons/exitButton/exitButtonPressed.png" type="Texture" id=19]
+[ext_resource path="res://UserInterface/buttons/exitButton/exitButtonDefault.png" type="Texture" id=20]
+[ext_resource path="res://UserInterface/buttons/exitButton/exitButtonHover.png" type="Texture" id=21]
 
 [node name="mainMenu" type="Control"]
 anchor_right = 1.0
@@ -27,46 +41,61 @@ margin_top = 280.0
 margin_right = 464.0
 margin_bottom = 980.0
 
-[node name="continue" type="Button" parent="VBoxContainer"]
+[node name="continue" type="TextureButton" parent="VBoxContainer"]
 margin_right = 400.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 400, 100 )
 size_flags_vertical = 2
-theme = SubResource( 1 )
-text = "Continue"
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 11 )
+texture_hover = ExtResource( 6 )
+texture_disabled = ExtResource( 9 )
+expand = true
 
-[node name="new" type="Button" parent="VBoxContainer"]
+[node name="new" type="TextureButton" parent="VBoxContainer"]
 margin_top = 150.0
 margin_right = 400.0
 margin_bottom = 250.0
 rect_min_size = Vector2( 400, 100 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-text = "New"
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 12 )
+expand = true
 
-[node name="load" type="Button" parent="VBoxContainer"]
+[node name="load" type="TextureButton" parent="VBoxContainer"]
 margin_top = 300.0
 margin_right = 400.0
 margin_bottom = 400.0
 rect_min_size = Vector2( 400, 100 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-text = "Load"
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 14 )
+expand = true
 
-[node name="options" type="Button" parent="VBoxContainer"]
+[node name="settings" type="TextureButton" parent="VBoxContainer"]
 margin_top = 450.0
 margin_right = 400.0
 margin_bottom = 550.0
 rect_min_size = Vector2( 400, 100 )
 size_flags_vertical = 2
-text = "Settings"
+texture_normal = ExtResource( 17 )
+texture_pressed = ExtResource( 16 )
+texture_hover = ExtResource( 18 )
+expand = true
 
-[node name="exit" type="Button" parent="VBoxContainer"]
+[node name="exit" type="TextureButton" parent="VBoxContainer"]
 margin_top = 600.0
 margin_right = 400.0
 margin_bottom = 700.0
 rect_min_size = Vector2( 400, 100 )
-text = "Exit"
+texture_normal = ExtResource( 20 )
+texture_pressed = ExtResource( 19 )
+texture_hover = ExtResource( 21 )
+expand = true
 
 [node name="newGameMenu" parent="." instance=ExtResource( 2 )]
 visible = false
@@ -76,14 +105,15 @@ visible = false
 
 [connection signal="pressed" from="VBoxContainer/continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="VBoxContainer/new" to="." method="_on_new_pressed"]
-[connection signal="pressed" from="VBoxContainer/load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/load" to="." method="_on_mainMenuLoad_pressed"]
+[connection signal="pressed" from="VBoxContainer/settings" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/exit" to="." method="_on_exit_pressed"]
 [connection signal="text_changed" from="newGameMenu/newSaveName" to="." method="_on_newSaveName_text_changed"]
 [connection signal="pressed" from="newGameMenu/HBoxContainer/back" to="." method="_on_newGameback_pressed"]
 [connection signal="pressed" from="newGameMenu/HBoxContainer/go" to="." method="_on_newGameGo_pressed"]
 [connection signal="item_selected" from="loadMenu/listOfSaves" to="." method="_on_file_selected"]
 [connection signal="pressed" from="loadMenu/HBoxContainer/back" to="." method="_on_loadMenuBack_pressed"]
+[connection signal="pressed" from="loadMenu/HBoxContainer/delete" to="." method="_on_loadMenuDelete_pressed"]
 [connection signal="pressed" from="loadMenu/HBoxContainer/load" to="." method="_on_loadMenuLoad_pressed"]
 
 [editable path="newGameMenu"]

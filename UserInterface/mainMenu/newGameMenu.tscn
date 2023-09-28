@@ -1,4 +1,13 @@
-[gd_scene format=2]
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://UserInterface/buttons/backButton/backButtonDefault.png" type="Texture" id=1]
+[ext_resource path="res://UserInterface/buttons/backButton/backButtonHover.png" type="Texture" id=2]
+[ext_resource path="res://UserInterface/buttons/backButton/backButtonPressed.png" type="Texture" id=3]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonPressed.png" type="Texture" id=4]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonDisabled.png" type="Texture" id=5]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonHover.png" type="Texture" id=6]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonDefault.png" type="Texture" id=7]
+[ext_resource path="res://UserInterface/menuBorder.png" type="Texture" id=8]
 
 [node name="newGameMenu" type="Panel"]
 margin_right = 1920.0
@@ -7,6 +16,8 @@ margin_bottom = 1080.0
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1920.0
 margin_bottom = 1080.0
+texture = ExtResource( 8 )
+expand = true
 
 [node name="title" type="RichTextLabel" parent="."]
 margin_left = 928.0
@@ -43,18 +54,25 @@ margin_right = 748.0
 margin_bottom = -60.0
 rect_min_size = Vector2( 1500, 100 )
 
-[node name="back" type="Button" parent="HBoxContainer"]
+[node name="back" type="TextureButton" parent="HBoxContainer"]
 margin_left = 174.0
 margin_right = 574.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 6
-text = "Back"
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 2 )
+expand = true
 
-[node name="go" type="Button" parent="HBoxContainer"]
+[node name="go" type="TextureButton" parent="HBoxContainer"]
 margin_left = 926.0
 margin_right = 1326.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 6
-text = "Go"
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 6 )
+texture_disabled = ExtResource( 5 )
+expand = true

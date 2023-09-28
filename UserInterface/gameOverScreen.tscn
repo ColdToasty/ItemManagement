@@ -26,36 +26,14 @@ margin_top = 144.0
 margin_right = 96.0
 margin_bottom = 164.0
 
-[node name="Label" type="Label" parent="LastCheckPoint"]
-margin_left = 5.0
-margin_right = 68.0
-margin_bottom = 14.0
-text = "play again"
-
 [node name="Restart" type="Button" parent="."]
 margin_left = 120.0
 margin_top = 144.0
 margin_right = 192.0
 margin_bottom = 164.0
 
-[node name="Label" type="Label" parent="Restart"]
-margin_left = 14.0
-margin_right = 59.0
-margin_bottom = 14.0
-text = "Restart"
-align = 1
-valign = 1
-
 [node name="Exit" type="Button" parent="."]
 margin_left = 216.0
 margin_top = 144.0
 margin_right = 288.0
 margin_bottom = 164.0
-
-[node name="Label" type="Label" parent="Exit"]
-margin_left = 24.0
-margin_right = 47.0
-margin_bottom = 14.0
-text = "Exit"
-align = 1
-valign = 1

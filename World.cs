@@ -53,7 +53,7 @@ public class World : Node2D
 		{
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
-		GD.Print(Name.ToString());
+
 		level = Name[Name.Length-1].ToString().ToInt();
 	}
 

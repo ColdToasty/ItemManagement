@@ -1,0 +1,402 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://UserInterface/menuBorder.png" type="Texture" id=1]
+[ext_resource path="res://UserInterface/buttons/backUndoNext.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/itemMenu.cs" type="Script" id=3]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/ornament/ornamentButtonHover.png" type="Texture" id=4]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/ornament/ornamentButtonPressed.png" type="Texture" id=5]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/ornament/ornamentButtonDisabled.png" type="Texture" id=6]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/ornament/ornamentButtonDefault.png" type="Texture" id=7]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/tinsel/tinselButtonHover.png" type="Texture" id=8]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/tinsel/tinselButtonDefault.png" type="Texture" id=9]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/tinsel/tinselButtonDisabled.png" type="Texture" id=10]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/tinsel/tinselButtonPressed.png" type="Texture" id=11]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/cane/caneButtonHover.png" type="Texture" id=12]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/cane/caneButtonPressed.png" type="Texture" id=13]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/cane/caneButtonDisabled.png" type="Texture" id=14]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/cane/caneButtonDefault.png" type="Texture" id=15]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/invisibility/invisibilitiyDisabled.png" type="Texture" id=16]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/invisibility/invisibilitiyHover.png" type="Texture" id=17]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/invisibility/invisibilitiyDefault.png" type="Texture" id=18]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/invisibility/invisibilitiyPressed.png" type="Texture" id=19]
+[ext_resource path="res://UserInterface/themes/themeUI.tres" type="Theme" id=20]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/costBorder.png" type="Texture" id=21]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/itemCount.png" type="Texture" id=22]
+[ext_resource path="res://DeliveryPresents/presents/Present3.png" type="Texture" id=23]
+
+[node name="itemMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1919.0
+margin_bottom = 1080.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -875.0
+margin_top = -500.0
+margin_right = 875.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 1750, 1000 )
+
+[node name="title" type="Control" parent="VBoxContainer"]
+margin_right = 1750.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 1700, 180 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/title"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="VBoxContainer/title/HBoxContainer"]
+margin_right = 835.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 0, 150 )
+theme = ExtResource( 20 )
+text = "Buy Some Super Items"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/title/HBoxContainer"]
+margin_left = 839.0
+margin_right = 1739.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 900, 150 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/title/HBoxContainer/TextureRect"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 0, 150 )
+size_flags_vertical = 7
+theme = ExtResource( 20 )
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/title/HBoxContainer/TextureRect"]
+margin_right = 40.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 23 )
+expand = true
+
+[node name="ornament" type="Control" parent="VBoxContainer"]
+margin_top = 184.0
+margin_right = 1750.0
+margin_bottom = 354.0
+rect_min_size = Vector2( 1750, 170 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ornament"]
+margin_top = 16.0
+margin_right = 1750.0
+margin_bottom = 166.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/ornament/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 600, 150 )
+size_flags_horizontal = 0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 6 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/ornament/HBoxContainer/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -140.0
+margin_top = -75.5
+margin_right = 140.0
+margin_bottom = 75.5
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 20 )
+text = "Bulb"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="cost" type="TextureRect" parent="VBoxContainer/ornament/HBoxContainer"]
+margin_left = 604.0
+margin_right = 754.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+texture = ExtResource( 21 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/ornament/HBoxContainer/cost"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 150, 150 )
+theme = ExtResource( 20 )
+align = 1
+valign = 1
+
+[node name="currentAmount" type="TextureRect" parent="VBoxContainer/ornament/HBoxContainer"]
+margin_left = 758.0
+margin_right = 1750.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 22 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/ornament/HBoxContainer/currentAmount"]
+margin_left = 100.0
+margin_right = 800.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 700, 150 )
+theme = ExtResource( 20 )
+text = "Current: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="tinsel" type="Control" parent="VBoxContainer"]
+margin_top = 358.0
+margin_right = 1750.0
+margin_bottom = 528.0
+rect_min_size = Vector2( 1750, 170 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/tinsel"]
+margin_top = 12.0
+margin_right = 1750.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/tinsel/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 600, 150 )
+size_flags_horizontal = 0
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 11 )
+texture_hover = ExtResource( 8 )
+texture_disabled = ExtResource( 10 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/tinsel/HBoxContainer/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -118.5
+margin_top = -50.5
+margin_right = 118.5
+margin_bottom = 50.5
+theme = ExtResource( 20 )
+text = "Tinsel"
+valign = 1
+uppercase = true
+
+[node name="cost" type="TextureRect" parent="VBoxContainer/tinsel/HBoxContainer"]
+margin_left = 604.0
+margin_right = 754.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+texture = ExtResource( 21 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/tinsel/HBoxContainer/cost"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 150, 150 )
+theme = ExtResource( 20 )
+align = 1
+valign = 1
+
+[node name="currentAmount" type="TextureRect" parent="VBoxContainer/tinsel/HBoxContainer"]
+margin_left = 758.0
+margin_right = 1750.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 22 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/tinsel/HBoxContainer/currentAmount"]
+margin_left = 100.0
+margin_right = 800.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 700, 150 )
+theme = ExtResource( 20 )
+text = "Current: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="cane" type="Control" parent="VBoxContainer"]
+margin_top = 532.0
+margin_right = 1750.0
+margin_bottom = 702.0
+rect_min_size = Vector2( 1750, 170 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/cane"]
+margin_top = 8.0
+margin_right = 1750.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/cane/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 600, 150 )
+size_flags_horizontal = 0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 12 )
+texture_disabled = ExtResource( 14 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/cane/HBoxContainer/TextureButton"]
+margin_left = 171.0
+margin_top = -4.0
+margin_right = 431.0
+margin_bottom = 147.0
+rect_min_size = Vector2( 260, 150 )
+theme = ExtResource( 20 )
+text = "Cane"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="cost" type="TextureRect" parent="VBoxContainer/cane/HBoxContainer"]
+margin_left = 604.0
+margin_right = 754.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+texture = ExtResource( 21 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/cane/HBoxContainer/cost"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 150, 150 )
+theme = ExtResource( 20 )
+align = 1
+valign = 1
+
+[node name="currentAmount" type="TextureRect" parent="VBoxContainer/cane/HBoxContainer"]
+margin_left = 758.0
+margin_right = 1750.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 22 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/cane/HBoxContainer/currentAmount"]
+margin_left = 100.0
+margin_right = 800.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 700, 150 )
+theme = ExtResource( 20 )
+text = "Current: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="invisibility" type="Control" parent="VBoxContainer"]
+margin_top = 706.0
+margin_right = 1750.0
+margin_bottom = 876.0
+rect_min_size = Vector2( 1750, 170 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/invisibility"]
+margin_top = 4.0
+margin_right = 1750.0
+margin_bottom = 154.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/invisibility/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 600, 150 )
+size_flags_horizontal = 0
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 19 )
+texture_hover = ExtResource( 17 )
+texture_disabled = ExtResource( 16 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/invisibility/HBoxContainer/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -161.0
+margin_top = -49.0
+margin_right = 282.0
+margin_bottom = 52.0
+theme = ExtResource( 20 )
+text = "Invisibility"
+valign = 1
+
+[node name="cost" type="TextureRect" parent="VBoxContainer/invisibility/HBoxContainer"]
+margin_left = 604.0
+margin_right = 754.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+texture = ExtResource( 21 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/invisibility/HBoxContainer/cost"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 150, 150 )
+theme = ExtResource( 20 )
+align = 1
+valign = 1
+
+[node name="currentAmount" type="TextureRect" parent="VBoxContainer/invisibility/HBoxContainer"]
+margin_left = 758.0
+margin_right = 1750.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 20 )
+texture = ExtResource( 22 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/invisibility/HBoxContainer/currentAmount"]
+margin_left = 100.0
+margin_right = 800.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 700, 150 )
+text = "Current: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="backUndoNext" parent="VBoxContainer" instance=ExtResource( 2 )]
+
+[connection signal="mouse_entered" from="VBoxContainer/ornament/HBoxContainer/TextureButton" to="." method="_on_ornamentButton_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/ornament/HBoxContainer/TextureButton" to="." method="_on_ornamentButton_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/ornament/HBoxContainer/TextureButton" to="." method="_on_ornamentButton_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/tinsel/HBoxContainer/TextureButton" to="." method="_on_tinselButton_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/tinsel/HBoxContainer/TextureButton" to="." method="_on_tinselButton_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/tinsel/HBoxContainer/TextureButton" to="." method="_on_tinselButton_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/cane/HBoxContainer/TextureButton" to="." method="_on_caneButton_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/cane/HBoxContainer/TextureButton" to="." method="_on_caneButton_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/invisibility/HBoxContainer/TextureButton" to="." method="_on_invisibilitiyButton_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/invisibility/HBoxContainer/TextureButton" to="." method="_on_invisibilityButton_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/invisibility/HBoxContainer/TextureButton" to="." method="_on_invisibilityButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/backUndoNext/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="VBoxContainer/backUndoNext/undo" to="." method="_on_undo_pressed"]
+[connection signal="pressed" from="VBoxContainer/backUndoNext/next" to="." method="_on_next_pressed"]
+
+[editable path="VBoxContainer/backUndoNext"]

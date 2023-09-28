@@ -8,16 +8,16 @@ public class playerStats : Resource
     public int currentLevel { get; set; }
 
     [Export]
-    public int Health { get; set; }
+    public int health { get; set; }
 
     [Export]
-    public int Speed
+    public int speed
     {
         get; set;
     }
 
     [Export]
-    public int SprintSpeed
+    public int sprintSpeed
     {
         get; set;
     }
@@ -45,10 +45,10 @@ public class playerStats : Resource
     public int invisibilityTime { get; set; }
 
     [Export]
-    public float PlayerItemRadius { get; set; }
+    public float reachX { get; set; }
 
     [Export]
-    public float PlayerItemHeight { get; set; }
+    public float reachY { get; set; }
 
     [Export]
     public float playerVisibleRadius { get; set; }
@@ -59,9 +59,6 @@ public class playerStats : Resource
 
     [Export]
     public float runNoiseRadius { get; set; }
-
-    [Export]
-    public float runNoiseHeight { get; set; }
 
     public float positionX { get; set; }
     public float positionY { get; set; }

@@ -43,10 +43,14 @@ public class Player : KinematicBody2D
 	private PlayerVisible playerVisibleArea;
 	private CollisionShape2D playerVisibleCollisionShape;
 
-	private CollisionShape2D runNoiseCollisionShape;
+	private CollisionShape2D runNoiseCollision;
+    private CircleShape2D runNoiseShape;
+
+    private CollisionShape2D playerItemReach;
+    private CapsuleShape2D playerItemShape;
 
 
-	[Signal]
+    [Signal]
 	public delegate void game_over();
 
 	private Sprite playerSprite;
@@ -81,17 +85,25 @@ public class Player : KinematicBody2D
 
 	private bool freeze = false;
 
-	private double itemReachRadius { get; set; }
-	public double ItemReachRadius {
+	private float itemReachRadius { get; set; }
+	public float ItemReachRadius {
 		get { return itemReachRadius; }
 		set { itemReachRadius = value; }
 	}
 
-	private double itemReachHeight { get; set; }
-	public double ItemReachHeight
+
+    private float itemReachHeight { get; set; }
+
+    public float ItemReachHeight { 
+        get { return itemReachHeight; }
+        set { itemReachHeight = value; }
+    }
+
+    private float noiseRadius { get; set; }
+	public float NoiseRadius
 	{
-		get { return itemReachHeight; }
-		set { itemReachHeight = value; }
+		get { return noiseRadius; }
+		set { noiseRadius = value; }
 	}
 
 	public itemSelect currentItemDisplay;
@@ -101,7 +113,17 @@ public class Player : KinematicBody2D
 	private TextureButton tryToLeaveCloseButton;
 	public override void _Ready()
 	{
-		animationTree = GetNode<AnimationTree>("AnimationTree");
+		//Stats
+        health = save_file_data["health"].ToString().ToInt();
+        walkSpeed = save_file_data["walkSpeed"].ToString().ToInt();
+        runSpeed = save_file_data["runSpeed"].ToString().ToInt();
+        ItemReachRadius = save_file_data["reachX"].ToString().ToFloat();
+        ItemReachHeight = save_file_data["reachY"].ToString().ToFloat();
+        NoiseRadius = save_file_data["noiseRadius"].ToString().ToFloat();
+
+
+
+        animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animation_playback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
@@ -113,22 +135,31 @@ public class Player : KinematicBody2D
 		playerVisibleArea = GetNode<PlayerVisible>("PlayerVisible");
 		playerVisibleCollisionShape = GetNode<CollisionShape2D>("PlayerVisible/CollisionShape2D");
 
-		runNoiseCollisionShape = GetNode<CollisionShape2D>("RunNoise/CollisionShape2D");
-		runNoiseCollisionShape.SetDeferred("disabled", true);
+		runNoiseCollision = GetNode<CollisionShape2D>("RunNoise/CollisionShape2D");
+		runNoiseCollision.SetDeferred("disabled", true);
+		runNoiseShape = runNoiseCollision.Shape as CircleShape2D;
 
-		playerSprite = GetNode<Sprite>("Sprite");
+        playerItemReach = GetNode<CollisionShape2D>("PlayerItem/CollisionShape2D");
+        playerItemShape = playerItemReach.Shape as CapsuleShape2D;
+
+        playerSprite = GetNode<Sprite>("Sprite");
 		ornamentScene = GD.Load<PackedScene>("res://Player/playerItems/Bulb.tscn");
 		tinselScene = GD.Load<PackedScene>("res://Player/playerItems/Tinsel.tscn");
 
-
-		health = save_file_data["health"].ToString().ToInt();
-		walkSpeed = save_file_data["walkSpeed"].ToString().ToInt(); 
-		runSpeed = save_file_data["runSpeed"].ToString().ToInt();
 
 
         currentItemDisplay = GetNode<itemSelect>("itemSelect");
 		tryToLeaveDialog = GetNode<WindowDialog>("WindowDialog");
 		tryToLeaveCloseButton = tryToLeaveDialog.GetCloseButton();
+
+		//Set sizes of noiseShape
+		runNoiseShape.Radius = NoiseRadius;
+
+		//Set Size of reach
+		playerItemShape.Radius = itemReachRadius;
+		playerItemShape.Height = ItemReachHeight;
+
+
 }
 
 	//Disables movement
@@ -261,12 +292,12 @@ public class Player : KinematicBody2D
 				if (Input.IsActionPressed("Sprint"))
 				{
 					Speed = runSpeed;
-					runNoiseCollisionShape.SetDeferred("disabled", false);
+                    runNoiseCollision.SetDeferred("disabled", false);
 				}
 				else
 				{
 					Speed = walkSpeed;
-					runNoiseCollisionShape.SetDeferred("disabled", true);
+                    runNoiseCollision.SetDeferred("disabled", true);
 				}
 				animation_playback.Travel("Moving");
 				velocity = input_vector * Speed;
@@ -284,7 +315,7 @@ public class Player : KinematicBody2D
 			if (Input.IsActionJustPressed("UseItem"))
 			{
 				state = STATE.ATTACK;
-			}
+            }
 		}
 		else
 		{

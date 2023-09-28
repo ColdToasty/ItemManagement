@@ -521,8 +521,7 @@ radius = 8.0
 height = 18.0
 
 [sub_resource type="CapsuleShape2D" id=47]
-radius = 41.0
-height = 18.0
+radius = 40.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -632,7 +631,6 @@ collision_mask = 0
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerItem"]
-position = Vector2( 5, 3 )
 shape = SubResource( 47 )
 
 [node name="WindowDialog" type="WindowDialog" parent="."]
@@ -650,3 +648,5 @@ mouse_filter = 2
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="area_entered" from="PlayerVisible" to="." method="_on_hitPlayerBox_entered"]
+
+[editable path="RunNoise"]

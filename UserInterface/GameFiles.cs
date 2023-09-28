@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 public class GameFiles : Control
@@ -16,7 +17,8 @@ public class GameFiles : Control
 	public static Dictionary current_file_data = new Dictionary();
 	private string levelFormat = "res://Levels/level0.tscn";
 
-	private bool pause = false;
+
+    private bool pause = false;
 
 
 
@@ -26,7 +28,7 @@ public class GameFiles : Control
 	private int number_of_saved_games =0;
 	
 	//Continue keys
-	private string continue_save_file_name = "";
+	public string continue_save_file_name = "";
 	private string continue_save_file_date = "";
 	private string continue_save_file_time = "";
 
@@ -51,37 +53,9 @@ public class GameFiles : Control
 	//Need to implement way to get current save and save file
 	public void ContinueGame()
 	{
-		var file = new File();
+		loadContinueFileData();
 
-		Error checkFileContinue = file.Open(continue_file_location, File.ModeFlags.Read);
-
-		if(checkFileContinue == Error.Ok)
-		{
-			
-			if (file.FileExists(continue_file_location))
-			{
-				var continueGameData = file.GetAsText();
-				JSONParseResult saveData = JSON.Parse(continueGameData);
-				Dictionary result = saveData.Result as Dictionary;
-
-                UpdateContinueVariables(result["name"].ToString(), result["date"].ToString(), result["time"].ToString());
-            }
-			else
-			{
-				file.Close();
-				GD.Print("Missing saveFile");
-				return;
-			}
-		}
-		else
-		{
-			file.Close();
-			OS.Alert("Missing savefile");
-			return;
-		}
-
-		file.Close();
-		try
+        try
 		{
             LoadFile(continue_save_file_name);
         }
@@ -92,6 +66,41 @@ public class GameFiles : Control
 		}
 
 	}
+
+
+	public void loadContinueFileData()
+	{
+        var file = new File();
+
+        Error checkFileContinue = file.Open(continue_file_location, File.ModeFlags.Read);
+
+        if (checkFileContinue == Error.Ok)
+        {
+
+            if (file.FileExists(continue_file_location))
+            {
+                var continueGameData = file.GetAsText();
+                JSONParseResult saveData = JSON.Parse(continueGameData);
+                Dictionary result = saveData.Result as Dictionary;
+
+                UpdateContinueVariables(result["name"].ToString(), result["date"].ToString(), result["time"].ToString());
+            }
+            else
+            {
+                file.Close();
+                GD.Print("Missing saveFile");
+                return;
+            }
+        }
+        else
+        {
+            file.Close();
+            OS.Alert("Missing savefile");
+            return;
+        }
+
+        file.Close();
+    }
 
 	//Loads the game data from directory based on fileName
 	public void LoadFile(string fileName)
@@ -114,7 +123,6 @@ public class GameFiles : Control
 						file.Close();
 				}
 
-
 			Error updateContinueFile = file.Open(save_directory + continue_file_name + file_extension, File.ModeFlags.Write);
 
 
@@ -134,13 +142,22 @@ public class GameFiles : Control
         }
 
 		file.Close();
-		//Reupdate file variables date and time
-        GetTree().ChangeScene($"res://Levels/PlayableLevels/level{current_file_data["currentLevel"]}.tscn");
+        //Reupdate file variables date and time
+        //GetTree().ChangeScene($"res://Levels/BaseLevel/levelSelector.tscn");
+        //GetTree().ChangeScene($"res://UserInterface/playerMenu/upgradeMenu/UpgradeMenu.tscn");
+        //GetTree().ChangeScene($"res://Levels/PlayableLevels/level{current_file_data["currentLevel"]}.tscn");
+		//GetTree().ChangeScene($"res://Levels/PlayableLevels/level1.tscn");
+		GetTree().ChangeScene($"res://UserInterface/playerMenu/itemMenu/itemMenu.tscn");
+
+   
+
+
     }
 
 
-	//Returns the key value pairs of a certain saved file
-	public static Dictionary GetFileContents()
+
+    //Returns the key value pairs of a certain saved file
+    public static Dictionary GetFileContents()
 	{
         Error checkSaveExist = file.Open(save_directory + save_name + file_extension, File.ModeFlags.Read);
 
@@ -184,13 +201,16 @@ public class GameFiles : Control
 			{"currentLevel", player_stats.currentLevel.ToString()},
 
 			//Player related stats 
-			{"health", player_stats.Health.ToString() },
-			{"walkSpeed", player_stats.Speed.ToString()},
-			{"runSpeed", player_stats.SprintSpeed.ToString() },
-			{"playerItemRadius", player_stats.PlayerItemRadius.ToString()},
-			{"playerItemHeight", player_stats.PlayerItemHeight.ToString()},
-			{"runNoiseRadius", player_stats.runNoiseRadius.ToString()},
-			{"runNoiseHeight", player_stats.runNoiseHeight.ToString() },
+			{"health", player_stats.health.ToString() },
+			{"healthLevel", "0"},
+			{"walkSpeed", player_stats.speed.ToString()},
+			{"runSpeed", player_stats.sprintSpeed.ToString() },
+            {"speedLevel", "0"},
+            {"reachX", player_stats.reachX.ToString()},
+			{"reachY", player_stats.reachY.ToString()},
+			{"reachLevel", "0"},
+            {"noiseRadius", player_stats.runNoiseRadius.ToString()},
+            {"noiseLevel", "0"},
 
 			//Player item count
 			{"ornamentCount", player_stats.ornamentCount.ToString()},
@@ -299,7 +319,7 @@ public class GameFiles : Control
 	private void UpdatePlayerData(Dictionary savedPlayerData)
 	{
 		//Sets the players health
-		player_stats.Health = (savedPlayerData["health"].ToString()).ToInt();
+		player_stats.health = (savedPlayerData["health"].ToString()).ToInt();
 
 	}
 

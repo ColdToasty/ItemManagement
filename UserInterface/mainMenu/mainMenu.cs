@@ -7,10 +7,10 @@ using System.Text.RegularExpressions;
 
 public class mainMenu : Control
 {
-	Button continueButton;
+	TextureButton continueButton;
 
 	//new Game Menu
-	Button newGameGo;
+	TextureButton newGameGo;
 	LineEdit newGameName;
 	Panel newGameMenu;
 	RichTextLabel newGameError;
@@ -22,7 +22,7 @@ public class mainMenu : Control
 
 	//load menu
 	Panel loadMenu;
-	Button loadMenuLoadButton;
+	TextureButton loadMenuLoadButton;
 
 	private static string save_directory = "user://saves/";
 	Directory fileDirectory = new Directory();
@@ -30,11 +30,11 @@ public class mainMenu : Control
 	private string loadFileName = "";
 	public override void _Ready()
 	{
-		continueButton = GetNode<Button>("VBoxContainer/continue");
+		continueButton = GetNode<TextureButton>("VBoxContainer/continue");
 
 		//New Game menu
 		newGameMenu = GetNode<Panel>("newGameMenu");
-		newGameGo = GetNode<Button>("newGameMenu/HBoxContainer/go");
+		newGameGo = GetNode<TextureButton>("newGameMenu/HBoxContainer/go");
 		newGameName = GetNode<LineEdit>("newGameMenu/newSaveName");
 		newGameError = GetNode<RichTextLabel>("newGameMenu/error");
 		newGameError.SetDeferred("visible", false);
@@ -53,7 +53,7 @@ public class mainMenu : Control
 		}
 
 		loadMenu = GetNode<Panel>("loadMenu");
-		loadMenuLoadButton = GetNode<Button>("loadMenu/HBoxContainer/load");
+		loadMenuLoadButton = GetNode<TextureButton>("loadMenu/HBoxContainer/load");
 		loadMenuLoadButton.SetDeferred("disabled", true);
 		loadMenu.SetDeferred("visible", false);
 
@@ -123,7 +123,7 @@ public class mainMenu : Control
 	//pop up a menu with all saves
 	//each save should be clickable
 	//load button, back arrow button, delete button
-	private void _on_load_pressed()
+	private void _on_mainMenuLoad_pressed()
 	{
 		loadMenu.SetDeferred("visible", true);
 
@@ -163,7 +163,6 @@ public class mainMenu : Control
 
 
 
-
 	private void _on_loadMenuBack_pressed()
 	{
 		loadMenu.SetDeferred("visible", false);
@@ -172,6 +171,11 @@ public class mainMenu : Control
 	private void _on_loadMenuLoad_pressed()
 	{
 		gameFileExplorer.LoadFile(loadFileName);
+	}
+
+	private void _on_loadMenuDelete_pressed()
+	{
+		// Replace with function body.
 	}
 
 
@@ -191,6 +195,8 @@ public class mainMenu : Control
 
 
 }
+
+
 
 
 

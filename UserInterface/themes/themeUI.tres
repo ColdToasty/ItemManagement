@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=3 format=2]
+
+[ext_resource path="res://UserInterface/themes/fonts/PixelOperator.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_color = Color( 0.054902, 0.0627451, 0.0980392, 1 )
+font_data = ExtResource( 1 )
+
+[resource]
+Label/colors/font_color = Color( 0.0392157, 0.0313726, 0.0666667, 1 )
+Label/fonts/font = SubResource( 1 )
