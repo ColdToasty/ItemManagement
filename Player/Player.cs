@@ -121,8 +121,6 @@ public class Player : KinematicBody2D
         ItemReachHeight = save_file_data["reachY"].ToString().ToFloat();
         NoiseRadius = save_file_data["noiseRadius"].ToString().ToFloat();
 
-
-
         animationTree = GetNode<AnimationTree>("AnimationTree");
 		animationTree.Active = true;
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");

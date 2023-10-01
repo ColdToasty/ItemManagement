@@ -14,7 +14,7 @@ public class Child : Mob
 
     private CollisionShape2D alertAreaCollisionShape;
 
-    private AnimatedSprite viewConeSprite; 
+
 
     public override void _Ready()
     {
@@ -22,7 +22,7 @@ public class Child : Mob
         alertAreaCollisionShape = GetNode<CollisionShape2D>("alertArea/CollisionShape2D");
         alertAreaCollisionShape.SetDeferred("disabled", true);
 
-        viewConeSprite = GetNode<AnimatedSprite>("ViewBox/ViewCone/AnimatedSprite");
+
     }
 
     new public void navigateToPosition(float delta)
@@ -126,7 +126,6 @@ public class Child : Mob
         }
 
 
-        checkAnimatedFrames();
         navigateToPosition(delta);
 
 

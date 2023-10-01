@@ -512,10 +512,6 @@ graph_offset = Vector2( 26, -10 )
 radius = 21.0
 height = 60.0
 
-[sub_resource type="CapsuleShape2D" id=56]
-radius = 10.9999
-height = 14.0001
-
 [sub_resource type="CapsuleShape2D" id=57]
 radius = 8.0
 height = 18.0
@@ -523,8 +519,12 @@ height = 18.0
 [sub_resource type="CapsuleShape2D" id=47]
 radius = 40.0
 
-[node name="Player" type="KinematicBody2D"]
-collision_layer = 2
+[sub_resource type="CapsuleShape2D" id=58]
+radius = 8.0
+height = 16.0
+
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
+collision_layer = 64
 collision_mask = 24577
 script = ExtResource( 5 )
 
@@ -578,13 +578,13 @@ stream = ExtResource( 6 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="PlayerVisible" type="Area2D" parent="."]
+[node name="PlayerVisible" type="Area2D" parent="." groups=["Player"]]
 position = Vector2( 2, -38 )
 collision_layer = 64
 collision_mask = 24577
 script = ExtResource( 7 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerVisible"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerVisible" groups=["Player"]]
 position = Vector2( 0, 3 )
 shape = SubResource( 48 )
 
@@ -608,11 +608,6 @@ __meta__ = {
 "source": "res://Player/PlayerSprite/sneaky_walk.aseprite"
 }
 }
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1 )
-rotation = 1.5708
-shape = SubResource( 56 )
 
 [node name="PlayerBase" type="Area2D" parent="."]
 position = Vector2( 2, -38 )
@@ -644,6 +639,10 @@ margin_top = 72.0
 margin_right = 1392.0
 margin_bottom = 572.0
 mouse_filter = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 58 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

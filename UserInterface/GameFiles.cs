@@ -146,8 +146,8 @@ public class GameFiles : Control
         //GetTree().ChangeScene($"res://Levels/BaseLevel/levelSelector.tscn");
         //GetTree().ChangeScene($"res://UserInterface/playerMenu/upgradeMenu/UpgradeMenu.tscn");
         //GetTree().ChangeScene($"res://Levels/PlayableLevels/level{current_file_data["currentLevel"]}.tscn");
-		//GetTree().ChangeScene($"res://Levels/PlayableLevels/level1.tscn");
-		GetTree().ChangeScene($"res://UserInterface/playerMenu/itemMenu/itemMenu.tscn");
+		GetTree().ChangeScene($"res://Levels/PlayableLevels/level0.tscn");
+		//GetTree().ChangeScene($"res://UserInterface/playerMenu/itemMenu/itemMenu.tscn");
 
    
 

@@ -27,7 +27,7 @@ public class Mob : KinematicBody2D
 	//Zones which detect player
 	public DetectionZone detectionZone;
 	public CollisionShape2D view_cone_box;
-	public viewCone view_cone;
+	public FOV view_cone;
 
 	public float rotation_speed = Mathf.Pi;
 
@@ -58,7 +58,6 @@ public class Mob : KinematicBody2D
 
 	public Random rnd = new Random();
 
-	public AnimatedSprite viewConeSprite;
 	public bool seenPlayer, investigatingPosition = false;
 	public Timer tinselTimer;
 	
@@ -77,12 +76,12 @@ public class Mob : KinematicBody2D
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
 		detectionZone.Connect("give_direction", this, "give_direction");
 		view_cone_box = GetNode<CollisionShape2D>("ViewBox");
-		view_cone = GetNode<viewCone>("ViewBox/ViewCone");
+		view_cone = GetNode<FOV>("ViewBox/FOV");
 		idleTimer = GetNode<Timer>("idleTimer");
 		original_location_timer = GetNode<Timer>("originalLocationTimer");
 		nav_agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 		original_position = this.GlobalPosition;
-		viewConeSprite = GetNode<AnimatedSprite>("ViewBox/ViewCone/AnimatedSprite");
+
 		tinselTimer = GetNode<Timer>("playerObjectDetectionZone/tinselTimer");
 		
 	}
@@ -253,23 +252,7 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 		can_move = true;
 	}
 
-	public void checkAnimatedFrames()
-	{
-		if (seenPlayer)
-		{
-			viewConeSprite.SetDeferred("animation", "seen");
-		}
-		else if (investigatingPosition)
-		{
-			viewConeSprite.SetDeferred("animation", "investigating");
-		}
-		else
-		{
-			viewConeSprite.SetDeferred("animation", "idle");
-		}
-		//Have checks on if a player is seen, heard, sus or idle
-		viewConeSprite.Playing = true;
-	}
+
 
 	//When player makes sound in the zone
 	//Have the viewcone shift towards it even if the player is not in zone anymore
@@ -326,7 +309,7 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 			seenPlayer = false;
 			
 		}
-        checkAnimatedFrames();
+
 
 		if (!heldByTinsel)
 		{

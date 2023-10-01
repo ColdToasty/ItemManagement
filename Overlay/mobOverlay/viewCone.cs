@@ -8,12 +8,13 @@ public class viewCone : Area2D
 	public bool seen_player = false;
 	public bool investigating = false;
 
+
 	
 	public override void _Ready()
 	{
 		raycast_nodes = GetNode<Node2D>("CollisionPolygon2D");
 
-    }
+	}
 
 
 	public bool can_see_player()
@@ -43,6 +44,22 @@ public class viewCone : Area2D
 		}
 	}
 
+private void _on_FieldOfView_player_enter()
+{
+		GD.Print("pklayerender");
+}
+
+
+private void _on_FieldOfView_player_exit()
+{
+	// Replace with function body.
+}
+
 
 }
+
+
+
+
+
 

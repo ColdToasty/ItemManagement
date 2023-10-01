@@ -35,7 +35,12 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg", "res://addons/MonoCustomResourceRegistry/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg", "res://addons/MonoCustomResourceRegistry/plugin.cfg", "res://addons/luisboch.field_of_view/plugin.cfg" )
+
+[gd2cs]
+
+config/ask_no_python=true
+config/python="python3"
 
 [global]
 
