@@ -36,7 +36,7 @@ public class FOV : Node2D
 	}
 
 
-	private int danger_distance = 300;
+	private int danger_distance = 500;
 
 	[Export]
 	public int Danger_distance
@@ -150,11 +150,16 @@ public class FOV : Node2D
 
 
 	public Player player;
+	private Node2D fieldOfViewNode;
 
-	public override void _Ready()
+	Godot.Collections.Array fovWarnArea, fovDangerArea;
+
+	public bool inWarnAreaOnly, inDangerArea = false;
+
+    public override void _Ready()
 	{
 		GDScript fieldOfViewScript = (GDScript)GD.Load("res://addons/luisboch.field_of_view/field_of_view.gd");
-		Node2D fieldOfViewNode = (Node2D)fieldOfViewScript.New();
+		fieldOfViewNode = (Node2D)fieldOfViewScript.New();
 
 
 		AddChild(fieldOfViewNode);
@@ -167,31 +172,61 @@ public class FOV : Node2D
 		fieldOfViewNode.Set("danger_distance", Danger_distance);
 		fieldOfViewNode.Set("view_detail", View_detail);
 		fieldOfViewNode.Set("show_target_line", false);
-
+		fieldOfViewNode.Call("_enter_tree");
 
         fieldOfViewNode.Connect("target_enter", this, "targetEntered");
         fieldOfViewNode.Connect("target_exit", this, "targetExited");
-
+		
+		fovWarnArea = fieldOfViewNode.Get("in_warn_area") as Godot.Collections.Array;
+        fovDangerArea = fieldOfViewNode.Get("in_danger_area") as Godot.Collections.Array;
 
 
     }
 
 	public bool can_see_player()
 	{
-		return player != null;
-	}
+        return player != null;
+
+    }
 
 
-	//Chase player
 	public void targetEntered(Player obj)
 	{
-		player = obj.GetParent() as Player;
-	}
+        player = obj.GetParent() as Player;
+        fovDangerArea = fieldOfViewNode.Get("in_danger_area") as Godot.Collections.Array;
+		
+		inDangerArea = true;
+        inWarnAreaOnly = false;
 
-	public void targetExited(Player obj) {
+        fieldOfViewNode.Set("chase", inDangerArea);
+        fieldOfViewNode.Set("investigating", inWarnAreaOnly);
+    }
+
+    public void targetExited(Player obj) {
 		player = null;
-	}
+		inDangerArea = false;
+        fieldOfViewNode.Set("chase", inDangerArea);
 
+    }
+
+
+	//Sets FOV to yellow when investigating
+	public void setFOVWarnColor()
+	{
+		inDangerArea = false;
+		inWarnAreaOnly = true;
+        fieldOfViewNode.Set("chase", inDangerArea);
+        fieldOfViewNode.Set("investigating", inWarnAreaOnly);
+    }
+
+	//Sets FOV to green when moving back
+	public void setFOVDefault()
+	{
+        inDangerArea = false;
+        inWarnAreaOnly = false;
+        fieldOfViewNode.Set("chase", inDangerArea);
+        fieldOfViewNode.Set("investigating", inWarnAreaOnly);
+    }
 
 	public void setup_timer()
 	{
@@ -228,7 +263,6 @@ public class FOV : Node2D
 	{
 		return new Vector2(Mathf.Cos(deg), Mathf.Sin(Mathf.Deg2Rad(deg)));
 	}
-
 
 
 

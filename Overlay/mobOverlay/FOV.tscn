@@ -4,4 +4,5 @@
 
 [node name="FOV" type="Node2D"]
 script = ExtResource( 1 )
+Danger_distance = 400
 Frequency = 0.1

@@ -34,14 +34,17 @@ var dir_deg
 var start_angle
 var end_angle
 
+var investigating = false
+var chase = false
+
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		timer = Timer.new()
 		timer.connect("timeout", self, "check_view")
 		timer.one_shot = false
 		timer.autostart = true
-		call_deferred("setup_timer")
-		call_deferred("_set_frequency", frequency)
+		setup_timer()
+		_set_frequency(frequency)
 	_update_rotation()
 
 func _ready():
@@ -49,7 +52,7 @@ func _ready():
 	
 
 func setup_timer():
-	add_child(timer)
+	self.add_child(timer)
 	timer.owner = self
 	timer.wait_time = frequency
 	
@@ -59,9 +62,9 @@ func _draw():
 
 func draw_fov():
 	var color 
-	if not in_danger_area.empty():
+	if not in_danger_area.empty() or chase:
 		color = fov_danger_color
-	elif not in_warn_area.empty():
+	elif not in_warn_area.empty() or investigating:
 		color = fov_warn_color
 	else:
 		color = fov_color

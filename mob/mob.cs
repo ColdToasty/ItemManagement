@@ -113,7 +113,7 @@ public class Mob : KinematicBody2D
 		Vector2 direction = position - view_cone_box.GlobalPosition;
 		prevDirection = direction;
 		var angle = direction.Angle();
-		float speed = (float)1;
+		float speed = (float)0.1;
 		var r = view_cone_box.GlobalRotation;
 		var angle_delta = rotation_speed * delta;
 
@@ -167,7 +167,8 @@ public class Mob : KinematicBody2D
 	{
 		nav_agent.SetTargetLocation(original_position);
 		can_move = true;
-	}
+        view_cone.setFOVDefault();
+    }
 
 
 	public void navigateToPosition(float delta)
@@ -203,7 +204,7 @@ public class Mob : KinematicBody2D
 			{
 				seenPlayer = false;
 				investigatingPosition = false;
-			}
+            }
 
 		}
 	}
@@ -262,23 +263,23 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 		//If the viewcone sees the player
 		if (view_cone.can_see_player())
 		{
-			//Stop the route, if any
-			EmitSignal("stop_route", false);
-			player = view_cone.player;
 
+            //Stop the route, if any
+            EmitSignal("stop_route", false);
+            player = view_cone.player;
 
+            idleTimer.Stop();
+            original_location_timer.Stop();
+            rotate_cone(delta, player.GlobalPosition);
 
-			idleTimer.Stop();
-			original_location_timer.Stop();
-			rotate_cone(delta, player.GlobalPosition);
+            //Rotate the cone towards the player
+            nav_agent.SetTargetLocation(player.GlobalPosition);
+            can_move = true;
 
-			//Rotate the cone towards the player
-			nav_agent.SetTargetLocation(player.GlobalPosition);
-			can_move = true;
-			
-			EmitSignal("can_player_hide", false);
-			//Change viewCone to red
-			seenPlayer = true;
+            EmitSignal("can_player_hide", false);
+            //Change viewCone to red
+            seenPlayer = true;
+           
 
 		}
 		else if (detectionZone.can_hear_player() && !seenPlayer)
@@ -289,6 +290,7 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 			EmitSignal("stop_route", false);
 			rotate_cone(delta, detectionZone.last_heard);
 
+			view_cone.setFOVWarnColor();
 			nav_agent.SetTargetLocation(detectionZone.last_heard);
 			EmitSignal("can_player_hide", true);
 
@@ -299,6 +301,7 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 				idleTimer.Start(1);
 
             }
+			//change view cone to yellow
 		   
 		}
 		else
@@ -307,7 +310,6 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 			player = null;
 			
 			seenPlayer = false;
-			
 		}
 
 
