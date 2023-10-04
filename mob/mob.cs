@@ -63,6 +63,8 @@ public class Mob : KinematicBody2D
 	
 	private bool heldByTinsel = false;
 
+	
+
 	public enum STATE
 	{
 		CHASE,
@@ -83,8 +85,15 @@ public class Mob : KinematicBody2D
 		original_position = this.GlobalPosition;
 
 		tinselTimer = GetNode<Timer>("playerObjectDetectionZone/tinselTimer");
-		
-	}
+
+		//Rotations for viewBox
+		//-180 left counterClockwise
+		//-90 up 
+		// 0 right
+		// 90 down
+		// 180 left (clockwise)
+
+    }
 
 
 	private void _on_hurtbox_area_entered(Slap area)

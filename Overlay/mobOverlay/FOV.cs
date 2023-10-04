@@ -227,7 +227,6 @@ public class FOV : Node2D
         fieldOfViewNode.Set("chase", inDangerArea);
         fieldOfViewNode.Set("investigating", inWarnAreaOnly);
     }
-
 	public void setup_timer()
 	{
 		AddChild(timer);
@@ -239,7 +238,6 @@ public class FOV : Node2D
 	public void draw_fov()
 	{
 		Color color = new Color();
-
 		if(in_danger_area.Count > 0)
 		{
 			color = danger_fov_color;

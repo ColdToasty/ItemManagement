@@ -39,8 +39,8 @@ texture_hover = ExtResource( 3 )
 expand = true
 
 [node name="levels" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 
 [editable path="itemMenu"]
 [editable path="itemMenu/VBoxContainer/backUndoNext"]

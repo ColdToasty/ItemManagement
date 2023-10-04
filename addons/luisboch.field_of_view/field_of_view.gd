@@ -70,7 +70,6 @@ func draw_fov():
 		color = fov_color
 		
 	for aux in points_arc:
-	
 		draw_line(get_position(), aux.pos , color)
 
 func deg_to_vector(deg):
