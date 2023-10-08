@@ -485,13 +485,15 @@ points = PoolVector2Array( 0, 1.08423, 0, 0, 48.0774, 0, 48.1423, 32.9528 )
 
 [node name="walls" type="Node2D"]
 
-[node name="straightWalls" type="TileMap" parent="."]
+[node name="blueWalls" type="Node2D" parent="."]
+
+[node name="straightWalls" type="TileMap" parent="blueWalls"]
 tile_set = SubResource( 2 )
 cell_size = Vector2( 64, 96 )
 cell_custom_transform = Transform2D( 64, 0, 0, 96, 0, 0 )
 format = 1
 
-[node name="edgeWalls" type="TileMap" parent="."]
+[node name="edgeWalls" type="TileMap" parent="blueWalls"]
 mode = 2
 tile_set = SubResource( 1 )
 cell_size = Vector2( 64, 96 )
@@ -499,7 +501,7 @@ cell_custom_transform = Transform2D( 64, 0, 0, 96, 0, 0 )
 format = 1
 tile_data = PoolIntArray( -65531, 0, 0 )
 
-[node name="diagonalWalls" type="TileMap" parent="."]
+[node name="diagonalWalls" type="TileMap" parent="blueWalls"]
 tile_set = SubResource( 3 )
 cell_size = Vector2( 64, 96 )
 cell_custom_transform = Transform2D( 64, 0, 0, 96, 0, 0 )
