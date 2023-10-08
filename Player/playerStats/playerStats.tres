@@ -18,4 +18,4 @@ reachX = 40.0
 reachY = 20.0
 playerVisibleRadius = 0.0
 playerVisibleHeight = 0.0
-runNoiseRadius = 250.0
+runNoiseRadius = 225.0

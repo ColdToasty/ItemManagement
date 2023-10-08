@@ -24,46 +24,67 @@ public class HidingSpot : StaticBody2D
 
 	private void _on_mouseArea_mouse_entered()
 	{
-			mouse_over = true;
-			//Change skin to one with a hover over
-	}
+		mouse_over = true;
+    }
 
 
 	private void _on_mouseArea_mouse_exited()
 	{
-			mouse_over = false;
-			//Change sprite back to original
-	}
+		mouse_over = false;
+    }
 
 	private void hide_player()
 	{
 
 		EmitSignal("hide_the_player_in_me", this.GlobalPosition);
 		player_already_hidden = true;
-		//Change sprite frame
-		//Disable the clickable zone
-		//Disable player movement
-	}
+        //Change sprite frame
+        object_skin.Frame = 2;
+        //Disable the clickable zone
+        //Disable player movement
+    }
 
 	private void show_player()
 	{
 		EmitSignal("show_the_player", release.GlobalPosition);
 		player_already_hidden = false;
-		//Change this sprite back to original
-		//Enable the clickable zone
-		//Enable player movement
-	}
+        //Change this sprite back to original
+        object_skin.Frame = 0;
+        //Enable the clickable zone
+        //Enable player movement
+    }
 
 
 	private void _on_playerDetection_area_entered(PlayerReach playerReach)
 	{
 		player_reach = true;
 		GD.Print("player can click me");
+
 	}
 
     private void _on_playerDetection_area_exited(object area)
     {
 		player_reach = false;
+        object_skin.Frame = 0;
+
+    }
+
+    public override void _Process(float delta)
+    {
+		//If mouse is over hiding spot and player can click and player is not hiding
+        if(mouse_over && player_reach && !player_already_hidden)
+		{
+            object_skin.Frame = 1;
+        }
+		
+		else if(mouse_over && player_reach && player_already_hidden || !mouse_over && player_reach && player_already_hidden)
+		{
+            object_skin.Frame = 2;
+        }
+		else
+		{
+            object_skin.Frame = 0;
+        }
     }
 
 

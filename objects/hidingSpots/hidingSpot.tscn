@@ -22,6 +22,8 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+hframes = 2
+vframes = 2
 
 [node name="mouseArea" type="Area2D" parent="."]
 collision_layer = 131072

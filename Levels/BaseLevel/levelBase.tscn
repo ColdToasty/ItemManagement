@@ -245,8 +245,6 @@ tile_set = SubResource( 12 )
 
 [node name="borderParent" parent="." instance=ExtResource( 8 )]
 
-[node name="PlaceLocations" type="YSort" parent="."]
-
 [node name="CookiesHolder" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -2 )
 
@@ -266,6 +264,8 @@ parameters/playback = SubResource( 13 )
 
 [node name="WindowDialog" parent="objectSort/Player" index="12"]
 visible = false
+
+[node name="PlaceLocations" type="YSort" parent="."]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 position = Vector2( 1.17987, 1.41581 )

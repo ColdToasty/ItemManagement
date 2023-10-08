@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://UserInterface/menuAnimations/blackFadeOut/blackFadeOut.png" type="Texture" id=1]
+[ext_resource path="res://objects/decoration/endTables/endtableFront/endtableFront.png" type="Texture" id=1]
 [ext_resource path="res://Player/PlayerSprite/player.png" type="Texture" id=2]
 [ext_resource path="res://mob/npcSprites/testAnimation.png" type="Texture" id=3]
 
@@ -600,11 +600,11 @@ __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
 "o_ex_p": "",
-"o_folder": "res://UserInterface/menuAnimations/blackFadeOut",
-"o_name": "blackFadeOut",
+"o_folder": "res://objects/decoration/endTables/endtableFront",
+"o_name": "endtableFront",
 "only_visible": false,
-"op_exp": true,
+"op_exp": false,
 "player": "AnimationPlayer",
-"source": "res://UserInterface/menuAnimations/blackFadeOut/blackFadeOut.aseprite"
+"source": "res://objects/decoration/endTables/endtableFront/endtableFront.aseprite"
 }
 }
