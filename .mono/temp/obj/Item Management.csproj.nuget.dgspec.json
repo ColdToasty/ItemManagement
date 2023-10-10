@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Github\\ItemManagement\\Item Management.csproj": {}
+    "D:\\GITHUB\\ITEMMANAGEMENT\\Item Management.csproj": {}
   },
   "projects": {
-    "D:\\Github\\ItemManagement\\Item Management.csproj": {
+    "D:\\GITHUB\\ITEMMANAGEMENT\\Item Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Github\\ItemManagement\\Item Management.csproj",
+        "projectUniqueName": "D:\\GITHUB\\ITEMMANAGEMENT\\Item Management.csproj",
         "projectName": "Item Management",
-        "projectPath": "D:\\Github\\ItemManagement\\Item Management.csproj",
+        "projectPath": "D:\\GITHUB\\ITEMMANAGEMENT\\Item Management.csproj",
         "packagesPath": "C:\\Users\\Home\\.nuget\\packages\\",
-        "outputPath": "D:\\Github\\ItemManagement\\.mono\\temp\\obj\\",
+        "outputPath": "D:\\GITHUB\\ITEMMANAGEMENT\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Home\\AppData\\Roaming\\NuGet\\NuGet.Config",
