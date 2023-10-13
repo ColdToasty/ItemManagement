@@ -39,13 +39,15 @@ public class DefaultDoor : KinematicBody2D
 	private void _on_playerReachArea_mouse_entered()
 	{
 		mouse_on_door = true;
+		GD.Print("mouse on door");
 	}
 
 
 	private void _on_playerReachArea_mouse_exited()
 	{
 		mouse_on_door = false;
-	}
+        GD.Print("mouse not on door");
+    }
 
 	
 	/*

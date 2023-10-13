@@ -4,8 +4,34 @@ using System.Drawing.Design;
 
 public class playerStats : Resource
 {
-    public int latestLevel { get; set; }
-    public int currentLevel { get; set; }
+
+    private int latestLevel = 1;
+    private int currentLevel = 1;
+
+    public int LatestLevel
+    {
+        get
+        {
+            return latestLevel;
+        }
+        set
+        {
+            latestLevel = value;
+        }
+    }
+
+    public int CurrentLevel
+    {
+        get
+        {
+            return currentLevel;
+
+        }
+        set
+        {
+            currentLevel = value;
+        }
+    }
 
     [Export]
     public int health { get; set; }

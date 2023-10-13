@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Levels/BaseLevel/levelSelector.cs" type="Script" id=1]
 [ext_resource path="res://UserInterface/buttons/defaultButton1.png" type="Texture" id=2]
@@ -6,19 +6,93 @@
 [ext_resource path="res://UserInterface/buttons/defaultButton3.png" type="Texture" id=4]
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/UpgradeMenu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://UserInterface/playerMenu/itemMenu/itemMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://UserInterface/buttons/levelSelectButton/levelButton.tscn" type="PackedScene" id=7]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonDefault.png" type="Texture" id=8]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonPressed.png" type="Texture" id=9]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonDisabled.png" type="Texture" id=10]
+[ext_resource path="res://UserInterface/buttons/goButton/goButtonHover.png" type="Texture" id=11]
+[ext_resource path="res://UserInterface/menuAnimations/BlackFadeOut.tscn" type="PackedScene" id=12]
 
 [node name="levelSelector" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 
-[node name="itemMenu" parent="." instance=ExtResource( 6 )]
-visible = false
+[node name="buttons" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
 
-[node name="UpgradeMenu" parent="." instance=ExtResource( 5 )]
-visible = false
+[node name="levels" type="Control" parent="buttons"]
+margin_right = 1920.0
+margin_bottom = 1080.0
 
-[node name="showItemMenu" type="TextureButton" parent="."]
+[node name="levelButton" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 320.0
+margin_top = 320.0
+margin_right = 384.0
+margin_bottom = 368.0
+
+[node name="levelButton2" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 464.0
+margin_top = 328.0
+margin_right = 528.0
+margin_bottom = 376.0
+
+[node name="levelButton3" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 632.0
+margin_top = 328.0
+margin_right = 696.0
+margin_bottom = 376.0
+
+[node name="levelButton4" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 800.0
+margin_top = 328.0
+margin_right = 864.0
+margin_bottom = 376.0
+
+[node name="levelButton5" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 960.0
+margin_top = 328.0
+margin_right = 1024.0
+margin_bottom = 376.0
+
+[node name="levelButton6" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 312.0
+margin_top = 432.0
+margin_right = 376.0
+margin_bottom = 480.0
+
+[node name="levelButton7" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 472.0
+margin_top = 456.0
+margin_right = 536.0
+margin_bottom = 504.0
+
+[node name="levelButton8" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 680.0
+margin_top = 448.0
+margin_right = 744.0
+margin_bottom = 496.0
+
+[node name="levelButton9" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 848.0
+margin_top = 448.0
+margin_right = 912.0
+margin_bottom = 496.0
+
+[node name="levelButton10" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 952.0
+margin_top = 448.0
+margin_right = 1016.0
+margin_bottom = 496.0
+
+[node name="levelButton11" parent="buttons/levels" instance=ExtResource( 7 )]
+margin_left = 952.0
+margin_top = 448.0
+margin_right = 1016.0
+margin_bottom = 496.0
+
+[node name="showItemMenu" type="TextureButton" parent="buttons"]
 margin_left = 632.0
 margin_top = 136.0
 margin_right = 824.0
@@ -28,7 +102,7 @@ texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 3 )
 expand = true
 
-[node name="showUpgradeMenu" type="TextureButton" parent="."]
+[node name="showUpgradeMenu" type="TextureButton" parent="buttons"]
 margin_left = 384.0
 margin_top = 144.0
 margin_right = 576.0
@@ -38,9 +112,27 @@ texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 3 )
 expand = true
 
-[node name="levels" type="Control" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+[node name="playLevelButton" type="TextureButton" parent="buttons"]
+margin_left = 768.0
+margin_top = 664.0
+margin_right = 960.0
+margin_bottom = 728.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 11 )
+texture_disabled = ExtResource( 10 )
+expand = true
+
+[node name="itemMenu" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[node name="UpgradeMenu" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="BlackFadeOut" parent="." instance=ExtResource( 12 )]
+visible = false
+
+[connection signal="pressed" from="buttons/playLevelButton" to="." method="_on_playLevelButton_pressed"]
 
 [editable path="itemMenu"]
 [editable path="itemMenu/VBoxContainer/backUndoNext"]

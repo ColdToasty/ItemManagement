@@ -1,20 +1,20 @@
 using Godot;
 using System;
 
-public class BlackFadeOut : CanvasLayer
+public class BlackFadeOut : Control
 {
-
-	[Signal]
-	public delegate void animation_finished();
-	
 	
 	AnimationPlayer animationPlayer;
+	TextureRect blackLayer;
 
-
+	[Signal]
+	public delegate void animation_finished(string name);
 
 	public override void _Ready()
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		blackLayer = GetNode<TextureRect>("TextureRect");
+		
 	}
 
 	public void hide()
@@ -36,10 +36,13 @@ public class BlackFadeOut : CanvasLayer
 		animationPlayer.Play("fadeIn");
 	}
 
+
 	private void _on_AnimationPlayer_animation_finished(String anim_name)
 	{
-		EmitSignal("animation_finished", anim_name);
-	}
-
+	
+         EmitSignal("animation_finished", anim_name);
+        
+    }
 }
+
 

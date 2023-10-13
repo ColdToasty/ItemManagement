@@ -143,10 +143,10 @@ public class GameFiles : Control
 
 		file.Close();
         //Reupdate file variables date and time
-        //GetTree().ChangeScene($"res://Levels/BaseLevel/levelSelector.tscn");
+        GetTree().ChangeScene($"res://Levels/BaseLevel/levelSelector.tscn");
         //GetTree().ChangeScene($"res://UserInterface/playerMenu/upgradeMenu/UpgradeMenu.tscn");
         //GetTree().ChangeScene($"res://Levels/PlayableLevels/level{current_file_data["currentLevel"]}.tscn");
-		GetTree().ChangeScene($"res://Levels/PlayableLevels/level0.tscn");
+		//GetTree().ChangeScene($"res://Levels/PlayableLevels/level1.tscn");
 		//GetTree().ChangeScene($"res://UserInterface/playerMenu/itemMenu/itemMenu.tscn");
 
    
@@ -160,7 +160,6 @@ public class GameFiles : Control
     public static Dictionary GetFileContents()
 	{
         Error checkSaveExist = file.Open(save_directory + save_name + file_extension, File.ModeFlags.Read);
-
         if (checkSaveExist == Error.Ok)
         {
             string fileContents = file.GetAsText();
@@ -179,6 +178,7 @@ public class GameFiles : Control
         
 	}
 
+	//Creates a continue file and updates continue variables
 	public void CreateContinueFile(Godot.Collections.Dictionary<string, string> latestSave)
 	{
         //Store the new save into continue
@@ -187,6 +187,8 @@ public class GameFiles : Control
         save_name = latestSave["name"];
     }
 
+
+	//Should only be used in main menu
 	public void OnNewSaveGameData(string saveName)
 	{
 		//Creates the key, pair values for player
@@ -197,8 +199,8 @@ public class GameFiles : Control
 			{ "time", time},
 
 			//Level tracking
-			{"latestLevel", player_stats.latestLevel.ToString()},
-			{"currentLevel", player_stats.currentLevel.ToString()},
+			{"latestLevel", player_stats.LatestLevel.ToString()},
+			{"currentLevel", player_stats.CurrentLevel.ToString()},
 
 			//Player related stats 
 			{"health", player_stats.health.ToString() },
@@ -355,6 +357,7 @@ public class GameFiles : Control
     public void UpdateContinueVariables(string name, string date, string time)
     {
         continue_save_file_name = name;
+		save_name = continue_save_file_name;
         continue_save_file_date = date;
         continue_save_file_time = time;
     }

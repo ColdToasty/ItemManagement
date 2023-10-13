@@ -32,7 +32,7 @@ public class World : Node2D
 	
 	private int ornamentCount, tinselCount, caneCount, invisibilityCount;
 
-	BlackFadeOut blackFadeOutAnimation;
+	//BlackFadeOut blackFadeOutAnimation;
 
 	public override void _Ready()
 	{
@@ -57,7 +57,7 @@ public class World : Node2D
 		}
 
 		level = Name[Name.Length-1].ToString().ToInt();
-
+		/*
 		blackFadeOutAnimation = GetNode<BlackFadeOut>("BlackFadeOut");
 
 		blackFadeOutAnimation.Connect("animation_finished", this, "animation_finished");
@@ -65,14 +65,15 @@ public class World : Node2D
         blackFadeOutAnimation.show();
 		blackFadeOutAnimation.playFadeIn();
 
-
+		*/
 
 
     }
 
 	public void animation_finished()
 	{
-        blackFadeOutAnimation.hide();
+        //blackFadeOutAnimation.hide();
+
     }
 
     //Shows game over screen
