@@ -30,7 +30,7 @@ public class mainMenu : Control
 	private string loadFileName = "";
 
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		continueButton = GetNode<TextureButton>("VBoxContainer/continue");
 
@@ -62,7 +62,7 @@ public class mainMenu : Control
 		listOfSaves = GetNode<ItemList>("loadMenu/listOfSaves");
 
 
-    }
+	}
 
 
 	//continue
@@ -83,7 +83,7 @@ public class mainMenu : Control
 		gameFileExplorer.OnNewSaveGameData(newFileName);
 
 	
-        gameFileExplorer.LoadFile(newFileName);
+		gameFileExplorer.LoadFile(newFileName);
 	}
 
 	//Go Back to main menu

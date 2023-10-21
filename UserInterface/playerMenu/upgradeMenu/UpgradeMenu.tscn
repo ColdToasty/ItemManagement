@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/UpgradeMenu.cs" type="Script" id=1]
 [ext_resource path="res://UserInterface/menuBorder.png" type="Texture" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/speed/speedPressed.png" type="Texture" id=5]
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/health/healthDefault.png" type="Texture" id=6]
 [ext_resource path="res://UserInterface/buttons/backUndoNext.tscn" type="PackedScene" id=7]
+[ext_resource path="res://UserInterface/playerMenu/upgradeMenu/progressBar.tscn" type="PackedScene" id=8]
+[ext_resource path="res://UserInterface/themes/themeUI.tres" type="Theme" id=9]
+[ext_resource path="res://Cookies/CookieScore2.png" type="Texture" id=10]
+[ext_resource path="res://UserInterface/playerMenu/itemMenu/costBorder.png" type="Texture" id=11]
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/speed/speedDefault.png" type="Texture" id=14]
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/reach/reachHover.png" type="Texture" id=15]
 [ext_resource path="res://UserInterface/playerMenu/upgradeMenu/reach/reachPressed.png" type="Texture" id=16]
@@ -40,21 +44,65 @@ margin_top = 40.0
 margin_right = 1835.0
 margin_bottom = 1040.0
 
-[node name="labels" type="HBoxContainer" parent="VBoxContainer"]
+[node name="title" type="Control" parent="VBoxContainer"]
 margin_right = 1750.0
 margin_bottom = 180.0
-rect_min_size = Vector2( 0, 180 )
+rect_min_size = Vector2( 1700, 180 )
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/labels"]
-margin_right = 1000.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 1000, 150 )
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/title"]
+margin_right = 40.0
+margin_bottom = 40.0
 
-[node name="Label" type="Label" parent="VBoxContainer/labels"]
-margin_left = 1004.0
-margin_top = 83.0
-margin_right = 1004.0
-margin_bottom = 97.0
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/title/HBoxContainer"]
+margin_right = 1440.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 1440, 0 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/title/HBoxContainer/TextureRect"]
+margin_left = 4.0
+margin_right = 1439.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 0, 150 )
+theme = ExtResource( 9 )
+text = "COOKIES = POWER"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="HboxContainer" type="HBoxContainer" parent="VBoxContainer/title/HBoxContainer"]
+margin_left = 1444.0
+margin_right = 1748.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 300, 150 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/title/HBoxContainer/HboxContainer"]
+margin_right = 150.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 10 )
+expand = true
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/title/HBoxContainer/HboxContainer"]
+margin_left = 154.0
+margin_right = 304.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+texture = ExtResource( 11 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/title/HBoxContainer/HboxContainer/TextureRect2"]
+margin_right = 150.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+size_flags_vertical = 7
+theme = ExtResource( 9 )
+align = 1
+valign = 1
 
 [node name="health" type="Control" parent="VBoxContainer"]
 margin_top = 184.0
@@ -77,12 +125,17 @@ texture_hover = ExtResource( 3 )
 texture_disabled = ExtResource( 26 )
 expand = true
 
-[node name="TextureRect" type="Sprite" parent="VBoxContainer/health/HBoxContainer"]
+[node name="progressBar" parent="VBoxContainer/health/HBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 604.0
+margin_right = 1754.0
+margin_bottom = 150.0
 
 [node name="Label" type="Label" parent="VBoxContainer/health/HBoxContainer"]
-margin_left = 604.0
+margin_left = 1758.0
 margin_top = 68.0
-margin_right = 604.0
+margin_right = 1758.0
 margin_bottom = 82.0
 
 [node name="speed" type="Control" parent="VBoxContainer"]
@@ -106,23 +159,23 @@ texture_hover = ExtResource( 4 )
 texture_disabled = ExtResource( 27 )
 expand = true
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/speed/HBoxContainer"]
+[node name="progressBar" parent="VBoxContainer/speed/HBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 604.0
-margin_right = 1742.0
+margin_right = 1754.0
 margin_bottom = 150.0
-size_flags_horizontal = 11
-size_flags_vertical = 7
 
 [node name="Label" type="Label" parent="VBoxContainer/speed/HBoxContainer"]
-margin_left = 1746.0
+margin_left = 1758.0
 margin_top = 68.0
-margin_right = 1746.0
+margin_right = 1758.0
 margin_bottom = 82.0
 
 [node name="Label2" type="Label" parent="VBoxContainer/speed/HBoxContainer"]
-margin_left = 1750.0
+margin_left = 1762.0
 margin_top = 68.0
-margin_right = 1750.0
+margin_right = 1762.0
 margin_bottom = 82.0
 
 [node name="reach" type="Control" parent="VBoxContainer"]
@@ -146,17 +199,17 @@ texture_hover = ExtResource( 15 )
 texture_disabled = ExtResource( 28 )
 expand = true
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/reach/HBoxContainer"]
+[node name="progressBar" parent="VBoxContainer/reach/HBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 604.0
-margin_right = 1746.0
+margin_right = 1754.0
 margin_bottom = 150.0
-size_flags_horizontal = 11
-size_flags_vertical = 7
 
 [node name="Label" type="Label" parent="VBoxContainer/reach/HBoxContainer"]
-margin_left = 1750.0
+margin_left = 1758.0
 margin_top = 68.0
-margin_right = 1750.0
+margin_right = 1758.0
 margin_bottom = 82.0
 
 [node name="noise" type="Control" parent="VBoxContainer"]
@@ -180,17 +233,17 @@ texture_hover = ExtResource( 18 )
 texture_disabled = ExtResource( 29 )
 expand = true
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/noise/HBoxContainer"]
+[node name="progressBar" parent="VBoxContainer/noise/HBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 604.0
-margin_right = 1746.0
+margin_right = 1754.0
 margin_bottom = 150.0
-size_flags_horizontal = 11
-size_flags_vertical = 7
 
 [node name="Label" type="Label" parent="VBoxContainer/noise/HBoxContainer"]
-margin_left = 1750.0
+margin_left = 1758.0
 margin_top = 68.0
-margin_right = 1750.0
+margin_right = 1758.0
 margin_bottom = 82.0
 
 [node name="backUndoNext" parent="VBoxContainer" instance=ExtResource( 7 )]
@@ -202,5 +255,13 @@ visible = false
 [connection signal="pressed" from="VBoxContainer/speed/HBoxContainer/upgrade" to="." method="_on_speedUpgrade_pressed"]
 [connection signal="pressed" from="VBoxContainer/reach/HBoxContainer/upgrade" to="." method="_on_reachUpgrade_pressed"]
 [connection signal="pressed" from="VBoxContainer/noise/HBoxContainer/upgrade" to="." method="_on_noiseUpgrade_pressed"]
+[connection signal="pressed" from="VBoxContainer/backUndoNext/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="VBoxContainer/backUndoNext/undo" to="." method="_on_undo_pressed"]
+[connection signal="pressed" from="VBoxContainer/backUndoNext/next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="confirmation/TextureButton/no" to="." method="_on_no_pressed"]
+[connection signal="pressed" from="confirmation/TextureButton/yes" to="." method="_on_yes_pressed"]
 
+[editable path="VBoxContainer/health/HBoxContainer/progressBar"]
+[editable path="VBoxContainer/reach/HBoxContainer/progressBar"]
+[editable path="VBoxContainer/backUndoNext"]
 [editable path="confirmation"]

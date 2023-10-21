@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Doors/DefaultDoor.cs" type="Script" id=2]
 [ext_resource path="res://Doors/doorSprites/frontDoorDown.png" type="Texture" id=3]
@@ -40,7 +40,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 9.53674e-07, -4 ) ]
+"values": [ Vector2( 0, -12 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("playerReachArea/CollisionShape2D:position")
@@ -76,7 +76,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, -8 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("mobDoor/CollisionShape2D:scale")
@@ -176,7 +176,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 30 ) ]
+"values": [ Vector2( 0, -32 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("mobDoor/CollisionShape2D:scale")
@@ -200,7 +200,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1.1 ) ]
+"values": [ Vector2( 1, 1.25 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Sprite:frame")
@@ -339,7 +339,6 @@ tracks/8/keys = {
 }
 
 [sub_resource type="StreamTexture" id=32]
-load_path = "res://.import/brownDoor.png-f717d720ab75b1a5be49610bf0467136.stex"
 
 [sub_resource type="Animation" id=31]
 length = 0.1
@@ -427,16 +426,13 @@ graph_offset = Vector2( -257, -74 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
 [sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 32, 4 )
+extents = Vector2( 32, 12 )
 
 [sub_resource type="RectangleShape2D" id=21]
-extents = Vector2( 32, 62.75 )
+extents = Vector2( 32, 63.3636 )
 
 [sub_resource type="RectangleShape2D" id=22]
-extents = Vector2( 32, 7.5 )
-
-[sub_resource type="RectangleShape2D" id=24]
-extents = Vector2( 32, 45 )
+extents = Vector2( 32, 16 )
 
 [node name="Door" type="KinematicBody2D"]
 collision_layer = 8192
@@ -492,17 +488,6 @@ collision_mask = 32768
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mobDoor"]
 shape = SubResource( 22 )
-
-[node name="Area2D2" type="Area2D" parent="."]
-position = Vector2( 0, -23 )
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-visible = false
-position = Vector2( 0, -3 )
-shape = SubResource( 24 )
-disabled = true
 
 [connection signal="area_entered" from="playerReachArea" to="." method="_on_playerReach_area_entered"]
 [connection signal="area_exited" from="playerReachArea" to="." method="_on_playerReach_area_exited"]

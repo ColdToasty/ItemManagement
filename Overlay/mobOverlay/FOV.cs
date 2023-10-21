@@ -95,7 +95,7 @@ public class FOV : Node2D
 	}
 
 
-	private int view_detail = 300;
+	private int view_detail = 200;
 
 
 

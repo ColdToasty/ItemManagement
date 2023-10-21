@@ -124,7 +124,6 @@ texture_disabled = ExtResource( 10 )
 expand = true
 
 [node name="itemMenu" parent="." instance=ExtResource( 6 )]
-visible = false
 
 [node name="UpgradeMenu" parent="." instance=ExtResource( 5 )]
 visible = false
@@ -132,9 +131,14 @@ visible = false
 [node name="BlackFadeOut" parent="." instance=ExtResource( 12 )]
 visible = false
 
+[connection signal="pressed" from="buttons/showItemMenu" to="." method="_on_showItemMenu_pressed"]
+[connection signal="pressed" from="buttons/showUpgradeMenu" to="." method="_on_showUpgradeMenu_pressed"]
 [connection signal="pressed" from="buttons/playLevelButton" to="." method="_on_playLevelButton_pressed"]
 
 [editable path="itemMenu"]
 [editable path="itemMenu/VBoxContainer/backUndoNext"]
 [editable path="UpgradeMenu"]
+[editable path="UpgradeMenu/VBoxContainer/health/HBoxContainer/progressBar"]
+[editable path="UpgradeMenu/VBoxContainer/reach/HBoxContainer/progressBar"]
+[editable path="UpgradeMenu/VBoxContainer/backUndoNext"]
 [editable path="UpgradeMenu/confirmation"]

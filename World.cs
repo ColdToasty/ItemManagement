@@ -32,7 +32,8 @@ public class World : Node2D
 	
 	private int ornamentCount, tinselCount, caneCount, invisibilityCount;
 
-	//BlackFadeOut blackFadeOutAnimation;
+	BlackFadeOut blackFadeOutAnimation;
+	PackedScene blackFadeOutScene;
 
 	public override void _Ready()
 	{
@@ -57,30 +58,36 @@ public class World : Node2D
 		}
 
 		level = Name[Name.Length-1].ToString().ToInt();
-		/*
-		blackFadeOutAnimation = GetNode<BlackFadeOut>("BlackFadeOut");
 
-		blackFadeOutAnimation.Connect("animation_finished", this, "animation_finished");
+        blackFadeOutScene = GD.Load<PackedScene>("res://UserInterface/menuAnimations/BlackFadeOut.tscn");
+		blackFadeOutAnimation = (BlackFadeOut)blackFadeOutScene.Instance();
 
+		this.AddChild(blackFadeOutAnimation);
+
+
+        blackFadeOutAnimation.Connect("fade_finished", this, "animationFinished");
         blackFadeOutAnimation.show();
 		blackFadeOutAnimation.playFadeIn();
 
-		*/
-
-
     }
 
-	public void animation_finished()
+	public void animationFinished(string name)
 	{
-        //blackFadeOutAnimation.hide();
-
+		blackFadeOutAnimation.QueueFree();
+		if (level_ended)
+		{
+            GetTree().ChangeScene($"res://Levels/BaseLevel/levelSelector.tscn");
+        }
     }
+
 
     //Shows game over screen
-    public void gameOver()
+
+	public void gameOver()
 	{
 
 	}
+
 
 	public void itemPlaced()
 	{
@@ -134,11 +141,13 @@ public class World : Node2D
 				//Are you even trying to make christmas enjoyable
 			}
 
+
+
 		}
 		else
 		{
 			//Popup rudolph critizing player
-			player.tryToLeaveDialogShow();
+			//player.tryToLeaveDialogShow();
 			//GD.Print("So you're going to come into someone's house and eat their cookies and dip?");
 
 		}

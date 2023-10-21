@@ -8,7 +8,7 @@ public class BlackFadeOut : Control
 	TextureRect blackLayer;
 
 	[Signal]
-	public delegate void animation_finished(string name);
+	public delegate void fade_finished(string name);
 
 	public override void _Ready()
 	{
@@ -37,12 +37,8 @@ public class BlackFadeOut : Control
 	}
 
 
-	private void _on_AnimationPlayer_animation_finished(String anim_name)
-	{
-	
-         EmitSignal("animation_finished", anim_name);
-        
-    }
+    private void _on_AnimationPlayer_animation_finished(String anim_name)
+    {
+        EmitSignal("fade_finished", anim_name);
+	}
 }
-
-

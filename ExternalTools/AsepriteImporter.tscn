@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://objects/decoration/endTables/endtableFront/endtableFront.png" type="Texture" id=1]
+[ext_resource path="res://UserInterface/playerMenu/upgradeMenu/progressBar.png" type="Texture" id=1]
 [ext_resource path="res://Player/PlayerSprite/player.png" type="Texture" id=2]
 [ext_resource path="res://mob/npcSprites/testAnimation.png" type="Texture" id=3]
 
@@ -197,7 +197,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=1]
-length = 0.1
+length = 0.3
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -221,7 +221,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 2 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:vframes")
@@ -233,7 +233,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 2 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Sprite:visible")
@@ -254,10 +254,10 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 0.0 ]
+"values": [ 0.0, 1.0, 2.0 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -596,15 +596,17 @@ anims/walkUp = SubResource( 9 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
+hframes = 2
+vframes = 2
 __meta__ = {
 "_aseprite_wizard_config_": {
 "layer": "",
 "o_ex_p": "",
-"o_folder": "res://objects/decoration/endTables/endtableFront",
-"o_name": "endtableFront",
+"o_folder": "res://UserInterface/playerMenu/upgradeMenu",
+"o_name": "progressBar",
 "only_visible": false,
 "op_exp": false,
 "player": "AnimationPlayer",
-"source": "res://objects/decoration/endTables/endtableFront/endtableFront.aseprite"
+"source": "res://UserInterface/playerMenu/upgradeMenu/progressDefault.aseprite"
 }
 }

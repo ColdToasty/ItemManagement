@@ -12,15 +12,24 @@ public class levelSelector : Control
 	levelButton currentLevelButton;
 	BlackFadeOut fadeOut;
 	string currentLevelNumber;
+
+
+	itemMenu itemMenuUI;
+	UpgradeMenu upgradeMenu;
+
 	public override void _Ready()
 	{
 		fadeOut = GetNode<BlackFadeOut>("BlackFadeOut");
 		fadeOut.hide();
-		fadeOut.Connect("animation_finished", this, "animationFinished");
+		fadeOut.Connect("fade_finished", this, "animationFinished");
 		levelsContainer = GetNode<Control>("buttons/levels");
 
+		itemMenuUI = GetNode<itemMenu>("itemMenu");
+		upgradeMenu = GetNode<UpgradeMenu>("UpgradeMenu");
 
-		foreach(levelButton b in levelsContainer.GetChildren())
+		itemMenuUI.SetDeferred("visible", false);
+		upgradeMenu.SetDeferred("visible", false);
+		foreach (levelButton b in levelsContainer.GetChildren())
 		{
 			b.Connect("level_selected", this, "levelSelected");
 
@@ -33,7 +42,7 @@ public class levelSelector : Control
 				currentLevelButton = b;
 				currentLevelNumber = b.levelNumber;
 
-            }
+			}
 			else if (b.levelNumber.ToInt() <= playerData["latestLevel"].ToString().ToInt())
 			{
 				b.changeToCompletedTexture();
@@ -56,9 +65,9 @@ public class levelSelector : Control
 			{
 				b.changeToCurrentTexture();
 				currentLevelButton = b;
-                currentLevelNumber = b.levelNumber;
+				currentLevelNumber = b.levelNumber;
 
-            }
+			}
 			else if (b.levelNumber.ToInt() <= playerData["latestLevel"].ToString().ToInt())
 			{
 				b.changeToCompletedTexture();
@@ -79,12 +88,26 @@ public class levelSelector : Control
 	}
 
 
-    public void animationFinished(string anim_name)
+	public void animationFinished(string anim_name)
 	{
-        GetTree().ChangeScene($"res://Levels/PlayableLevels/level{currentLevelNumber}.tscn");
-    }
+		GD.Print(currentLevelNumber);
+		GetTree().ChangeScene($"res://Levels/PlayableLevels/level{currentLevelNumber}.tscn");
+	}
+
+
+	private void _on_showItemMenu_pressed()
+	{
+		itemMenuUI.SetDeferred("visible", true);
+	}
+
+
+	private void _on_showUpgradeMenu_pressed()
+	{
+		upgradeMenu.SetDeferred("visible", true);
+	}
 
 }
+
 
 
 
