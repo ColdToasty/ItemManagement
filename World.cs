@@ -57,8 +57,9 @@ public class World : Node2D
 			((PlaceLocation)presents[i]).Connect("item_placed", this, "itemPlaced");
 		}
 
-		level = Name[Name.Length-1].ToString().ToInt();
-
+        GD.Print(level);
+        level = Name[Name.Length-1].ToString().ToInt();
+		
         blackFadeOutScene = GD.Load<PackedScene>("res://UserInterface/menuAnimations/BlackFadeOut.tscn");
 		blackFadeOutAnimation = (BlackFadeOut)blackFadeOutScene.Instance();
 

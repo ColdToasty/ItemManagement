@@ -84,6 +84,7 @@ public class itemMenu : Control
 		
 		presentsLabel.Text = presentsCount.ToString();
 
+		checkPurchasable();
 
 
     }
@@ -189,7 +190,6 @@ public class itemMenu : Control
 
 	private void _on_ornamentButton_mouse_entered()
 	{
-		GD.Print("hovering");
 		showItemDescription = !showItemDescription;
 		currentDescription = ornamentDescription;
         hoveringOver = ITEMHOVER.ORNAMENT;
@@ -198,7 +198,6 @@ public class itemMenu : Control
 
 	private void _on_ornamentButton_mouse_exited()
 	{
-		GD.Print("left");
 		showItemDescription = !showItemDescription;
 		currentDescription = "";
         hoveringOver = ITEMHOVER.NONE;
@@ -259,11 +258,52 @@ public class itemMenu : Control
 
 
 
+	private void checkPurchasable()
+	{
+        if (ornamentCost > presentsCount || ornamentCount > 998)
+        {
+            ornamentButton.SetDeferred("disabled", true);
+        }
+        else
+        {
+            ornamentButton.SetDeferred("disabled", false);
+        }
+
+        if (tinselCost > presentsCount || tinselCount > 998)
+        {
+            tinselButton.SetDeferred("disabled", true);
+        }
+        else
+        {
+            tinselButton.SetDeferred("disabled", false);
+        }
+
+
+        if (caneCost > presentsCount || caneCount > 998)
+        {
+            caneButton.SetDeferred("disabled", true);
+        }
+        else
+        {
+            caneButton.SetDeferred("disabled", false);
+        }
+
+
+        if (invisibilityCost > presentsCount || invisibilityCount > 998)
+        {
+            invisibilityButton.SetDeferred("disabled", true);
+        }
+        else
+        {
+            invisibilityButton.SetDeferred("disabled", false);
+        }
+    }
+
 
 	public override void _Process(float delta)
 	{
 
-		ornamentAmount.Text = ornamentCost.ToString();
+		ornamentAmount.Text = ornamentCount.ToString();
 
 		tinselAmount.Text = tinselCount.ToString();
 
@@ -286,46 +326,10 @@ public class itemMenu : Control
 		
 		presentsLabel.Text = presentsCount.ToString();
 
-		if (ornamentCost > presentsCount || ornamentCount > 998)
-		{
-			ornamentButton.SetDeferred("disabled", true);
-		}
-		else
-		{
-			ornamentButton.SetDeferred("disabled", false);
-		}
+		checkPurchasable();
 
-		if (tinselCost > presentsCount || tinselCount > 998)
-		{
-			tinselButton.SetDeferred("disabled", true);
-		}
-		else
-		{
-			tinselButton.SetDeferred("disabled", false);
-		}
-
-
-		if (caneCost > presentsCount || caneCount > 998)
-		{
-			caneButton.SetDeferred("disabled", true);
-		}
-		else
-		{
-			caneButton.SetDeferred("disabled", false);
-		}
-
-
-		if (invisibilityCount > presentsCount || invisibilityCount > 998)
-		{
-			invisibilityButton.SetDeferred("disabled", true);
-		}
-		else
-		{
-			tinselButton.SetDeferred("disabled", false);
-		}
-
-		//Displays a short description about an item
-		if (showItemDescription)
+        //Displays a short description about an item
+        if (showItemDescription)
 		{
             switch (hoveringOver)
             {
