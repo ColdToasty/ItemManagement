@@ -84,23 +84,30 @@ public class UpgradeMenu : Control
 
         confirmationMenu = GetNode<Control>("confirmation");
 		confirmationMenu.SetDeferred("visible", false);
+		
 	}
 
 
 	private void _on_healthUpgrade_pressed()
 	{
+
 		if(healthLevel < 4)
 		{
 			health += healthIncreaseValue[healthLevel];
-			healthLevel++;
+            cookies -= healthCostAmount[healthLevel];
+
+            healthLevel++;
+
+
             setButton("health");
             Tuple<string, int> choice = new Tuple<string, int>("health", health);
 			playerChoice.Push(choice);
             setCostBars();
         }
-		else
-		{
-			healthButton.SetDeferred("disabled", true);
+
+        if (healthLevel >= 4)
+        {
+            healthButton.SetDeferred("disabled", true);
 		}
 
 	}
@@ -108,19 +115,24 @@ public class UpgradeMenu : Control
 
 	private void _on_speedUpgrade_pressed()
 	{
-		if(speedLevel < 4) { 
+  
+        if (speedLevel < 4) { 
 		walkSpeed += walkSpeedIncreaseValue[speedLevel];
 		runSpeed += runSpeedIncreaseValue[speedLevel];
-		speedLevel++;
+        cookies -= speedCostAmount[speedLevel];
+        speedLevel++;
+
         setButton("speed");
         Tuple<string, int> choice = new Tuple<string, int>("speed", walkSpeed);
 		playerChoice.Push(choice);
             setCostBars();
         }
-		else
-		{
+
+		if (speedLevel > 3) { 
 			speedButton.SetDeferred("disabled", true);
 		}
+            
+		
 	}
 
 
@@ -130,15 +142,18 @@ public class UpgradeMenu : Control
 		{
 			reachX += reachXIncreaseValue[reachLevel];
 			//reachY += reachYIncreaseValue[reachLevel];
-			reachLevel++;
+            cookies -= reachCostAmount[reachLevel];
+
+            reachLevel++;
+
             setButton("reach");
             Tuple<string, int> choice = new Tuple<string, int>("reach", reachX);
 			playerChoice.Push(choice);
             setCostBars();
         }
-		else
-		{
-			reachButton.SetDeferred("disabled", true);
+        if (reachLevel > 3)
+        {
+            reachButton.SetDeferred("disabled", true);
 		}
 	}
 
@@ -148,16 +163,19 @@ public class UpgradeMenu : Control
 		if (noiseLevel < 4)
 		{
 			noise += noiseDecreaseValue[noiseLevel];
-			noiseLevel++;
+            cookies -= noiseCostAmount[noiseLevel];
+
+            noiseLevel++;
             setButton("noise");
             Tuple<string, int> choice = new Tuple<string, int>("noise", noise);
 			playerChoice.Push(choice);
 			setCostBars();
 
         }
-		else
-		{
-			noiseButton.SetDeferred("disabled", true);
+
+        if (noiseLevel > 3)
+        {
+            noiseButton.SetDeferred("disabled", true);
 		}
 	}
 
@@ -186,6 +204,8 @@ public class UpgradeMenu : Control
 			case "health":
 				healthLevel--;
 				health = undoUpgrade.Item2 - healthIncreaseValue[healthLevel];
+
+                cookies += healthCostAmount[healthLevel];
 				setButton("health");
 
                 if (healthLevel < 4)
@@ -198,6 +218,8 @@ public class UpgradeMenu : Control
 				speedLevel--;
 				walkSpeed = undoUpgrade.Item2 - walkSpeedIncreaseValue[speedLevel];
 				runSpeed = undoUpgrade.Item2 - runSpeedIncreaseValue[speedLevel];
+
+                cookies += speedCostAmount[speedLevel];
                 setButton("speed");
                 if (speedLevel < 4)
 				{
@@ -209,6 +231,8 @@ public class UpgradeMenu : Control
 				reachLevel--;
 				reachX = undoUpgrade.Item2 - reachXIncreaseValue[reachLevel];
                 //reachY = undoUpgrade.Item2 - reachYIncreaseValue[reachLevel];
+
+                cookies += reachCostAmount[reachLevel];
                 setButton("reach");
                 if (reachLevel < 4)
 				{
@@ -219,6 +243,8 @@ public class UpgradeMenu : Control
 			case "noise":
 				noiseLevel--;
 				noise = undoUpgrade.Item2 - noiseDecreaseValue[noiseLevel];
+
+                cookies += noiseCostAmount[noiseLevel];
                 setButton("noise");
                 if (noiseLevel < 4)
 				{
@@ -255,114 +281,124 @@ public class UpgradeMenu : Control
 		
 	}
 
-	public override void _PhysicsProcess(float delta)
-	{
+    private void _on_no_pressed()
+    {
+        confirmationMenu.SetDeferred("visible", false);
 
-		cookieCounter.Text = cookies.ToString();
-
-
-		if(playerChoice.Count <= 0)
-		{
-			undoButton.SetDeferred("disabled", true);
-		}
-		else
-		{
-			undoButton.SetDeferred("disabled", false);
-		}
-
-
-
-	}
-
-
-	private void defaultPlayerChoices()
-	{
-        health = playerData["health"].ToString().ToInt();
-        walkSpeed = playerData["walkSpeed"].ToString().ToInt();
-        runSpeed = playerData["runSpeed"].ToString().ToInt();
-        reachX = playerData["reachX"].ToString().ToInt();
-        reachY = playerData["reachX"].ToString().ToInt();
-        noise = playerData["noiseRadius"].ToString().ToInt();
-        cookies = playerData["currentCookies"].ToString().ToInt();
-
-        healthLevel = playerData["healthLevel"].ToString().ToInt();
-        speedLevel = playerData["speedLevel"].ToString().ToInt();
-        reachLevel = playerData["reachLevel"].ToString().ToInt();
-        noiseLevel = playerData["noiseLevel"].ToString().ToInt();
-
-		setButton("");
-
-        if (playerChoice.Count > 0) {
-
-            if (healthLevel < 4)
-            {
-                healthButton.SetDeferred("disabled", false);
-            }
-			if (speedLevel < 4 )
-            {
-                speedButton.SetDeferred("disabled", false);
-            }
-            if (reachLevel < 4)
-            {
-                reachButton.SetDeferred("disabled", false);
-            }
-            if (noiseLevel < 4)
-            {
-                noiseButton.SetDeferred("disabled", false);
-            }
-
-        }
-        playerChoice.Clear();
     }
 
 
-	private void setCostBars()
+    private void _on_yes_pressed()
+    {
+        confirmationMenu.SetDeferred("visible", false);
+        defaultPlayerChoices();
+    }
+
+
+
+	//Sets the first box to display the cost of the upgrade
+    private void setCostBars()
 	{
 		cookieCounter.Text = cookies.ToString();
+
 		if(healthLevel < 4) {
             hCost.Text = healthCostAmount[healthLevel].ToString();
+            checkPurchasable("health");
+
         }
 		else
 		{
-			hCost.Text = "";
+            healthButton.SetDeferred("disabled", true);
+            hCost.Text = "";
 
         }
 
-		if(speedLevel < 4) { 
-			wsCost.Text = speedCostAmount[speedLevel].ToString(); 
-		}
+		if(speedLevel < 4 ) { 
+			wsCost.Text = speedCostAmount[speedLevel].ToString();
+            checkPurchasable("speed");
+        }
         else
         {
             wsCost.Text = "";
-
+            speedButton.SetDeferred("disabled", true);
         }
 
-        if (reachLevel < 4) { 
+        if (reachLevel < 4 ) { 
 			rCost.Text = reachCostAmount[reachLevel].ToString();
+            checkPurchasable("reach");
         }
+
         else
         {
             rCost.Text = "";
+            reachButton.SetDeferred("disabled", true);
 
         }
 
         if (noiseLevel < 4) { 
 			nCost.Text = noiseCostAmount[noiseLevel].ToString();
-		}
+            checkPurchasable("noise");
+        }
         else
         {
             nCost.Text = "";
-
+            noiseButton.SetDeferred("disabled", true);
         }
-
-
-
     }
 
 
-	//Sets the progress bars
-	//can set specific progressBar or all
-	private void setButton(string name)
+    private void checkPurchasable(string buttonName)
+    {
+        switch (buttonName)
+        {
+            case "health":
+                if (healthCostAmount[healthLevel] >= cookies)
+                {
+                    healthButton.SetDeferred("disabled", true);
+                }
+                else
+                {
+                    healthButton.SetDeferred("disabled", false);
+                }
+                break;
+
+            case "speed":
+                if (speedCostAmount[speedLevel] >= cookies)
+                {
+                    speedButton.SetDeferred("disabled", true);
+                }
+                else
+                {
+                    speedButton.SetDeferred("disabled", false);
+                }
+                break;
+
+            case "reach":
+                if (reachCostAmount[reachLevel] >= cookies)
+                {
+                    reachButton.SetDeferred("disabled", true);
+                }
+                else
+                {
+                    reachButton.SetDeferred("disabled", false);
+                }
+                break;
+            case "noise":
+                if (noiseCostAmount[noiseLevel] >= cookies)
+                {
+                    noiseButton.SetDeferred("disabled", true);
+                }
+                else
+                {
+                    noiseButton.SetDeferred("disabled", false);
+                }
+                break;
+        }
+    }
+
+    //Sets the progress bars
+    //can set specific progressBar or all
+    private void setButton(string name)
 	{
         switch (name)
 		{
@@ -415,7 +451,46 @@ public class UpgradeMenu : Control
     }
 
 
+    private void defaultPlayerChoices()
+    {
+        health = playerData["health"].ToString().ToInt();
+        walkSpeed = playerData["walkSpeed"].ToString().ToInt();
+        runSpeed = playerData["runSpeed"].ToString().ToInt();
+        reachX = playerData["reachX"].ToString().ToInt();
+        reachY = playerData["reachX"].ToString().ToInt();
+        noise = playerData["noiseRadius"].ToString().ToInt();
+        cookies = playerData["currentCookies"].ToString().ToInt();
 
+        healthLevel = playerData["healthLevel"].ToString().ToInt();
+        speedLevel = playerData["speedLevel"].ToString().ToInt();
+        reachLevel = playerData["reachLevel"].ToString().ToInt();
+        noiseLevel = playerData["noiseLevel"].ToString().ToInt();
+
+        setButton("");
+
+        if (playerChoice.Count > 0)
+        {
+
+            if (healthLevel < 4)
+            {
+                healthButton.SetDeferred("disabled", false);
+            }
+            if (speedLevel < 4)
+            {
+                speedButton.SetDeferred("disabled", false);
+            }
+            if (reachLevel < 4)
+            {
+                reachButton.SetDeferred("disabled", false);
+            }
+            if (noiseLevel < 4)
+            {
+                noiseButton.SetDeferred("disabled", false);
+            }
+
+        }
+        playerChoice.Clear();
+    }
 
 
     private int getProgressLevel(Sprite sprite)
@@ -433,18 +508,27 @@ public class UpgradeMenu : Control
 
 	}
 
-	private void _on_no_pressed()
-	{
-		confirmationMenu.SetDeferred("visible", false);
-		
-	}
+
+    public override void _PhysicsProcess(float delta)
+    {
+
+        cookieCounter.Text = cookies.ToString();
 
 
-	private void _on_yes_pressed()
-	{
-        confirmationMenu.SetDeferred("visible", false);
-		defaultPlayerChoices();
+        if (playerChoice.Count <= 0)
+        {
+            undoButton.SetDeferred("disabled", true);
+        }
+        else
+        {
+            undoButton.SetDeferred("disabled", false);
+        }
+
+
+
     }
+
+
 
 
 
