@@ -22,6 +22,7 @@ one_shot = true
 modulate = Color( 1, 1, 1, 0.262745 )
 margin_right = 1091.0
 margin_bottom = 646.0
+rect_min_size = Vector2( 32, 32 )
 theme = SubResource( 1 )
 texture = ExtResource( 1 )
 expand = true
