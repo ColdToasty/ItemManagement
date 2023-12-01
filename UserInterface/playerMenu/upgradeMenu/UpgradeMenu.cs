@@ -278,8 +278,8 @@ public class UpgradeMenu : Control
 
 		GameFiles.OnSaveGame(saveData);
 		playerChoice.Clear();
-		
-	}
+        this.SetDeferred("visible", false);
+    }
 
     private void _on_no_pressed()
     {

@@ -21,10 +21,10 @@ script = ExtResource( 5 )
 
 [node name="walls" parent="." instance=ExtResource( 11 )]
 
-[node name="borderParent" parent="." instance=ExtResource( 8 )]
-
 [node name="CookiesHolder" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -2 )
+
+[node name="borderParent" parent="." instance=ExtResource( 8 )]
 
 [node name="objectSort" parent="." instance=ExtResource( 6 )]
 

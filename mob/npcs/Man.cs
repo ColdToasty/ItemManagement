@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Security.AccessControl;
 
 public class Man : Mob
 {
@@ -12,14 +13,69 @@ public class Man : Mob
     Vector2 player_last_seen;
 	Timer callCopTimer;
 	bool copTimerStarted = false;
-	public override void _Ready()
+
+
+	AnimationTree animationTree;
+	AnimationPlayer animationPlayer;
+	AnimationNodeStateMachinePlayback animationPlayback;
+	Vector2 lookDirection = Vector2.Zero;
+	string animation = "";
+
+	private enum LOOKDIRECTION
 	{
-		base._Ready();
-		callCopTimer = GetNode<Timer>("callCopTimer");
+		LEFT,RIGHT, UP, DOWN
 	}
 
+	//Should affect starting viewConePosition too
+	[Export]
+	LOOKDIRECTION startDirection;
 
-    private void _on_callCopTimer_timeout()
+	string startDirectionName;
+	public override void _Ready()
+	{
+		
+		base._Ready();
+		callCopTimer = GetNode<Timer>("callCopTimer");
+
+		animationTree = GetNode<AnimationTree>("AnimationTree");
+		animationTree.Active = true;
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        animationPlayback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+
+		startDirectionName = startDirection.ToString();
+		setSpriteDirection();
+    }
+
+
+	private void setSpriteDirection()
+	{
+		Vector2 inputVector;
+		switch (startDirectionName) {
+			case "LEFT":
+				inputVector = new Vector2(-1, 0);
+                break;
+
+            case "RIGHT":
+                inputVector = new Vector2(1, 0);
+                break;
+
+            case "UP":
+                inputVector = new Vector2(0, -1);
+                break;
+
+			default:
+                inputVector = new Vector2(0, 1);
+				break;
+        }
+
+
+        animationTree.Set("parameters/Idle/blend_position", inputVector);
+        animation = "Idle";
+
+    }
+
+
+	private void _on_callCopTimer_timeout()
     {
         EmitSignal("callCops");
     }
@@ -38,7 +94,17 @@ public class Man : Mob
 			}
 			EmitSignal("sendPlayerPosition", player_last_seen);
 		}
-	}
+
+		lookDirection = nav_agent.GetNextLocation().Normalized();
+		GD.Print(lookDirection.ToString());
+		//check if player is allowed to move
+		//if allowed to move and moving
+			//make mob play an animation based on lookDirection.x and lookDirection.y
+		if(can_move)
+		{
+
+		}
+    }
 }
 
 

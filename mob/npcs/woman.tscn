@@ -6,8 +6,9 @@
 
 [node name="woman" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+startDirection = 0
 
-[node name="Sprite" parent="." index="5"]
+[node name="Sprite" parent="." index="4"]
 texture = ExtResource( 2 )
 
 [node name="callCopTimer" type="Timer" parent="." index="10"]

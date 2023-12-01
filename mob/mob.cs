@@ -155,6 +155,7 @@ public class Mob : KinematicBody2D
 	//If mob has arrived at the position its suppose to move towards
 	public bool arrived_at_location()
 	{
+		//GD.Print(nav_agent.IsNavigationFinished());
 		return nav_agent.IsNavigationFinished();
 	}
 
@@ -190,8 +191,6 @@ public class Mob : KinematicBody2D
 
 			//GD.Print(nav_agent.GetNextLocation());
 			rotate_cone(delta, nav_agent.GetNextLocation());
-
-			//Make it so that when player is heard stop movement and follow 185
 
 			move();
 

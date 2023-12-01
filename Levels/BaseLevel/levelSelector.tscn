@@ -126,7 +126,6 @@ expand = true
 [node name="itemMenu" parent="." instance=ExtResource( 6 )]
 
 [node name="UpgradeMenu" parent="." instance=ExtResource( 5 )]
-visible = false
 
 [node name="BlackFadeOut" parent="." instance=ExtResource( 12 )]
 visible = false
