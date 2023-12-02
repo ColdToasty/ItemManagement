@@ -72,7 +72,29 @@ public class Mob : KinematicBody2D
 	}
 	public STATE state = STATE.IDLE;
 
-	public override void _Ready()
+
+
+
+    AnimatedSprite animatedSprite;
+    Vector2 navigatePosition = Vector2.Zero;
+    string animation = "";
+
+    public enum LOOKDIRECTION
+    {
+        LEFT, RIGHT, UP, DOWN, NONE
+    }
+
+    //Should affect starting viewConePosition too
+    [Export]
+    public LOOKDIRECTION startDirection;
+
+
+    private LOOKDIRECTION animationWalk = LOOKDIRECTION.NONE;
+
+    public string startDirectionName;
+
+
+    public override void _Ready()
 	{
 		stats = GetNode<mobStats>("Stats");
 		detectionZone = GetNode<DetectionZone>("DetectionZone");
@@ -86,17 +108,46 @@ public class Mob : KinematicBody2D
 
 		tinselTimer = GetNode<Timer>("playerObjectDetectionZone/tinselTimer");
 
-		//Rotations for viewBox
-		//-180 left counterClockwise
-		//-90 up 
-		// 0 right
-		// 90 down
-		// 180 left (clockwise)
+        //Rotations for viewBox
+        //-180 left counterClockwise
+        //-90 up 
+        // 0 right
+        // 90 down
+        // 180 left (clockwise)
+
+        animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+
+        startDirectionName = startDirection.ToString();
+        setSpriteDirection(startDirection.ToString().ToLower());
+	
 
     }
 
+    public void setSpriteDirection(string direction)
+    {
+        switch (direction)
+        {
+            case "left":
+                animationWalk = LOOKDIRECTION.LEFT;
+                break;
 
-	private void _on_hurtbox_area_entered(Slap area)
+            case "right":
+                animationWalk = LOOKDIRECTION.RIGHT;
+                break;
+
+            case "up":
+                animationWalk = LOOKDIRECTION.UP;
+                break;
+
+            default:
+                animationWalk = LOOKDIRECTION.DOWN;
+                break;
+        }
+
+        animatedSprite.Animation = animationWalk.ToString().ToLower();
+    }
+
+    private void _on_hurtbox_area_entered(Slap area)
 	{
 		stats.Health -= 1;
 		playHitEffect();
@@ -261,12 +312,48 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 		can_move = true;
 	}
 
+    //Chooses which animation is needed
+    private void setWalkDirection()
+    {
+        navigatePosition = (nav_agent.GetNextLocation() - this.GlobalPosition).Normalized();
+        //Checks if up or down animation is needed
+        if (navigatePosition.y > .7 || navigatePosition.y < -.7)
+        {
+            float YAsisDotValue = navigatePosition.Dot(Vector2.Up);
+            if (YAsisDotValue < 0)
+            {
+                animationWalk = LOOKDIRECTION.DOWN;
 
+            }
+            else
+            {
+                animationWalk = LOOKDIRECTION.UP;
+            }
+        }
+        //Results in a walking left or right animation
+        else
+        {
+            float XAsisDotValue = navigatePosition.Dot(Vector2.Right);
 
-	//When player makes sound in the zone
-	//Have the viewcone shift towards it even if the player is not in zone anymore
+            //Go Left
+            if (XAsisDotValue < 0)
+            {
+                animationWalk = LOOKDIRECTION.LEFT;
 
-	public override void _PhysicsProcess(float delta)
+            }
+            //Go Right
+            else
+            {
+                animationWalk = LOOKDIRECTION.RIGHT;
+            }
+        }
+
+    }
+
+    //When player makes sound in the zone
+    //Have the viewcone shift towards it even if the player is not in zone anymore
+
+    public override void _PhysicsProcess(float delta)
 	{
 		//If the viewcone sees the player
 		if (view_cone.can_see_player())
@@ -325,10 +412,37 @@ private void _on_playerObjectDetectionZone_area_entered(Area2D area)
 		{
 			navigateToPosition(delta);
 		}
+
+
+
+
+        //check if player is allowed to move
+        //Plays the animation
+        if (!arrived_at_location() && can_move)
+        {
+            setWalkDirection();
+            animatedSprite.Animation = "walk" + animationWalk.ToString().ToLower().Capitalize();
+            animatedSprite.Playing = true;
+        }
+        else
+        {
+            animatedSprite.Animation = animationWalk.ToString().ToLower();
+            animatedSprite.Playing = false;
+        }
+    
 		
+		if(animationWalk == LOOKDIRECTION.UP)
+		{
+	
+			this.MoveChild(view_cone_box, 0);
+		}
+		else
+		{
+            this.MoveChild(view_cone_box, 1);
+        }
 
 
-	}
+    }
 
 
 

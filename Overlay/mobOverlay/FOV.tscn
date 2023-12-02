@@ -5,4 +5,7 @@
 [node name="FOV" type="Node2D"]
 script = ExtResource( 1 )
 Danger_distance = 400
+Fov_color = Color( 0.239216, 0.498039, 0.0431373, 0.294118 )
+Warn_fov_color = Color( 0.933333, 0.87451, 0.0431373, 0.294118 )
+Danger_fov_color = Color( 0.984314, 0.196078, 0.0431373, 0.294118 )
 Frequency = 0.1

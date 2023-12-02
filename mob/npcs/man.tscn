@@ -1,342 +1,135 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://mob/mob.tscn" type="PackedScene" id=1]
 [ext_resource path="res://mob/npcSprites/man/man.png" type="Texture" id=2]
 [ext_resource path="res://mob/npcs/Man.cs" type="Script" id=3]
 
-[sub_resource type="AnimationNodeAnimation" id=13]
-animation = "idleDown"
-
-[sub_resource type="AnimationNodeAnimation" id=14]
-animation = "idleRight"
-
-[sub_resource type="AnimationNodeAnimation" id=15]
-animation = "idleUp"
-
-[sub_resource type="AnimationNodeAnimation" id=16]
-animation = "idleLeft"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=3]
-blend_point_0/node = SubResource( 13 )
-blend_point_0/pos = Vector2( 0, -1.1 )
-blend_point_1/node = SubResource( 14 )
-blend_point_1/pos = Vector2( 1, 0 )
-blend_point_2/node = SubResource( 15 )
-blend_point_2/pos = Vector2( 0, 1.1 )
-blend_point_3/node = SubResource( 16 )
-blend_point_3/pos = Vector2( -1, 0 )
-min_space = Vector2( -1, -1.1 )
-max_space = Vector2( 1, 1.1 )
-blend_mode = 1
-
-[sub_resource type="AnimationNodeAnimation" id=17]
-animation = "walkDown"
-
-[sub_resource type="AnimationNodeAnimation" id=18]
-animation = "walkUp"
-
-[sub_resource type="AnimationNodeAnimation" id=19]
-animation = "walkRight"
-
-[sub_resource type="AnimationNodeAnimation" id=20]
-animation = "walkLeft"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=21]
-blend_point_0/node = SubResource( 17 )
-blend_point_0/pos = Vector2( 0, -1.1 )
-blend_point_1/node = SubResource( 18 )
-blend_point_1/pos = Vector2( 0, 1.1 )
-blend_point_2/node = SubResource( 19 )
-blend_point_2/pos = Vector2( 1, 0 )
-blend_point_3/node = SubResource( 20 )
-blend_point_3/pos = Vector2( -1, 0 )
-min_space = Vector2( -1, -1.1 )
-max_space = Vector2( 1, 1.1 )
-blend_mode = 1
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
-
-[sub_resource type="AnimationNodeStateMachine" id=1]
-states/Idle/node = SubResource( 3 )
-states/Idle/position = Vector2( 428, 119 )
-states/Walk/node = SubResource( 21 )
-states/Walk/position = Vector2( 714, 119 )
-transitions = [ "Idle", "Walk", SubResource( 22 ), "Walk", "Idle", SubResource( 23 ) ]
-start_node = "Idle"
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
-
-[sub_resource type="Animation" id=4]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 5 ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "idleDown"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "idleLeft"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 2 ]
-}
-
-[sub_resource type="Animation" id=7]
-resource_name = "idleRight"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 3 ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "idleUp"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
-
-[sub_resource type="Animation" id=9]
-resource_name = "walkDown"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 4, 5, 6, 7 ]
-}
-
-[sub_resource type="Animation" id=12]
-resource_name = "walkLeft"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 17, 18, 19, 20, 21 ]
-}
-
-[sub_resource type="Animation" id=11]
-resource_name = "walkRight"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 12, 13, 14, 15, 16 ]
-}
-
-[sub_resource type="Animation" id=10]
-resource_name = "walkUp"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 8, 9, 10, 11 ]
-}
-
-[sub_resource type="AtlasTexture" id=65]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=66]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=67]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=68]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=52]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=53]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=54]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=55]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=47]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=48]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=49]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=50]
+[sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 128, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=51]
+[sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 128, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=56]
+[sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=57]
+[sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=58]
+[sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=59]
+[sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=60]
+[sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=61]
+[sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=62]
+[sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=63]
+[sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=64]
+[sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 64, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=46]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 65 ) ],
+"frames": [ SubResource( 1 ) ],
 "loop": true,
 "name": "down",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 66 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "left",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 67 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "right",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 68 ) ],
+"frames": [ SubResource( 4 ) ],
 "loop": true,
 "name": "up",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ) ],
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "walkDown",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ) ],
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
 "loop": true,
 "name": "walkLeft",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ) ],
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
 "loop": true,
 "name": "walkRight",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ) ],
+"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
 "loop": true,
 "name": "walkUp",
 "speed": 5.0
@@ -344,42 +137,17 @@ animations = [ {
 
 [node name="man" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-startDirection = 1
+startDirection = 2
 
-[node name="Sprite" parent="." index="4"]
-position = Vector2( 0, -5 )
-rotation = 0.0
-scale = Vector2( 3, 3 )
-texture = ExtResource( 2 )
-hframes = 5
-vframes = 5
-frame = 3
+[node name="AnimatedSprite" parent="." index="0"]
+frames = SubResource( 5 )
+animation = "down"
+
+[node name="FOV" parent="ViewBox" index="0"]
+position = Vector2( 0, 0 )
 
 [node name="callCopTimer" type="Timer" parent="." index="10"]
 one_shot = true
-
-[node name="AnimationTree" type="AnimationTree" parent="." index="13"]
-tree_root = SubResource( 1 )
-parameters/playback = SubResource( 2 )
-parameters/Idle/blend_position = Vector2( 0, 0 )
-parameters/Walk/blend_position = Vector2( 0, 0 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="14"]
-anims/RESET = SubResource( 4 )
-anims/idleDown = SubResource( 5 )
-anims/idleLeft = SubResource( 6 )
-anims/idleRight = SubResource( 7 )
-anims/idleUp = SubResource( 8 )
-anims/walkDown = SubResource( 9 )
-anims/walkLeft = SubResource( 12 )
-anims/walkRight = SubResource( 11 )
-anims/walkUp = SubResource( 10 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="15"]
-position = Vector2( 0, -7 )
-scale = Vector2( 3, 3 )
-frames = SubResource( 46 )
-animation = "right"
 
 [connection signal="timeout" from="callCopTimer" to="." method="_on_callCopTimer_timeout"]
 

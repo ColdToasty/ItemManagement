@@ -27,6 +27,7 @@ position = Vector2( 0, -2 )
 [node name="borderParent" parent="." instance=ExtResource( 8 )]
 
 [node name="objectSort" parent="." instance=ExtResource( 6 )]
+position = Vector2( 0, 1 )
 
 [node name="Spawn" parent="objectSort" index="0"]
 position = Vector2( -304, -80 )

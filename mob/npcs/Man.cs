@@ -15,63 +15,11 @@ public class Man : Mob
 	bool copTimerStarted = false;
 
 
-	AnimationTree animationTree;
-	AnimationPlayer animationPlayer;
-	AnimationNodeStateMachinePlayback animationPlayback;
-	Vector2 lookDirection = Vector2.Zero;
-	string animation = "";
-
-	private enum LOOKDIRECTION
-	{
-		LEFT,RIGHT, UP, DOWN
-	}
-
-	//Should affect starting viewConePosition too
-	[Export]
-	LOOKDIRECTION startDirection;
-
-	string startDirectionName;
 	public override void _Ready()
 	{
 		
 		base._Ready();
 		callCopTimer = GetNode<Timer>("callCopTimer");
-
-		animationTree = GetNode<AnimationTree>("AnimationTree");
-		animationTree.Active = true;
-		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        animationPlayback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
-
-		startDirectionName = startDirection.ToString();
-		setSpriteDirection();
-    }
-
-
-	private void setSpriteDirection()
-	{
-		Vector2 inputVector;
-		switch (startDirectionName) {
-			case "LEFT":
-				inputVector = new Vector2(-1, 0);
-                break;
-
-            case "RIGHT":
-                inputVector = new Vector2(1, 0);
-                break;
-
-            case "UP":
-                inputVector = new Vector2(0, -1);
-                break;
-
-			default:
-                inputVector = new Vector2(0, 1);
-				break;
-        }
-
-
-        animationTree.Set("parameters/Idle/blend_position", inputVector);
-        animation = "Idle";
-
     }
 
 
@@ -95,15 +43,10 @@ public class Man : Mob
 			EmitSignal("sendPlayerPosition", player_last_seen);
 		}
 
-		lookDirection = nav_agent.GetNextLocation().Normalized();
-		GD.Print(lookDirection.ToString());
-		//check if player is allowed to move
-		//if allowed to move and moving
-			//make mob play an animation based on lookDirection.x and lookDirection.y
-		if(can_move)
-		{
 
-		}
+
+
+
     }
 }
 

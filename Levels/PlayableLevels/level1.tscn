@@ -18,7 +18,7 @@ outlines = [ PoolVector2Array( -2577.18, -1513.42, -2593.18, 1766.58, 3118.82, 1
 [node name="level0" instance=ExtResource( 1 )]
 
 [node name="Camera2D" parent="." index="0"]
-position = Vector2( -192, -48 )
+position = Vector2( -192, -47 )
 current = true
 
 [node name="blackUnderLay" parent="." index="1"]
@@ -65,15 +65,18 @@ position = Vector2( 96, 0 )
 
 [node name="man" parent="objectSort" index="6" instance=ExtResource( 11 )]
 position = Vector2( 688, 184 )
-startDirection = 2
+startDirection = 3
 
-[node name="DoorUp2" parent="objectSort" index="7" instance=ExtResource( 5 )]
+[node name="man2" parent="objectSort" index="7" instance=ExtResource( 11 )]
+position = Vector2( 704, -216 )
+
+[node name="DoorUp2" parent="objectSort" index="8" instance=ExtResource( 5 )]
 position = Vector2( 672, 0 )
 
-[node name="DoorUp3" parent="objectSort" index="8" instance=ExtResource( 5 )]
+[node name="DoorUp3" parent="objectSort" index="9" instance=ExtResource( 5 )]
 position = Vector2( 288, -192 )
 
-[node name="DoorUp4" parent="objectSort" index="9" instance=ExtResource( 5 )]
+[node name="DoorUp4" parent="objectSort" index="10" instance=ExtResource( 5 )]
 position = Vector2( 224, 192 )
 
 [node name="PlaceLocation" parent="PlaceLocations" index="0" instance=ExtResource( 3 )]
