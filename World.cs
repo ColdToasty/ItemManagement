@@ -111,6 +111,14 @@ public class World : Node2D
 
 			float stars = 0;
             Godot.Collections.Dictionary<string, string> saveData = CreateSaveDictionary(GameFiles.save_name);
+			//Change the level
+			int currentLevel = saveData["currentLevel"].ToInt();
+            saveData["currentLevel"] = (currentLevel + 1).ToString();
+			
+			if(currentLevel + 1 > saveData["latestLevel"].ToInt())
+			{
+                saveData["latestLevel"] = (currentLevel + 1).ToString();
+            }
 			GameFiles.OnSaveGame(saveData);
 			GD.Print("saved");
 			
@@ -141,10 +149,15 @@ public class World : Node2D
 			{
 				//Are you even trying to make christmas enjoyable
 			}
+            blackFadeOutAnimation = (BlackFadeOut)blackFadeOutScene.Instance();
+            blackFadeOutAnimation.Connect("fade_finished", this, "animationFinished");
+
+            this.AddChild(blackFadeOutAnimation);
+            blackFadeOutAnimation.show();
+            blackFadeOutAnimation.playFadeOut();
 
 
-
-		}
+        }
 		else
 		{
 			//Popup rudolph critizing player
@@ -153,7 +166,9 @@ public class World : Node2D
 
 		}
 
-	}
+
+
+    }
 
 
 	private Godot.Collections.Dictionary<string, string> CreateSaveDictionary(string saveName)

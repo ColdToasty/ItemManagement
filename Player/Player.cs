@@ -405,8 +405,6 @@ public class Player : KinematicBody2D
 		if (state == STATE.MOVING)
 		{
 			move_state();
-
-
 		}
 
 		if(state == STATE.ATTACK)

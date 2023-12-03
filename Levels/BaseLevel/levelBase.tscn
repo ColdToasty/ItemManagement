@@ -41,9 +41,6 @@ position = Vector2( -192, -48 )
 [node name="AnimationTree" parent="objectSort/Player" index="4"]
 parameters/playback = SubResource( 13 )
 
-[node name="WindowDialog" parent="objectSort/Player" index="12"]
-visible = false
-
 [node name="PlaceLocations" type="YSort" parent="."]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]

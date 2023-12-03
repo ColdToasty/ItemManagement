@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public class itemSelect : PanelContainer
+public class itemSelect : CanvasLayer
 {
     private Dictionary save_file_data = GameFiles.current_file_data;
 
@@ -37,7 +37,7 @@ public class itemSelect : PanelContainer
     private TextureRect itemIcon;
     private Label itemCount;
 
-    private static string playerItemImagesPaths = "res://Player/playerItemImages/";
+    private static string playerItemImagesPaths = "res://Player/playerItemImages/ItemIcon/";
 
     public bool itemAvailable = true;
     public enum ITEMSTATE
@@ -69,8 +69,6 @@ public class itemSelect : PanelContainer
         string imageType = ".png";
         string imagePath = "";
 
-        //Update the ItemIcon.Texture
-        //Do it via image pathway
         this.itemCount.Text = itemCount.ToString();
         
         //Change imageTexture to default
@@ -78,45 +76,45 @@ public class itemSelect : PanelContainer
         {
             imagePath = imageName + imageType;
             itemAvailable = true;
-            itemIcon.Modulate = new Color(1, 1, 1, (float)1);
+            itemIcon.Modulate = new Color(1, 1, 1, (float).8);
         }
         else
         {
-            imagePath = imageName + "None" + imageType;
+            imagePath = imageName + imageType;
             itemAvailable = false;
-            itemIcon.Modulate = new Color(1, 1, 1, (float)0.25);
+            itemIcon.Modulate = new Color(1, 1, 1, (float)0.5);
         }
 
+        Texture texture = GD.Load<Texture>(imagePath);
+        itemIcon.Texture = texture;
     }
 
     public override void _Process(float delta)
     {
         //Update to based on state
-        if (Input.IsActionJustPressed("Ornament") || pickedItem == ITEMSTATE.ORNAMENT)
+        if (Input.IsActionJustPressed("Ornament") )
         {
             pickedItem = ITEMSTATE.ORNAMENT;
             updatePanel("Ornament", OrnamentCount);
         }
 
-        else if (Input.IsActionJustPressed("Tinsel") || pickedItem == ITEMSTATE.TINSEL)
+        else if (Input.IsActionJustPressed("Tinsel"))
         {
             pickedItem = ITEMSTATE.TINSEL;
             updatePanel("Tinsel", TinselCount);
         }
 
-        else if (Input.IsActionJustPressed("Cane") || pickedItem == ITEMSTATE.CANE)
+        else if (Input.IsActionJustPressed("Cane"))
         {
             pickedItem = ITEMSTATE.CANE;
             updatePanel("Cane", CaneCount);
         }
 
-        else if (Input.IsActionJustPressed("Invisibility") || pickedItem == ITEMSTATE.INVISIBILITY)
+        else if (Input.IsActionJustPressed("Invisibility"))
         {
             pickedItem = ITEMSTATE.INVISIBILITY;
             updatePanel("Invisibility", InvisibilityCount);
-            //start timer on invisibility
         }
-
 
 
 

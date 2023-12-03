@@ -13,6 +13,7 @@ public class GameFiles : Control
 	public static string save_directory = "user://saves/";
 	public static string continue_file_name = "continue";
 	public static string file_extension = ".json";
+	public static string scene_extension = ".tscn";
 	public static string continue_file_location = save_directory + continue_file_name + file_extension;
 	public static Dictionary current_file_data = new Dictionary();
 	private string levelFormat = "res://Levels/level0.tscn";
@@ -142,8 +143,9 @@ public class GameFiles : Control
         }
 
 		file.Close();
-        //Reupdate file variables date and time
-        GetTree().ChangeScene($"res://Levels/BaseLevel/levelSelector.tscn");
+
+		changeScene("levelSelector");
+
         //GetTree().ChangeScene($"res://UserInterface/playerMenu/upgradeMenu/UpgradeMenu.tscn");
         //GetTree().ChangeScene($"res://Levels/PlayableLevels/level{current_file_data["currentLevel"]}.tscn");
 		//GetTree().ChangeScene($"res://Levels/PlayableLevels/level1.tscn");
@@ -155,6 +157,11 @@ public class GameFiles : Control
     }
 
 
+	public void changeScene(string sceneName)
+	{
+        GetTree().ChangeScene($"res://Levels/BaseLevel/{sceneName + scene_extension}");
+
+    }
 
     //Returns the key value pairs of a certain saved file
     public static Dictionary GetFileContents()

@@ -529,10 +529,6 @@ collision_mask = 24577
 script = ExtResource( 5 )
 
 [node name="itemSelect" parent="." instance=ExtResource( 8 )]
-margin_left = -67.0
-margin_top = 36.0
-margin_right = -67.0
-margin_bottom = 50.0
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 
@@ -629,7 +625,6 @@ script = ExtResource( 4 )
 shape = SubResource( 47 )
 
 [node name="WindowDialog" type="WindowDialog" parent="."]
-visible = true
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
