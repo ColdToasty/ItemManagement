@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class levelSelector : Control
 {
 	//Gets the player data from files
-	private Dictionary playerData = GameFiles.GetFileContents();
+	private Godot.Collections.Dictionary playerData = GameFiles.GetFileContents() ;
 
 	Control levelsContainer;
 	levelButton currentLevelButton;
@@ -83,7 +83,7 @@ public class levelSelector : Control
 
 	private void _on_playLevelButton_pressed()
 	{
-		fadeOut.show();
+        fadeOut.show();
 		fadeOut.playFadeOut();
 	}
 

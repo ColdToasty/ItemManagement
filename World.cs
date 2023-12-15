@@ -105,19 +105,18 @@ public class World : Node2D
 	{
 		//Prevent cookies being added multiple times
 		if(!level_ended && presentsTBD < placeLocationNumber) {
-			GD.Print("End Level");
 			level_ended = true;
 
 
 			float stars = 0;
             Godot.Collections.Dictionary<string, string> saveData = CreateSaveDictionary(GameFiles.save_name);
-			//Change the level
-			int currentLevel = saveData["currentLevel"].ToInt();
-            saveData["currentLevel"] = (currentLevel + 1).ToString();
-			
-			if(currentLevel + 1 > saveData["latestLevel"].ToInt())
+
+            saveData["currentLevel"] = (level + 1).ToString();
+
+            if (level + 1 > saveData["latestLevel"].ToInt())
 			{
-                saveData["latestLevel"] = (currentLevel + 1).ToString();
+                saveData["latestLevel"] = (level + 1).ToString();
+				
             }
 			GameFiles.OnSaveGame(saveData);
 			GD.Print("saved");

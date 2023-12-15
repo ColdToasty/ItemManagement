@@ -4,8 +4,8 @@ using System;
 public class BlackFadeOut : Control
 {
 	
-	AnimationPlayer animationPlayer;
-	TextureRect blackLayer;
+	private AnimationPlayer animationPlayer;
+	public TextureRect blackLayer;
 
 	[Signal]
 	public delegate void fade_finished(string name);

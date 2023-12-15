@@ -95,8 +95,10 @@ anims/fadeIn = SubResource( 3 )
 anims/fadeOut = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_left = -5000.0
+margin_top = -5000.0
+margin_right = 5000.0
+margin_bottom = 5000.0
 texture = ExtResource( 1 )
 expand = true
 
